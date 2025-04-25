@@ -1,4 +1,4 @@
-import { MapEntity } from "proto/trx/trx.entity";
+import { MapEntity } from "src/core/common/models/map-entity";
 
 export interface IMapEntityRpcAdapter {
     delete(entity: MapEntity): Promise<void>;
