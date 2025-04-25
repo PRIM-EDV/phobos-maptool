@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "phobos.maptool.entity.proto";
+import "phobos.maptool.squad.proto";
+// import "trx.tracker.proto";
+
+package phobos.maptool;
+
+message Request {
+    oneof request {
+        SetMapEntity.Request setMapEntity = 1;
+        DeleteMapEntity.Request deleteMapEntity = 2;
+        GetAllMapEntities.Request getAllMapEntities = 3;
+
+        // Squad
+        SetSquad.Request setSquad = 4;
+        DeleteSquad.Request deleteSquad = 5;
+        GetAllSquads.Request getAllSquads = 6;
+
+        // // Tracker
+        // SetTracker.Request setTracker = 7;
+    }
+}
+
+message Response {
+    oneof response {
+        SetMapEntity.Response setMapEntity = 1;
+        DeleteMapEntity.Response deleteMapEntity = 2;
+        GetAllMapEntities.Response getAllMapEntities = 3;
+
+        // Squad
+        SetSquad.Response setSquad = 4;
+        DeleteSquad.Response deleteSquad = 5;
+        GetAllSquads.Response getAllSquads = 6;
+
+        // // Tracker
+        // SetTracker.Response setTracker = 7;
+    }
+}
+
+message Error {
+    string type = 1;
+    string message = 2;
+}
+
+message Message {
+    string id = 1;
+
+    oneof message{
+        Request request = 2;
+        Response response = 3;
+        Error error = 4;
+    }
+}
+

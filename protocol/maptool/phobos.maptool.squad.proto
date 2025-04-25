@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package phobos.maptool;
+enum SquadState {
+    SQUAD_STATE_UNDEFINED = 0;
+    SQUAD_STATE_UNSTAGED = 1;
+    SQUAD_STATE_READY = 2;
+    SQUAD_STATE_QRF_READY = 3;
+    SQUAD_STATE_IN_FIELD = 4;
+}
+
+message Squad {
+    string name = 1;
+    string callsign = 2;
+    SquadState state = 3;
+    int32 combattants = 4;
+    int32 position = 5; 
+}
+
+message GetAllSquads {
+    message Request {
+    }
+
+    message Response {
+        repeated Squad squads = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetSquad {
+    message Request {
+        Squad squad = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message DeleteSquad {
+    message Request {
+        Squad squad = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+

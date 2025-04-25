@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mongo:8.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+
+  server:
+    image: prim/phobos-maptool:1.0.0
+    build:
+      context: "."
+    restart: always
+    container_name: "phobos-maptool"
+    depends_on:
+      - db
+    ports:
+      - "3000:3100"
+      - "3100:3200"
+    environment:
+      - MONGO_DB_HOST=db
+
