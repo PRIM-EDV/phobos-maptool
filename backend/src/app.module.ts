@@ -8,7 +8,7 @@ import { ApiModule } from './api/api.module';
 import { AppGateway } from './app.gateway';
 import { CoreModule } from './core/core.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { LoggingModule } from './infrastructure/logging/logging.module';
+import { WinstonLoggerModule } from './infrastructure/logger/winston/winston.logger.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
@@ -17,7 +17,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
   imports: [
     ApiModule,
     CoreModule,
-    LoggingModule,
+    WinstonLoggerModule,
     EventEmitterModule.forRoot(),
     MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
     ServeStaticModule.forRoot({
