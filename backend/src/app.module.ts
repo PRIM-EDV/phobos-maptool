@@ -3,7 +3,6 @@ import { Global, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from './api/api.module';
 import { AppGateway } from './app.gateway';
@@ -26,7 +25,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     }),
   ],
   controllers: [AppController],
-  providers: [AppGateway, AppService],
+  providers: [AppGateway],
   exports: [AppGateway]
 })
 export class AppModule {
