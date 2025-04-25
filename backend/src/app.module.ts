@@ -6,9 +6,10 @@ import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from './api/api.module';
 import { AppGateway } from './app.gateway';
-import { CoreModule } from './core/core.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { WinstonLoggerModule } from './infrastructure/logger/winston/winston.logger.module';
+import { MapEntityModule } from './core/map-entity/map-entity.module';
+import { SquadModule } from './core/squad/squad.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
@@ -16,7 +17,8 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
 @Module({
   imports: [
     ApiModule,
-    CoreModule,
+    MapEntityModule,
+    SquadModule,
     WinstonLoggerModule,
     EventEmitterModule.forRoot(),
     MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
