@@ -1,12 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ISquadRepository } from "./interfaces/squad.repository.interface";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
-import { SquadPlacedEvent } from "../events/squad-placed.event";
-import { Squad, SquadState } from "proto/trx/trx.squad";
-import { EntityPlacedEvent } from "../events/map-entity/entity-placed.event";
-import { MapEntityType } from "proto/trx/trx.entity";
+import { SquadPlacedEvent } from "../common/events/squad-placed.event";
+import { MapEntityPlacedEvent } from "../common/events/map-entity/map-entity-placed.event";
 import { ISquadRpcAdapter } from "./interfaces/squad.rpc.adapter.interface";
-import { EntityRemovedEvent } from "../events/map-entity/entity-removed.event";
+import { MapEntityRemovedEvent } from "../common/events/map-entity/map-entity-removed.event";
+import { Squad, SquadState } from "../common/models/squad";
+import { MapEntityType } from "../common/models/map-entity";
+import { MapEntity_Squad } from "proto/maptool/phobos.maptool.entity";
 
 const SquadRepository = () => Inject('SquadRepository');
 const SquadRpcAdapter = () => Inject('SquadRpcAdapter');
@@ -33,16 +34,16 @@ export class SquadService {
     }
 
     @OnEvent('entity.placed')
-    async handleEntityPlacedEvent(event: EntityPlacedEvent) {
-        const entity = event.entity;
-        if (entity.type == MapEntityType.TYPE_FRIEND && entity.squad) {
-            const existing = await this.squadRepository.get(entity.squad.name);
+    async handleEntityPlacedEvent(event: MapEntityPlacedEvent) {
+        if (event.mapEntity.type == MapEntityType.FRIEND) {
+            const entity = event.mapEntity.entity as MapEntity_Squad;
+            const existing = await this.squadRepository.get(entity.name);
             if (!existing) {
                 const squad: Squad = { 
-                    name:  entity.squad.name, 
-                    combattants: entity.squad.combattants, 
-                    callsign: entity.squad.callsign, 
-                    state: SquadState.SQUAD_STATE_IN_FIELD, 
+                    name:  entity.name, 
+                    combattants: entity.combattants, 
+                    callsign: entity.callsign, 
+                    state: SquadState.IN_FIELD, 
                     position: 0 
                 };
                 
