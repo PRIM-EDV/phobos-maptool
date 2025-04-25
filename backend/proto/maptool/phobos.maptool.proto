@@ -8,14 +8,15 @@ package phobos.maptool;
 
 message Request {
     oneof request {
+        // MapEntity
         SetMapEntity.Request setMapEntity = 1;
         DeleteMapEntity.Request deleteMapEntity = 2;
         GetAllMapEntities.Request getAllMapEntities = 3;
 
         // Squad
-        SetSquad.Request setSquad = 4;
-        DeleteSquad.Request deleteSquad = 5;
-        GetAllSquads.Request getAllSquads = 6;
+        SetSquad.Request setSquad = 14;
+        DeleteSquad.Request deleteSquad = 15;
+        GetAllSquads.Request getAllSquads = 16;
 
         // // Tracker
         // SetTracker.Request setTracker = 7;
@@ -29,9 +30,9 @@ message Response {
         GetAllMapEntities.Response getAllMapEntities = 3;
 
         // Squad
-        SetSquad.Response setSquad = 4;
-        DeleteSquad.Response deleteSquad = 5;
-        GetAllSquads.Response getAllSquads = 6;
+        SetSquad.Response setSquad = 14;
+        DeleteSquad.Response deleteSquad = 15;
+        GetAllSquads.Response getAllSquads = 16;
 
         // // Tracker
         // SetTracker.Response setTracker = 7;
@@ -43,7 +44,7 @@ message Error {
     string message = 2;
 }
 
-message Message {
+message MaptoolMessage {
     string id = 1;
 
     oneof message{

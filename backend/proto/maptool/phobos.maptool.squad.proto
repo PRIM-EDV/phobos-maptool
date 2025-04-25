@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package phobos.maptool;
-enum SquadState {
+enum SquadDtoState {
     SQUAD_STATE_UNDEFINED = 0;
     SQUAD_STATE_UNSTAGED = 1;
     SQUAD_STATE_READY = 2;
@@ -9,10 +9,10 @@ enum SquadState {
     SQUAD_STATE_IN_FIELD = 4;
 }
 
-message Squad {
+message SquadDto {
     string name = 1;
     string callsign = 2;
-    SquadState state = 3;
+    SquadDtoState state = 3;
     int32 combattants = 4;
     int32 position = 5; 
 }
@@ -22,7 +22,7 @@ message GetAllSquads {
     }
 
     message Response {
-        repeated Squad squads = 1;
+        repeated SquadDto squads = 1;
     }
 
     oneof message {
@@ -34,7 +34,7 @@ message GetAllSquads {
 
 message SetSquad {
     message Request {
-        Squad squad = 1;
+        SquadDto squad = 1;
     }
 
     message Response {}
@@ -48,7 +48,7 @@ message SetSquad {
 
 message DeleteSquad {
     message Request {
-        Squad squad = 1;
+        SquadDto squad = 1;
     }
 
     message Response {}

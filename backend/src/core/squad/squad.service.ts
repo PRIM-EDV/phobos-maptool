@@ -6,8 +6,7 @@ import { MapEntityPlacedEvent } from "../common/events/map-entity/map-entity-pla
 import { ISquadRpcAdapter } from "./interfaces/squad.rpc.adapter.interface";
 import { MapEntityRemovedEvent } from "../common/events/map-entity/map-entity-removed.event";
 import { Squad, SquadState } from "../common/models/squad";
-import { MapEntityType } from "../common/models/map-entity";
-import { MapEntity_Squad } from "proto/maptool/phobos.maptool.entity";
+import { MapEntitySquad, MapEntityType } from "../common/models/map-entity";
 
 const SquadRepository = () => Inject('SquadRepository');
 const SquadRpcAdapter = () => Inject('SquadRpcAdapter');
@@ -36,7 +35,7 @@ export class SquadService {
     @OnEvent('entity.placed')
     async handleEntityPlacedEvent(event: MapEntityPlacedEvent) {
         if (event.mapEntity.type == MapEntityType.FRIEND) {
-            const entity = event.mapEntity.entity as MapEntity_Squad;
+            const entity = event.mapEntity.entity as MapEntitySquad;
             const existing = await this.squadRepository.get(entity.name);
             if (!existing) {
                 const squad: Squad = { 
