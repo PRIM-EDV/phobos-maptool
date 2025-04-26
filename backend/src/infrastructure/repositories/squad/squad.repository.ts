@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
 import { DbSquadDocument, DbSquad } from "./schemas/squad.schema";
-import { Squad } from "proto/trx/trx.squad";
+import { Squad } from "src/core/common/models/squad";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {

@@ -9,13 +9,13 @@ import { MapEntityDtoService } from 'src/common/dtos/map-entity/map-entity.dto.s
 export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
     constructor(
         private readonly gateway: AppGateway,
-        private readonly dtoService: MapEntityDtoService,
+        private readonly mapEntityDto: MapEntityDtoService,
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {
         const req: MaptoolRequest = {
             deleteMapEntity: {
-                entity: this.dtoService.toDto(entity)
+                entity: this.mapEntityDto.toDto(entity)
             }
         }
         await this.gateway.requestAll(req);
@@ -24,7 +24,7 @@ export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
     public async set(entity: MapEntity): Promise<void> {
         const req: MaptoolRequest = {
             setMapEntity: {
-                entity: this.dtoService.toDto(entity)
+                entity: this.mapEntityDto.toDto(entity)
             }
         }
         await this.gateway.requestAll(req);
