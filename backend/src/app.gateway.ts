@@ -1,5 +1,7 @@
 import * as WebSocket from 'ws';
 import {
+  OnGatewayConnection,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -8,21 +10,22 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Subject } from 'rxjs';
 import { Ws } from './common/interfaces/ws';
-import { LoggingService } from './infrastructure/logging/logging.service';
 
-import { Message as MaptoolMessage, Request as MaptoolRequest, Response as MaptoolResponse } from 'proto/maptool/phobos.maptool';
+import { MaptoolMessage, Request as MaptoolRequest, Response as MaptoolResponse } from 'proto/maptool/phobos.maptool';
+import { WinstonLogger } from './infrastructure/logger/winston/winston.logger';
 @WebSocketGateway()
-export class AppGateway {
+export class AppGateway implements OnGatewayConnection{
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: MaptoolResponse) => void> = new Map<string, (value: MaptoolResponse) => void>();
 
   public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
   public onRequest: Subject<{ client: Ws, msgId: string, request: MaptoolRequest }> = new Subject<{ client: Ws, msgId: string, request: MaptoolRequest }>();
 
-  constructor(private readonly log: LoggingService) {
-  }
-
   @WebSocketServer() server: WebSocket.Server;
+
+  constructor(private readonly logger: WinstonLogger) {
+    this.logger.setContext('AppGateway');
+  }
 
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
@@ -41,10 +44,9 @@ export class AppGateway {
     this.onMessage.next(msg);
   }
 
-
   handleDisconnect(client: Ws) {
     this.activeClients.delete(client.id);
-    this.log.info(`Client disconnected: ${client.id}`);
+    this.logger.log(`Client disconnected: ${client.id}`);
   }
 
   handleConnection(client: Ws, ...args: any[]) {
@@ -54,7 +56,7 @@ export class AppGateway {
     client.id = uuidv4();
 
     this.activeClients.set(client.id, client);
-    this.log.info(`Client connected: ${client.id}`);
+    this.logger.log(`Client connected: ${client.id}`);
   }
 
   public error(clientId: string, msgId: string, err: Error) {
