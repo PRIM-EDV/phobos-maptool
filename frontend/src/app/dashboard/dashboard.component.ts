@@ -4,6 +4,7 @@ import { TrxBackendService } from '../backend/trx.backend.service';
 
 @Component({
   selector: 'dashboard',
+  standalone: false,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

@@ -1,8 +1,8 @@
 services:
   db:
     image: mongo:8.0
-    ports:
-      - "27017:27017"
+    # ports:
+    #   - "27017:27017"
     volumes:
       - ./data/db:/data/db
 
@@ -15,8 +15,7 @@ services:
     depends_on:
       - db
     ports:
-      - "3000:3100"
-      - "3100:3200"
+      - "${PHOBOS_MAPTOOL_PORT:-3002}:3002"
     environment:
       - MONGO_DB_HOST=db
 

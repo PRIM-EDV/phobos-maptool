@@ -10,9 +10,9 @@ RUN npm install
 # Build webapp
 COPY ./frontend/src ./src
 COPY ./frontend/lib ./lib
-# COPY ./protocol ../protocol
+COPY ./protocol ../protocol
 
-# RUN npm run proto:generate
+RUN npm run proto:generate
 RUN npm run build
 
 FROM node:23.11.0-slim AS backend
@@ -27,17 +27,13 @@ RUN npm install
 # Build server
 COPY ./backend/src ./src
 COPY ./backend/lib ./lib 
-# COPY ./protocol ../protocol
+COPY ./protocol ../protocol
 
-# RUN npm run proto:generate
+RUN npm run proto:generate
 RUN npm run build
 
 # Get webapp artifact
 COPY --from=frontend /opt/auth/frontend/dist/phobos-maptool/browser ./public
-
-#
-EXPOSE 3100
-EXPOSE 3200
 
 # Run startscript
 COPY ./docker-entrypoint.sh ./

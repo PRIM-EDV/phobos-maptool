@@ -5,10 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "proto:generate": "cpx \"../protocol/*/*\" ./proto && protoc -I=./proto/maptool --ts_proto_opt=messages=true --ts_proto_out=./proto/maptool ./proto/maptool/phobos.maptool.proto"
   },
   "private": true,
   "dependencies": {
+    "@angular-architects/native-federation": "^19.0.22",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
     "@angular/core": "^19.2.0",
@@ -28,6 +30,9 @@
     "@angular/compiler-cli": "^19.2.0",
     "@types/hammerjs": "^2.0.46",
     "@types/node": "^22.15.2",
+    "cpx": "^1.5.0",
+    "ts-proto": "^2.7.0",
+    "ts-protoc-gen": "^0.15.0",
     "typescript": "~5.7.2"
   }
 }
