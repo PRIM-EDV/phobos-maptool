@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DbSquad, DbSquadSchema } from './schemas/squad.schema';
 import { SquadRepository } from './squad.repository';
+import { SquadSchema } from './schemas/squad.schema';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: DbSquad.name, schema: DbSquadSchema }])
+        MongooseModule.forFeature([{ name: "Squad", schema: SquadSchema }])
     ],
     providers: [{
         provide: "SquadRepository",

@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
-import { DbSquadDocument, DbSquad } from "./schemas/squad.schema";
 import { Squad } from "src/core/common/models/squad";
+import { SquadDocument } from "./schemas/squad.schema";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {
 
     constructor(
-        @InjectModel("DbSquad") private squadModel: Model<DbSquadDocument>
+        @InjectModel("Squad") private squadModel: Model<SquadDocument>
     ) {}
 
 
@@ -28,7 +28,7 @@ export class SquadRepository implements ISquadRepository {
             return await this.squadModel.findOne({name: name}).exec();
         } else {
             const squads = await this.squadModel.find().exec();
-            return squads.map(squad => DbSquad.toProto(squad));
+            return squads;
         }
     }
 
@@ -47,7 +47,7 @@ export class SquadRepository implements ISquadRepository {
             
             await dbSquad.save();
         } else {
-            dbSquad = new this.squadModel(DbSquad.fromProto(squad));
+            dbSquad = new this.squadModel(squad);
             await dbSquad.save();
         }
     }
