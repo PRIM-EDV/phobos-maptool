@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MapEntityRpcAdatper } from './map-entity.rpc.adapter';
 import { MapEntityDtoModule } from 'src/common/dtos/map-entity/map-entity.dto.module';
+import { WinstonLoggerModule } from 'src/infrastructure/logger/winston/winston.logger.module';
 
 
 @Module({
     imports: [
-        MapEntityDtoModule
+        MapEntityDtoModule,
+        WinstonLoggerModule
     ],
     providers: [{
         provide: 'MapEntityRpcAdapter',

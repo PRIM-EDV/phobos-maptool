@@ -4,20 +4,22 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ApiModule } from './api/api.module';
 import { AppGateway } from './app.gateway';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { WinstonLoggerModule } from './infrastructure/logger/winston/winston.logger.module';
 import { MapEntityModule } from './core/map-entity/map-entity.module';
 import { SquadModule } from './core/squad/squad.module';
 import { WebSocketAuthMiddleware } from './api/auth/websocket-auth.middleware';
+import { MapApiModule } from './api/map/map.api.module';
+import { SquadApiModule } from './api/squad/squad.api.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
 @Global()
 @Module({
   imports: [
-    ApiModule,
+    MapApiModule,
+    SquadApiModule,
     MapEntityModule,
     SquadModule,
     WinstonLoggerModule,
