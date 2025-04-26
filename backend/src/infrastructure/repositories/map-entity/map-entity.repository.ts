@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { IMapEntityRepository } from "src/core/map-entity/interfaces/map-entity.repository.interface";
-import { DbMapEntity, DbMapEntityDocument } from "./schemas/map-entity.schema";
-import { MapEntity } from "proto/trx/trx.entity";
+import { MapEntityDocument } from "./schemas/map-entity.schema";
+import { MapEntity } from "src/core/common/models/map-entity";
 
 @Injectable()
 export class MapEntityRepository implements IMapEntityRepository {
 
     constructor(
-        @InjectModel("DbMapEntity") private mapEntityModel: Model<DbMapEntityDocument>
+        @InjectModel("MapEntity") private mapEntityModel: Model<MapEntityDocument>
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {
@@ -22,38 +22,25 @@ export class MapEntityRepository implements IMapEntityRepository {
 
     public async get(): Promise<MapEntity[]> {
         const entities = await this.mapEntityModel.find().exec();
-
-        return entities.map(entity => DbMapEntity.toProto(entity));
+        return entities;
     }
 
     public async getBySquadName(name: string): Promise<MapEntity | null> {
-        const dbMapEntity = await this.mapEntityModel.findOne({"squad.name": name}).exec();
-        return dbMapEntity ? DbMapEntity.toProto(dbMapEntity) : null;
+        const mapEntityDbo = await this.mapEntityModel.findOne({"squad.name": name}).exec();
+        return mapEntityDbo || null;
     }
 
     private async upsert(entity: MapEntity): Promise<void> {
-        let dbMapEntity = await this.mapEntityModel.findOne({uuid: entity.id}).exec();
-        if(dbMapEntity) {
-            dbMapEntity.uuid = entity.id;
-            dbMapEntity.position = entity.position;
-            dbMapEntity.type = entity.type;
-    
-            if(entity.squad) {
-                dbMapEntity.squad = entity.squad;
-            }
-
-            if(entity.enemy) {
-                dbMapEntity.enemy = entity.enemy;
-            }
-
-            if(entity.objective) {
-                dbMapEntity.objective = entity.objective;
-            }
-            
-            dbMapEntity.save();
+        let mapEntityDbo = await this.mapEntityModel.findOne({uuid: entity.id}).exec();
+        if(mapEntityDbo) {
+            mapEntityDbo.id = entity.id;
+            mapEntityDbo.position = entity.position;
+            mapEntityDbo.type = entity.type;
+            mapEntityDbo.entity = entity.entity;
+            mapEntityDbo.save();
         } else {
-            dbMapEntity = new this.mapEntityModel(DbMapEntity.fromProto(entity));
-            await dbMapEntity.save();
+            mapEntityDbo = new this.mapEntityModel(entity);
+            await mapEntityDbo.save();
         }
     }
 }
