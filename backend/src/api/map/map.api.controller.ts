@@ -13,14 +13,14 @@ export class MapApiController {
         private readonly logger: WinstonLogger,
         private readonly gateway: AppGateway,
         private readonly mapEntity: MapEntityService,
-        private readonly dtoService: MapEntityDtoService
+        private readonly mapEntityDto: MapEntityDtoService
     ) {
         this.logger.setContext(MapApiController.name);
     }
 
     @Rpc()
     public async deleteMapEntity(client: Ws, req: DeleteMapEntity_Request) {
-        const entity = this.dtoService.fromDto(req.entity);
+        const entity = this.mapEntityDto.fromDto(req.entity);
 
         await this.mapEntity.remove(entity);
         this.gateway.requestAllButOne(client.id, { deleteMapEntity: req }).then().catch(this.logger.error);
@@ -28,14 +28,14 @@ export class MapApiController {
 
     @Rpc()
     public async getAllMapEntities(): Promise<GetAllMapEntities_Response> {
-        const entities = (await this.mapEntity.getAll()).map(entity => this.dtoService.toDto(entity));
+        const entities = (await this.mapEntity.getAll()).map(entity => this.mapEntityDto.toDto(entity));
         
         return { entities: entities } ;
     }
 
     @Rpc()
     public async setMapEntity(client: Ws, req: SetMapEntity_Request) {
-        const entity = this.dtoService.fromDto(req.entity);
+        const entity = this.mapEntityDto.fromDto(req.entity);
 
         await this.mapEntity.place(entity);
         this.gateway.requestAllButOne(client.id, { setMapEntity: req }).then().catch(this.logger.error);
