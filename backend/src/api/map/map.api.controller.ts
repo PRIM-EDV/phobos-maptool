@@ -1,33 +1,43 @@
-import { AppGateway } from 'src/app.gateway';
-import { Ws } from 'src/common/interfaces/ws';
 import { RpcHandler, Rpc } from 'lib/rpc/decorators';
-import { LoggingService } from 'src/infrastructure/logging/logging.service';
+import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/maptool/phobos.maptool.entity';
+
+import { AppGateway } from 'src/app.gateway';
+import { MapEntityDtoService } from 'src/common/dtos/map-entity/map-entity.dto.service';
+import { Ws } from 'src/common/interfaces/ws';
 import { MapEntityService } from 'src/core/map-entity/map-entity.service';
-import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/trx/trx.entity';
+import { WinstonLogger } from 'src/infrastructure/logger/winston/winston.logger';
 
 @RpcHandler(AppGateway)
 export class MapApiController {
     constructor(
-        private readonly log: LoggingService,
+        private readonly logger: WinstonLogger,
         private readonly gateway: AppGateway,
-        private readonly mapEntity: MapEntityService
-    ) {}
+        private readonly mapEntity: MapEntityService,
+        private readonly dtoService: MapEntityDtoService
+    ) {
+        this.logger.setContext(MapApiController.name);
+    }
 
     @Rpc()
     public async deleteMapEntity(client: Ws, req: DeleteMapEntity_Request) {
-        await this.mapEntity.remove(req.entity);
-        this.gateway.requestAllButOne(client.id, { deleteMapEntity: req }).then().catch(this.log.error);
+        const entity = this.dtoService.fromDto(req.entity);
+
+        await this.mapEntity.remove(entity);
+        this.gateway.requestAllButOne(client.id, { deleteMapEntity: req }).then().catch(this.logger.error);
     }
 
     @Rpc()
     public async getAllMapEntities(): Promise<GetAllMapEntities_Response> {
-        const entities = await this.mapEntity.getAll();
+        const entities = (await this.mapEntity.getAll()).map(entity => this.dtoService.toDto(entity));
+        
         return { entities: entities } ;
     }
 
     @Rpc()
     public async setMapEntity(client: Ws, req: SetMapEntity_Request) {
-        await this.mapEntity.place(req.entity);
-        this.gateway.requestAllButOne(client.id, { setMapEntity: req }).then().catch(this.log.error);
+        const entity = this.dtoService.fromDto(req.entity);
+
+        await this.mapEntity.place(entity);
+        this.gateway.requestAllButOne(client.id, { setMapEntity: req }).then().catch(this.logger.error);
     }
 }

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MapEntityRpcAdatper } from './map-entity.rpc.adapter';
-import { MapEntityRpcService } from './map-entity.rpc.service';
+import { MapEntityDtoModule } from 'src/common/dtos/map-entity/map-entity.dto.module';
 
 
 @Module({
-    providers: [
-        MapEntityRpcService,
-        {
-            provide: 'MapEntityRpcAdapter',
-            useClass: MapEntityRpcAdatper
-        }
+    imports: [
+        MapEntityDtoModule
     ],
+    providers: [{
+        provide: 'MapEntityRpcAdapter',
+        useClass: MapEntityRpcAdatper
+    }],
     exports: [
         {
             provide: 'MapEntityRpcAdapter',

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { MapApiService } from './map.api.service';
 import { MapApiController } from './map.api.controller';
-import { CoreModule } from 'src/core/core.module';
+import { MapEntityDtoModule } from 'src/common/dtos/map-entity/map-entity.dto.module';
+import { MapEntityModule } from 'src/core/map-entity/map-entity.module';
 
 @Module({
     imports: [
-        CoreModule
+        MapEntityModule,
+        MapEntityDtoModule
     ],
     providers: [
         MapApiController,
-        MapApiService
     ],
-    exports: [MapApiService]
+    exports: []
 })
 export class MapApiModule { }
