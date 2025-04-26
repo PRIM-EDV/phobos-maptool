@@ -1,5 +1,5 @@
 import { Rpc, RpcHandler } from "lib/rpc/decorators";
-import { GetAllSquads_Response, SetSquad_Request, SquadDto } from "proto/maptool/phobos.maptool.squad";
+import { GetAllSquads_Response, SetSquad_Request } from "proto/maptool/phobos.maptool.squad";
 import { AppGateway } from "src/app.gateway";
 import { SquadDtoService } from "src/common/dtos/squad/squad.dto.service";
 import { Ws } from "src/common/interfaces/ws";

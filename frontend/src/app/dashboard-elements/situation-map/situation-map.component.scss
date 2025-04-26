@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    // padding: 4px 4px 0 0;
+}
+
+div.overlay {
+    position: absolute;
+    // background-color: black;
+    pointer-events: none;
+    top: 0; bottom: 0; left: 0; right: 0;
+
+    * {
+        pointer-events: auto;
+    }
+
+    div.warning {
+        position: absolute;
+        background: repeating-linear-gradient(45deg, rgba(0,0,0,0.75), rgba(0,0,0,0.75) 20px,rgba(0,0,0,0.5) 20px, rgba(0,0,0,0.6) 40px);
+        top: 0; bottom: 0; left: 0; right: 0;
+
+        div.message {
+            position: absolute;
+            background-color: #1b1b1b;
+            left: 0; right: 0;
+            height: 128px;
+            top: 50%;
+            margin-top: -64px;
+
+            line-height: 128px;
+            font-family: 'Fira Code';
+            font-size: 20px;
+            color: white;
+            text-align: center;
+        }
+    }
+
+    div.warning.disabled {
+        pointer-events: none;
+        display: none;
+    }
+
+}

@@ -1,0 +1,73 @@
+:host {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+div.content {
+    flex-grow: 1;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1fr 32px;
+}
+
+div.lists {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+
+    overflow: hidden;
+}
+
+div.tag {
+    background-color: #5a616c;
+    width: 52px;
+    height: 52px;
+    margin-top: 6px;
+    margin-left: 6px;
+
+    color: #fff;
+    text-align: left;
+    font-family: 'Fira Code';
+    font-size: 16px;
+    line-height: 52px;
+    font-weight: 400;
+
+    text-align: center;
+}
+
+div.desc {
+    color: #a9aaac;
+    text-align: left;
+    font-family: 'Fira Code';
+    font-size: 12px;
+    line-height: 26px;
+    font-weight: 400;
+
+    padding-left: 6px;
+    padding-top: 2px;
+}
+
+div.actions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 2px solid #28343e;
+    padding: 3px 4px 4px 0;
+}
+
+div.overlay {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 96px;
+    top: 32px;
+
+    pointer-events: none;
+
+    * {
+        pointer-events: auto;
+    }
+}

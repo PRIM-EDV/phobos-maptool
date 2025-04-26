@@ -1,0 +1,37 @@
+@import '../theme.scss';
+
+div.login {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+div.inputs {
+    display: grid;
+    grid-template-columns: 35% 12px 65%;
+}
+
+div.label {
+    color: $pb-primary;
+
+    font-weight: 500;
+    font-size: 14px;
+
+    height: 24px;
+    line-height: 24px;
+
+    padding-left: 12px;
+}
+
+div.divider {
+    border-top: 3px solid $pb-primary;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+ph-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

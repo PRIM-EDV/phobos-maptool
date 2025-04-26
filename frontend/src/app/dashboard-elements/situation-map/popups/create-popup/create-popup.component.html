@@ -1,0 +1,27 @@
+<ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 512px;">
+    <ph-form>
+        <ph-dropdown [label]="'Type'" [(value)]="type">
+            <ph-dropdown-item [label]="'Squad'" [value]="MapEntityType.TYPE_FRIEND"></ph-dropdown-item>
+            <ph-dropdown-item [label]="'Enemy'" [value]="MapEntityType.TYPE_FOE"></ph-dropdown-item>
+            <ph-dropdown-item [label]="'Objective'" [value]="MapEntityType.TYPE_OBJECT"></ph-dropdown-item>
+        </ph-dropdown>
+    </ph-form>
+    <ph-form *ngIf="type==MapEntityType.TYPE_FRIEND">
+        <ph-input [label]="'Squad'" [(value)]="this.entity.squad.name"></ph-input>
+        <ph-input [label]="'Callsign'" [(value)]="this.entity.squad.callsign"></ph-input>
+        <ph-input [label]="'Tracker ID'" [(value)]="this.entity.squad.trackerId"></ph-input>
+        <ph-slider [label]="'Combattants'" [(value)]="this.entity.squad.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+        <!-- <ph-slider [label]="'Casualties'" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 5, 10, 15, 20, 25, 30]"></ph-slider> -->
+    </ph-form>
+    <ph-form *ngIf="type==MapEntityType.TYPE_FOE">
+        <ph-slider [label]="'Combattants'" [(value)]="this.entity.enemy.combattants" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+    </ph-form>
+    <ph-form *ngIf="type==MapEntityType.TYPE_OBJECT">
+        <ph-input [label]="'Name'" [(value)]="this.entity.objective.name"></ph-input>
+        <ph-input [label]="'Description'" [(value)]="this.entity.objective.description"></ph-input>
+    </ph-form>
+    <ph-button-list>
+        <ph-button (click)="apply()">APPLY</ph-button>
+        <ph-button (click)="cancel()">CANCEL</ph-button>
+    </ph-button-list>
+</ph-window>
