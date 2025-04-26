@@ -10,6 +10,7 @@ RUN npm install
 # Build webapp
 COPY ./frontend/src ./src
 COPY ./frontend/lib ./lib
+COPY ./frontend/public ./public
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
@@ -30,10 +31,9 @@ COPY ./backend/lib ./lib
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
-RUN npm run build
 
 # Get webapp artifact
-COPY --from=frontend /opt/auth/frontend/dist/phobos-maptool/browser ./public
+COPY --from=frontend /opt/phobos-maptool/frontend/dist/phobos-maptool/browser ./dist/public
 
 # Run startscript
 COPY ./docker-entrypoint.sh ./
