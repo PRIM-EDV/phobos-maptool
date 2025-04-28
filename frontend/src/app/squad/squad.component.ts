@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, View
 import { TrxBackendService } from 'src/app/backend/trx.backend.service';
 import { Squad, SquadState } from 'proto/trx/trx.squad';
 import { Response, Request } from 'proto/trx/trx';
-import { SquadService } from './squad.service';
+import { SquadService } from './core/squad.service';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 import { Subscription } from 'rxjs';
 

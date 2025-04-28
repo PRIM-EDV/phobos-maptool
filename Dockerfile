@@ -12,6 +12,7 @@ COPY ./frontend/src ./src
 COPY ./frontend/lib ./lib
 COPY ./frontend/public ./public
 COPY ./protocol ../protocol
+COPY ./libs ../libs
 
 RUN npm run proto:generate
 RUN npm run build
@@ -29,6 +30,8 @@ RUN npm install
 COPY ./backend/src ./src
 COPY ./backend/lib ./lib 
 COPY ./protocol ../protocol
+COPY ./libs ../libs
+
 
 RUN npm run proto:generate
 
