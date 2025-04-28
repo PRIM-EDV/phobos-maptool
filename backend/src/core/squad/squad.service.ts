@@ -1,12 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ISquadRepository } from "./interfaces/squad.repository.interface";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
+import { MapEntitySquad, MapEntityType, Squad, SquadState } from "@phobos-maptool/models";
+
+import { ISquadRepository } from "./interfaces/squad.repository.interface";
+import { ISquadRpcAdapter } from "./interfaces/squad.rpc.adapter.interface";
 import { SquadPlacedEvent } from "../common/events/squad-placed.event";
 import { MapEntityPlacedEvent } from "../common/events/map-entity/map-entity-placed.event";
-import { ISquadRpcAdapter } from "./interfaces/squad.rpc.adapter.interface";
-import { MapEntityRemovedEvent } from "../common/events/map-entity/map-entity-removed.event";
-import { Squad, SquadState } from "../common/models/squad";
-import { MapEntitySquad, MapEntityType } from "../common/models/map-entity";
+
 
 const SquadRepository = () => Inject('SquadRepository');
 const SquadRpcAdapter = () => Inject('SquadRpcAdapter');

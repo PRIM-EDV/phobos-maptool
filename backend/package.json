@@ -12,8 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "proto:generate": "cpx \"../protocol/*/*\" ./proto && protoc -I=./proto/maptool --ts_proto_opt=messages=true --ts_proto_out=./proto/maptool ./proto/maptool/phobos.maptool.proto"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -24,6 +23,9 @@
     "@nestjs/platform-ws": "^11.1.0",
     "@nestjs/serve-static": "^5.0.3",
     "@nestjs/websockets": "^11.1.0",
+    "@phobos-maptool/dto": "file:../libs/dto",
+    "@phobos-maptool/models": "file:../libs/models",
+    "@phobos-maptool/protocol": "file:../libs/protocol",
     "mongoose": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
@@ -47,8 +49,6 @@
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
-    "ts-proto": "^1.125.0",
-    "ts-protoc-gen": "^0.15.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"

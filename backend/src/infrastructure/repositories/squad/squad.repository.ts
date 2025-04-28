@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { Squad } from "@phobos-maptool/models";
+
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
-import { Squad } from "src/core/common/models/squad";
 import { SquadDocument } from "./schemas/squad.schema";
 
 @Injectable()

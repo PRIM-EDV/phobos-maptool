@@ -1,4 +1,4 @@
-import { Squad } from "../models/squad";
+import { Squad } from "@phobos-maptool/models";
 
 export class SquadPlacedEvent {
     squad: Squad;

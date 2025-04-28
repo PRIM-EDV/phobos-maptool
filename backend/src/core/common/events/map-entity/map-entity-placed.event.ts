@@ -1,4 +1,4 @@
-import { MapEntity } from "../../models/map-entity";
+import { MapEntity } from "@phobos-maptool/models";
 
 export class MapEntityPlacedEvent {
     mapEntity: MapEntity;

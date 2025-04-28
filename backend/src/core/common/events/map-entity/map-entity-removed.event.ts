@@ -1,4 +1,4 @@
-import { MapEntity } from "../../models/map-entity";
+import { MapEntity } from "@phobos-maptool/models";
 
 export class MapEntityRemovedEvent {
     mapEntity: MapEntity;

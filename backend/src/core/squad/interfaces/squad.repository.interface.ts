@@ -1,4 +1,4 @@
-import { Squad } from "src/core/common/models/squad";
+import { Squad } from "@phobos-maptool/models";
 
 export interface ISquadRepository {
     delete(entity: Squad): Promise<void>;

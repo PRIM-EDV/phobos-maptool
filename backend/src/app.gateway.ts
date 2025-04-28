@@ -1,4 +1,3 @@
-import * as WebSocket from 'ws';
 import {
   OnGatewayConnection,
   OnGatewayInit,
@@ -6,13 +5,16 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { MaptoolMessage, Response as MaptoolResponse, Request as MaptoolRequest } from '@phobos-maptool/protocol';
 import { v4 as uuidv4 } from 'uuid';
-
 import { Subject } from 'rxjs';
-import { Ws } from './common/interfaces/ws';
 
-import { MaptoolMessage, Request as MaptoolRequest, Response as MaptoolResponse } from 'proto/maptool/phobos.maptool';
+
+import { Ws } from './common/interfaces/ws';
 import { WinstonLogger } from './infrastructure/logger/winston/winston.logger';
+
+import * as WebSocket from 'ws';
+
 @WebSocketGateway()
 export class AppGateway implements OnGatewayConnection{
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();

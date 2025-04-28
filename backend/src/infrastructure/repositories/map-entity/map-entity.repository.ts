@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { MapEntity } from "@phobos-maptool/models";
+
 import { Model } from "mongoose";
+
 import { IMapEntityRepository } from "src/core/map-entity/interfaces/map-entity.repository.interface";
 import { MapEntityDocument } from "./schemas/map-entity.schema";
-import { MapEntity } from "src/core/common/models/map-entity";
 
 @Injectable()
 export class MapEntityRepository implements IMapEntityRepository {

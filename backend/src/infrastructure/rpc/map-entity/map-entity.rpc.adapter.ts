@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { toMapEntityDto } from '@phobos-maptool/dto';
+import { MapEntity } from '@phobos-maptool/models';
+import { Request as MaptoolRequest } from '@phobos-maptool/protocol';
+
 import { AppGateway } from 'src/app.gateway';
-import { MapEntity } from 'src/core/common/models/map-entity';
 import { IMapEntityRpcAdapter } from 'src/core/map-entity/interfaces/map-entity.rpc.adapter.interface';
-import { Request as MaptoolRequest } from 'proto/maptool/phobos.maptool';
-import { MapEntityDtoService } from 'src/common/dtos/map-entity/map-entity.dto.service';
 
 @Injectable()
 export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
     constructor(
         private readonly gateway: AppGateway,
-        private readonly mapEntityDto: MapEntityDtoService,
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {
         const req: MaptoolRequest = {
             deleteMapEntity: {
-                entity: this.mapEntityDto.toDto(entity)
+                entity: toMapEntityDto(entity)
             }
         }
         await this.gateway.requestAll(req);
@@ -24,7 +24,7 @@ export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
     public async set(entity: MapEntity): Promise<void> {
         const req: MaptoolRequest = {
             setMapEntity: {
-                entity: this.mapEntityDto.toDto(entity)
+                entity: toMapEntityDto(entity)
             }
         }
         await this.gateway.requestAll(req);

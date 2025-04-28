@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MapEntity, MapEntityEnemy, MapEntityObjective, MapEntitySquad, MapEntityType } from '@phobos-maptool/models';
+
 import { HydratedDocument } from 'mongoose';
-import { MapEntity, MapEntityEnemy, MapEntityObjective, MapEntitySquad, MapEntityType } from 'src/core/common/models/map-entity';
 
 export type MapEntityDocument = HydratedDocument<MapEntityDbo>;
 
