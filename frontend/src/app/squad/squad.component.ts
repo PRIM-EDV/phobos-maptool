@@ -30,21 +30,10 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   private onRequestSubscription?: Subscription;
 
   constructor(
-    private readonly backend: TrxBackendService, 
     public readonly squadService: SquadService
-  ) {
-    this.onOpenSubscription = this.backend.onOpen.subscribe(() => {
-      this.squadService.getAllSquads().then((squads) => {this.squads = squads});
-    })
-    this.onRequestSubscription = backend.onRequest.subscribe(this.handleRequest.bind(this));
-  }
+  ) {}
 
   ngOnInit(): void {
-    if (this.backend.isConnected) {
-      this.squadService.getAllSquads().then((squads) => {
-        this.squads = squads;
-    });
-    }
   }
 
   ngAfterViewInit() {
