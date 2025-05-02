@@ -1,4 +1,4 @@
-@import '../theme.scss';
+@use '../theme.scss';
 
 div.login {
     display: flex;
@@ -12,7 +12,7 @@ div.inputs {
 }
 
 div.label {
-    color: $pb-primary;
+    color: theme.$pb-primary;
 
     font-weight: 500;
     font-size: 14px;
@@ -24,7 +24,7 @@ div.label {
 }
 
 div.divider {
-    border-top: 3px solid $pb-primary;
+    border-top: 3px solid theme.$pb-primary;
     margin-top: 18px;
     margin-bottom: 18px;
 }
