@@ -2,17 +2,13 @@ import {
   AfterViewInit,
   Component,
   computed,
-  OnDestroy,
-  OnInit,
   QueryList,
-  ViewChild,
   ViewChildren,
 } from "@angular/core";
 import { Squad } from "@phobos-maptool/models";
 import { SquadState } from "@phobos-maptool/models";
 
 import { SquadService } from "./core/squad.service";
-import { PhContextMenuComponent } from "../../../lib/ph-elements/ph-context-menu/ph-context-menu.component";
 import { PhDropListComponent } from "../../../lib/ph-elements/ph-drop-list/ph-drop-list.component";
 import { DialogService } from "../infrastructure/ui/dialog/dialog.service";
 import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/create-squad.dialog.component";
@@ -26,11 +22,9 @@ import { EditSquadDialogComponent } from "./presentation/dialogs/edit-squad/edit
   templateUrl: "./squad.component.html",
   styleUrls: ["./squad.component.scss"],
 })
-export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("existingContextMenu")
-  existingContextMenu!: PhContextMenuComponent;
-  @ViewChild("newContextMenu") newContextMenu!: PhContextMenuComponent;
+export class SquadComponent implements AfterViewInit {
   @ViewChildren(PhDropListComponent)
+
   dropListComponents!: QueryList<PhDropListComponent>;
 
   public SquadState = SquadState;
@@ -42,8 +36,6 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   public squadsQRFReady = this.filterSquads(SquadState.QRF_READY);
   public squadsInField = this.filterSquads(SquadState.IN_FIELD);
 
-  private contextSquad!: Squad;
-
   constructor(
     public readonly squad: SquadService,
     public readonly facade: SquadFacadeService,
@@ -51,20 +43,11 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly contextMenu: ContextMenuService
   ) {}
 
-  ngOnInit(): void {}
-
   ngAfterViewInit() {
     for (const item of this.dropListComponents) {
       this.connectedLists.push(item);
     }
   }
-
-  ngOnDestroy(): void {}
-
-  // public deleteSquad() {
-  //   this.squadService.deleteSquad(this.contextSquad);
-  //   this.existingContextMenu.close();
-  // }
 
   public openEditSquadContextMenu(ev: MouseEvent, squad: Squad) {
     ev.preventDefault();
@@ -90,14 +73,18 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public openNewContextMenu(ev: MouseEvent, state: SquadState) {
     ev.preventDefault();
-    this.contextSquad = {
-      name: "",
-      callsign: "",
-      combattants: 0,
-      state: state,
-      position: 0,
-    };
-    // this.newContextMenu.open({ x: ev.clientX, y: ev.clientY });
+    ev.stopPropagation();
+    this.contextMenu.open({
+      entries: [
+        {
+          label: "Create",
+          action: async () => {
+            this.openCreateSquadDialog(ev);
+          },
+        },
+      ],
+      position: { x: ev.clientX, y: ev.clientY },
+    });
   }
 
   public async openCreateSquadDialog(ev: MouseEvent) {
@@ -118,7 +105,6 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   public handleDrop(event: { index: number; data: Squad }, state: SquadState) {
     const squad = { ...event.data, state: state, position: event.index };
     this.squad.setSquad(squad);
-    console.log(this.squad.squads());
   }
 
   private filterSquads(state: SquadState) {
