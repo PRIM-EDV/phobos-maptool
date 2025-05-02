@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OverlayComponent } from './overlay/overlay.component';
 import { RouterOutlet } from '@angular/router';
+import { SquadModule } from './squad/squad.module';
 // import { LsxBackendService } from './backend/lsx.backend.service';
 
 declare global {
@@ -18,7 +19,7 @@ declare global {
     selector: 'app-root',
     standalone: true,
     imports: [
-        OverlayComponent,
+        SquadModule,
         RouterOutlet
     ],
     templateUrl: './app.component.html',

@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { OverlayComponent } from './overlay/overlay.component';
+import { SquadComponent } from './squad/squad.component';
 
 export const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: 'map' },
-    { path: 'map', component: OverlayComponent },
+    { path: '', pathMatch: 'full', redirectTo: 'squad' },
+    { path: 'squad', component: SquadComponent },
     // {
     //   path: 'dashboard',
     //   component: DashboardComponent,

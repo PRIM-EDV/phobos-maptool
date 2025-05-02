@@ -1,7 +1,9 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Squad } from '@phobos-maptool/models';
 
-@Injectable()
+@Injectable(
+    {providedIn: 'root'}
+)
 export class SquadService {
     public squads: WritableSignal<Squad[]> = signal([]);
     
