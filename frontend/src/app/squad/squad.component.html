@@ -1,25 +1,25 @@
 <div class="content">
     <div class="lists">
         <ph-drop-list [header]="'Unstaged'" style="flex-grow: 1;" [connectedLists]="connectedLists" (drop)="handleDrop($event, SquadState.UNSTAGED)" (contextmenu)="openNewContextMenu($event, SquadState.UNSTAGED)">
-            <ph-drop-list-item *ngFor="let squad of this.getSquadsByState(SquadState.UNSTAGED)" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
+            <ph-drop-list-item *ngFor="let squad of squadsUnstaged()" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
                 <div class="tag">{{squad.callsign}}</div>
                 <div class="desc">{{squad.name}}</div>
             </ph-drop-list-item>
         </ph-drop-list>
         <ph-drop-list [header]="'Ready'" style="flex-grow: 1;" [connectedLists]="connectedLists" (drop)="handleDrop($event, SquadState.READY)" (contextmenu)="openNewContextMenu($event, SquadState.READY)">
-            <ph-drop-list-item *ngFor="let squad of this.getSquadsByState(SquadState.READY)" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
+            <ph-drop-list-item *ngFor="let squad of squadsReady()" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
                 <div class="tag">{{squad.callsign}}</div>
                 <div class="desc">{{squad.name}}</div>
             </ph-drop-list-item>
         </ph-drop-list>
         <ph-drop-list [header]="'QRF Ready'"style="flex-grow: 1;" [connectedLists]="connectedLists" (drop)="handleDrop($event, SquadState.QRF_READY)" (contextmenu)="openNewContextMenu($event, SquadState.QRF_READY)">
-            <ph-drop-list-item *ngFor="let squad of this.getSquadsByState(SquadState.QRF_READY)" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
+            <ph-drop-list-item *ngFor="let squad of squadsQRFReady()" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
                 <div class="tag">{{squad.callsign}}</div>
                 <div class="desc">{{squad.name}}</div>
             </ph-drop-list-item>
         </ph-drop-list>
         <ph-drop-list [header]="'In Field'" style="flex-grow: 1;" [connectedLists]="connectedLists" (drop)="handleDrop($event, SquadState.IN_FIELD)" (contextmenu)="openNewContextMenu($event, SquadState.IN_FIELD)">
-            <ph-drop-list-item *ngFor="let squad of this.getSquadsByState(SquadState.IN_FIELD)" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
+            <ph-drop-list-item *ngFor="let squad of squadsInField()" [data]="squad" (contextmenu)="openEditContextMenu($event, squad)">
                 <div class="tag">{{squad.callsign}}</div>
                 <div class="desc">{{squad.name}}</div>
             </ph-drop-list-item>

@@ -14,10 +14,7 @@ export class SquadService {
     public setSquad(squad: Squad) {
         const existing = this.squads().find((item) => item.name == squad.name);
         if (existing) {
-            existing.callsign = squad.callsign;
-            existing.combattants = squad.combattants;
-            existing.state = squad.state;
-            existing.position = squad.position;
+            this.updateSquad(existing, squad);
         } else {
             this.squads.update(squads => { squads.push(squad); return squads; });
         }
@@ -33,5 +30,29 @@ export class SquadService {
         if (idx > -1) {
             this.squads.update(squads => { squads.splice(idx, 1); return squads; });
         }
+    }
+
+    private addSquad(squad: Squad) {
+
+    }
+
+    private updateSquad(existing: Squad, updated: Squad) {
+        this.squads.update(squads => {
+            return squads.map(squad => {
+                if (squad.name === existing.name) {
+                    return { ...squad, ...updated };
+                }
+
+                if (squad.state === existing.state && squad.position >= existing.position) {
+                    return { ...squad, position: squad.position - 1 };
+                }
+
+                if (squad.state === updated.state && squad.position >= updated.position) {
+                    return { ...squad, position: squad.position + 1 };
+                }
+
+                return squad;
+            });
+        });
     }
 }

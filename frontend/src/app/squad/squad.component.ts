@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Squad } from '@phobos-maptool/models';
 import { SquadState } from '@phobos-maptool/models';
 
@@ -19,8 +19,14 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("newContextMenu") newContextMenu!: PhContextMenuComponent;
   @ViewChildren(PhDropListComponent) dropListComponents!: QueryList<PhDropListComponent>;
 
-  public connectedLists: Array<PhDropListComponent> = [];
   public SquadState = SquadState;
+
+  public connectedLists: Array<PhDropListComponent> = [];
+
+  public squadsUnstaged = this.filterSquads(SquadState.UNSTAGED);
+  public squadsReady = this.filterSquads(SquadState.READY);
+  public squadsQRFReady = this.filterSquads(SquadState.QRF_READY);
+  public squadsInField = this.filterSquads(SquadState.IN_FIELD);
 
   private contextSquad!: Squad ;
 
@@ -35,8 +41,8 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     for(const item of this.dropListComponents) {
         this.connectedLists.push(item);
     }
-    this.existingContextMenu.close();
-    this.newContextMenu.close();
+    // this.existingContextMenu.close();
+    // this.newContextMenu.close();
 
   }
 
@@ -73,36 +79,17 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.createPopup.squad = {name: this.contextSquad.name, callsign: this.contextSquad.callsign, combattants: this.contextSquad.combattants, state: this.contextSquad.state, position: 0};
   }
 
-  public getSquadsByState(state: SquadState): Array<Squad> {
-    let squads = this.squadService.squads().filter((squad) => squad.state === state);
-    return squads.sort((a, b) => a.position - b.position);
-  }
-
   handleDrop(event: {index: number, data: Squad}, state: SquadState) {
-    const squad = event.data;
-    const squads = this.getSquadsByState(state);
-    const index = event.index;
+    const squad = {...event.data, state: state, position: event.index};
 
-    if (squads.includes(squad)) {
-        const previousIndex = squads.indexOf(squad);
-        squads.splice(previousIndex, 1);
-
-        if (previousIndex < index) {
-            squads.splice(index - 1, 0, squad);
-        } else {
-            squads.splice(index, 0, squad);
-        }
-    } else {
-        squads.splice(index, 0, squad);
-    }
-
-    squad.state = state;
-    squads.map((squad, index) => {squad.position = index + 1});
-    squads.map(async (squad) => {await this.squadService.setSquad(squad)});
+    this.squadService.setSquad(squad);
+    console.log(this.squadService.squads());
   }
 
-  private fixPositions(state: SquadState) {
-    const squads = this.getSquadsByState(state);
-    squads.map((squad, index) => {squad.position = index + 1});
+  private filterSquads(state: SquadState) {
+    return computed(() => {
+      const squads = this.squadService.squads().filter((squad) => squad.state === state);
+      return squads.sort((a, b) => a.position - b.position);
+    })
   }
 }
