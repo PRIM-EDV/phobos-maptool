@@ -21,6 +21,8 @@ import {
   GetAllSquads_Response,
   SetSquad_Request,
   SetSquad_Response,
+  SetSquads_Request,
+  SetSquads_Response,
 } from "./phobos.maptool.squad";
 
 export const protobufPackage = "phobos.maptool";
@@ -34,6 +36,7 @@ export interface Request {
     | undefined;
   /** Squad */
   setSquad?: SetSquad_Request | undefined;
+  setSquads?: SetSquads_Request | undefined;
   deleteSquad?: DeleteSquad_Request | undefined;
   getAllSquads?: GetAllSquads_Request | undefined;
 }
@@ -46,6 +49,7 @@ export interface Response {
     | undefined;
   /** Squad */
   setSquad?: SetSquad_Response | undefined;
+  setSquads?: SetSquads_Response | undefined;
   deleteSquad?: DeleteSquad_Response | undefined;
   getAllSquads?: GetAllSquads_Response | undefined;
 }
@@ -68,6 +72,7 @@ function createBaseRequest(): Request {
     deleteMapEntity: undefined,
     getAllMapEntities: undefined,
     setSquad: undefined,
+    setSquads: undefined,
     deleteSquad: undefined,
     getAllSquads: undefined,
   };
@@ -85,13 +90,16 @@ export const Request = {
       GetAllMapEntities_Request.encode(message.getAllMapEntities, writer.uint32(26).fork()).ldelim();
     }
     if (message.setSquad !== undefined) {
-      SetSquad_Request.encode(message.setSquad, writer.uint32(114).fork()).ldelim();
+      SetSquad_Request.encode(message.setSquad, writer.uint32(82).fork()).ldelim();
+    }
+    if (message.setSquads !== undefined) {
+      SetSquads_Request.encode(message.setSquads, writer.uint32(90).fork()).ldelim();
     }
     if (message.deleteSquad !== undefined) {
-      DeleteSquad_Request.encode(message.deleteSquad, writer.uint32(122).fork()).ldelim();
+      DeleteSquad_Request.encode(message.deleteSquad, writer.uint32(98).fork()).ldelim();
     }
     if (message.getAllSquads !== undefined) {
-      GetAllSquads_Request.encode(message.getAllSquads, writer.uint32(130).fork()).ldelim();
+      GetAllSquads_Request.encode(message.getAllSquads, writer.uint32(106).fork()).ldelim();
     }
     return writer;
   },
@@ -124,22 +132,29 @@ export const Request = {
 
           message.getAllMapEntities = GetAllMapEntities_Request.decode(reader, reader.uint32());
           continue;
-        case 14:
-          if (tag !== 114) {
+        case 10:
+          if (tag !== 82) {
             break;
           }
 
           message.setSquad = SetSquad_Request.decode(reader, reader.uint32());
           continue;
-        case 15:
-          if (tag !== 122) {
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.setSquads = SetSquads_Request.decode(reader, reader.uint32());
+          continue;
+        case 12:
+          if (tag !== 98) {
             break;
           }
 
           message.deleteSquad = DeleteSquad_Request.decode(reader, reader.uint32());
           continue;
-        case 16:
-          if (tag !== 130) {
+        case 13:
+          if (tag !== 106) {
             break;
           }
 
@@ -164,6 +179,7 @@ export const Request = {
         ? GetAllMapEntities_Request.fromJSON(object.getAllMapEntities)
         : undefined,
       setSquad: isSet(object.setSquad) ? SetSquad_Request.fromJSON(object.setSquad) : undefined,
+      setSquads: isSet(object.setSquads) ? SetSquads_Request.fromJSON(object.setSquads) : undefined,
       deleteSquad: isSet(object.deleteSquad) ? DeleteSquad_Request.fromJSON(object.deleteSquad) : undefined,
       getAllSquads: isSet(object.getAllSquads) ? GetAllSquads_Request.fromJSON(object.getAllSquads) : undefined,
     };
@@ -182,6 +198,9 @@ export const Request = {
     }
     if (message.setSquad !== undefined) {
       obj.setSquad = SetSquad_Request.toJSON(message.setSquad);
+    }
+    if (message.setSquads !== undefined) {
+      obj.setSquads = SetSquads_Request.toJSON(message.setSquads);
     }
     if (message.deleteSquad !== undefined) {
       obj.deleteSquad = DeleteSquad_Request.toJSON(message.deleteSquad);
@@ -209,6 +228,9 @@ export const Request = {
     message.setSquad = (object.setSquad !== undefined && object.setSquad !== null)
       ? SetSquad_Request.fromPartial(object.setSquad)
       : undefined;
+    message.setSquads = (object.setSquads !== undefined && object.setSquads !== null)
+      ? SetSquads_Request.fromPartial(object.setSquads)
+      : undefined;
     message.deleteSquad = (object.deleteSquad !== undefined && object.deleteSquad !== null)
       ? DeleteSquad_Request.fromPartial(object.deleteSquad)
       : undefined;
@@ -225,6 +247,7 @@ function createBaseResponse(): Response {
     deleteMapEntity: undefined,
     getAllMapEntities: undefined,
     setSquad: undefined,
+    setSquads: undefined,
     deleteSquad: undefined,
     getAllSquads: undefined,
   };
@@ -242,13 +265,16 @@ export const Response = {
       GetAllMapEntities_Response.encode(message.getAllMapEntities, writer.uint32(26).fork()).ldelim();
     }
     if (message.setSquad !== undefined) {
-      SetSquad_Response.encode(message.setSquad, writer.uint32(114).fork()).ldelim();
+      SetSquad_Response.encode(message.setSquad, writer.uint32(82).fork()).ldelim();
+    }
+    if (message.setSquads !== undefined) {
+      SetSquads_Response.encode(message.setSquads, writer.uint32(90).fork()).ldelim();
     }
     if (message.deleteSquad !== undefined) {
-      DeleteSquad_Response.encode(message.deleteSquad, writer.uint32(122).fork()).ldelim();
+      DeleteSquad_Response.encode(message.deleteSquad, writer.uint32(98).fork()).ldelim();
     }
     if (message.getAllSquads !== undefined) {
-      GetAllSquads_Response.encode(message.getAllSquads, writer.uint32(130).fork()).ldelim();
+      GetAllSquads_Response.encode(message.getAllSquads, writer.uint32(106).fork()).ldelim();
     }
     return writer;
   },
@@ -281,22 +307,29 @@ export const Response = {
 
           message.getAllMapEntities = GetAllMapEntities_Response.decode(reader, reader.uint32());
           continue;
-        case 14:
-          if (tag !== 114) {
+        case 10:
+          if (tag !== 82) {
             break;
           }
 
           message.setSquad = SetSquad_Response.decode(reader, reader.uint32());
           continue;
-        case 15:
-          if (tag !== 122) {
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.setSquads = SetSquads_Response.decode(reader, reader.uint32());
+          continue;
+        case 12:
+          if (tag !== 98) {
             break;
           }
 
           message.deleteSquad = DeleteSquad_Response.decode(reader, reader.uint32());
           continue;
-        case 16:
-          if (tag !== 130) {
+        case 13:
+          if (tag !== 106) {
             break;
           }
 
@@ -321,6 +354,7 @@ export const Response = {
         ? GetAllMapEntities_Response.fromJSON(object.getAllMapEntities)
         : undefined,
       setSquad: isSet(object.setSquad) ? SetSquad_Response.fromJSON(object.setSquad) : undefined,
+      setSquads: isSet(object.setSquads) ? SetSquads_Response.fromJSON(object.setSquads) : undefined,
       deleteSquad: isSet(object.deleteSquad) ? DeleteSquad_Response.fromJSON(object.deleteSquad) : undefined,
       getAllSquads: isSet(object.getAllSquads) ? GetAllSquads_Response.fromJSON(object.getAllSquads) : undefined,
     };
@@ -339,6 +373,9 @@ export const Response = {
     }
     if (message.setSquad !== undefined) {
       obj.setSquad = SetSquad_Response.toJSON(message.setSquad);
+    }
+    if (message.setSquads !== undefined) {
+      obj.setSquads = SetSquads_Response.toJSON(message.setSquads);
     }
     if (message.deleteSquad !== undefined) {
       obj.deleteSquad = DeleteSquad_Response.toJSON(message.deleteSquad);
@@ -365,6 +402,9 @@ export const Response = {
       : undefined;
     message.setSquad = (object.setSquad !== undefined && object.setSquad !== null)
       ? SetSquad_Response.fromPartial(object.setSquad)
+      : undefined;
+    message.setSquads = (object.setSquads !== undefined && object.setSquads !== null)
+      ? SetSquads_Response.fromPartial(object.setSquads)
       : undefined;
     message.deleteSquad = (object.deleteSquad !== undefined && object.deleteSquad !== null)
       ? DeleteSquad_Response.fromPartial(object.deleteSquad)

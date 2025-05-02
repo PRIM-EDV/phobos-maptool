@@ -46,6 +46,20 @@ message SetSquad {
     }
 }
 
+message SetSquads {
+    message Request {
+        repeated SquadDto squads = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
 message DeleteSquad {
     message Request {
         SquadDto squad = 1;

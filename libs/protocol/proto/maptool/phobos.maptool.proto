@@ -14,9 +14,10 @@ message Request {
         GetAllMapEntities.Request getAllMapEntities = 3;
 
         // Squad
-        SetSquad.Request setSquad = 14;
-        DeleteSquad.Request deleteSquad = 15;
-        GetAllSquads.Request getAllSquads = 16;
+        SetSquad.Request setSquad = 10;
+        SetSquads.Request setSquads = 11;
+        DeleteSquad.Request deleteSquad = 12;
+        GetAllSquads.Request getAllSquads = 13;
 
         // // Tracker
         // SetTracker.Request setTracker = 7;
@@ -30,9 +31,10 @@ message Response {
         GetAllMapEntities.Response getAllMapEntities = 3;
 
         // Squad
-        SetSquad.Response setSquad = 14;
-        DeleteSquad.Response deleteSquad = 15;
-        GetAllSquads.Response getAllSquads = 16;
+        SetSquad.Response setSquad = 10;
+        SetSquads.Response setSquads = 11;
+        DeleteSquad.Response deleteSquad = 12;
+        GetAllSquads.Response getAllSquads = 13;
 
         // // Tracker
         // SetTracker.Response setTracker = 7;

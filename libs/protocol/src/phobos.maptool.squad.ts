@@ -94,6 +94,19 @@ export interface SetSquad_Request {
 export interface SetSquad_Response {
 }
 
+export interface SetSquads {
+  request?: SetSquads_Request | undefined;
+  response?: SetSquads_Response | undefined;
+  error?: string | undefined;
+}
+
+export interface SetSquads_Request {
+  squads: SquadDto[];
+}
+
+export interface SetSquads_Response {
+}
+
 export interface DeleteSquad {
   request?: DeleteSquad_Request | undefined;
   response?: DeleteSquad_Response | undefined;
@@ -612,6 +625,201 @@ export const SetSquad_Response = {
   },
   fromPartial<I extends Exact<DeepPartial<SetSquad_Response>, I>>(_: I): SetSquad_Response {
     const message = createBaseSetSquad_Response();
+    return message;
+  },
+};
+
+function createBaseSetSquads(): SetSquads {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const SetSquads = {
+  encode(message: SetSquads, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.request !== undefined) {
+      SetSquads_Request.encode(message.request, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.response !== undefined) {
+      SetSquads_Response.encode(message.response, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetSquads {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetSquads();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.request = SetSquads_Request.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.response = SetSquads_Response.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.error = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetSquads {
+    return {
+      request: isSet(object.request) ? SetSquads_Request.fromJSON(object.request) : undefined,
+      response: isSet(object.response) ? SetSquads_Response.fromJSON(object.response) : undefined,
+      error: isSet(object.error) ? globalThis.String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: SetSquads): unknown {
+    const obj: any = {};
+    if (message.request !== undefined) {
+      obj.request = SetSquads_Request.toJSON(message.request);
+    }
+    if (message.response !== undefined) {
+      obj.response = SetSquads_Response.toJSON(message.response);
+    }
+    if (message.error !== undefined) {
+      obj.error = message.error;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetSquads>, I>>(base?: I): SetSquads {
+    return SetSquads.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetSquads>, I>>(object: I): SetSquads {
+    const message = createBaseSetSquads();
+    message.request = (object.request !== undefined && object.request !== null)
+      ? SetSquads_Request.fromPartial(object.request)
+      : undefined;
+    message.response = (object.response !== undefined && object.response !== null)
+      ? SetSquads_Response.fromPartial(object.response)
+      : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseSetSquads_Request(): SetSquads_Request {
+  return { squads: [] };
+}
+
+export const SetSquads_Request = {
+  encode(message: SetSquads_Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.squads) {
+      SquadDto.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetSquads_Request {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetSquads_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.squads.push(SquadDto.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SetSquads_Request {
+    return {
+      squads: globalThis.Array.isArray(object?.squads) ? object.squads.map((e: any) => SquadDto.fromJSON(e)) : [],
+    };
+  },
+
+  toJSON(message: SetSquads_Request): unknown {
+    const obj: any = {};
+    if (message.squads?.length) {
+      obj.squads = message.squads.map((e) => SquadDto.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetSquads_Request>, I>>(base?: I): SetSquads_Request {
+    return SetSquads_Request.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetSquads_Request>, I>>(object: I): SetSquads_Request {
+    const message = createBaseSetSquads_Request();
+    message.squads = object.squads?.map((e) => SquadDto.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseSetSquads_Response(): SetSquads_Response {
+  return {};
+}
+
+export const SetSquads_Response = {
+  encode(_: SetSquads_Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SetSquads_Response {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSetSquads_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): SetSquads_Response {
+    return {};
+  },
+
+  toJSON(_: SetSquads_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SetSquads_Response>, I>>(base?: I): SetSquads_Response {
+    return SetSquads_Response.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SetSquads_Response>, I>>(_: I): SetSquads_Response {
+    const message = createBaseSetSquads_Response();
     return message;
   },
 };

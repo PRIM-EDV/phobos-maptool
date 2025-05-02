@@ -1,22 +1,14 @@
-import { effect, Injectable } from "@angular/core";
-import { Request, GetAllSquads_Request, SetSquad, SetSquad_Response, SetSquad_Request } from "@phobos-maptool/protocol";
+import { Injectable } from "@angular/core";
+import { Request, SetSquad_Response, SetSquad_Request, DeleteSquad_Request, DeleteSquad_Response } from "@phobos-maptool/protocol";
 import { fromSquadDto } from "@phobos-maptool/dto";
 import { Squad } from "@phobos-maptool/models";
-import { from, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 
 import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
 import { SquadService } from "../core/squad.service";
 
 @Injectable()
-export class SquadApiService {
-
-  squadInit = effect(async () => {
-    if (this.gateway.isConnected()) {
-        const request: GetAllSquads_Request = {
-            getAllSquads: {}
-        }
-        const squads = await this.gateway.request(request);
-  }})  
+export class SquadApiService { 
 
   private onRequestSubscription: Subscription;
 
@@ -40,25 +32,18 @@ export class SquadApiService {
   private async setSquad(request: SetSquad_Request): Promise<SetSquad_Response> {
     const squadDto = request.squad!;
     const squad = fromSquadDto(squadDto);
-    const existing = this.squadService.squads().find((item) => item.name == squad.name);
 
-    if (existing) {
-      existing.callsign = squad.callsign;
-      existing.combattants = squad.combattants;
-      existing.state = squad.state;
-      existing.position = squad.position;
-    }else {
-      this.squadService.squads.update(squads => { squads.push(squad); return squads; });
-    }
-
+    this.squadService.setSquad(squad);
+    
     return {}
   }
 
-  private handleDeleteSquad(squad: Squad) {
-    // const idx = this.squads.findIndex((item) => item.name == squad.name);
+  private async deleteSquad(request: DeleteSquad_Request): Promise<DeleteSquad_Response> {
+    const squadDto = request.squad!;
+    const squad = fromSquadDto(squadDto);
 
-    // if (idx > -1) {
-    //     this.squads.splice(idx, 1);
-    // }
+    this.squadService.deleteSquad(squad);
+    
+    return {}
   }
 }

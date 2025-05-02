@@ -1,27 +1,44 @@
-import { Injectable } from '@angular/core';
-import { Squad } from '@phobos-maptool/models';
+import { effect, Injectable } from "@angular/core";
+import { Squad } from "@phobos-maptool/models";
 
-import { SquadService } from '../core/squad.service';
-import { DeleteSquad } from '@phobos-maptool/protocol';
-
+import { SquadService } from "../core/squad.service";
+import { SquadRpcAdapter } from "../infrastructure/squad.rpc.adapter";
+import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: "root",
 })
 export class SquadFacadeService {
-    constructor(
-        private readonly squad: SquadService,
-    ){}
-
-    public createSquad(squad: Squad) {
-        this.squad.setSquad(squad);
+    
+  squadInit = effect(async () => {
+    if (this.gateway.isConnected()) {
+      const squads = await this.rpc.getAllSquads();
+      this.squad.setSquads(squads);
     }
+  });
 
-    public deleteSquad(squad: Squad) {
-        this.squad.deleteSquad(squad);
-    }
+  constructor(
+    private readonly gateway: MaptoolGateway,
+    private readonly squad: SquadService,
+    private readonly rpc: SquadRpcAdapter
+  ) {}
 
-    public updateSquad(squad: Squad) {
-        this.squad.setSquad(squad);
-    }
+  public async createSquad(squad: Squad) {
+    this.squad.setSquad(squad);
+
+    await this.rpc.setSquads(this.squad.squads());
+  }
+
+  public async deleteSquad(squad: Squad) {
+    this.squad.deleteSquad(squad);
+
+    await this.rpc.deleteSquad(squad);
+    await this.rpc.setSquads(this.squad.squads());
+  }
+
+  public async updateSquad(squad: Squad) {
+    this.squad.setSquad(squad);
+
+    await this.rpc.setSquads(this.squad.squads());
+  }
 }
