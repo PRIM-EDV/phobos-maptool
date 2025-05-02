@@ -16,7 +16,7 @@ export class SquadService {
         if (existing) {
             this.updateSquad(existing, squad);
         } else {
-            this.squads.update(squads => { squads.push(squad); return squads; });
+            this.squads.update(squads => { squads.push(squad); return [... squads]; });
         }
     }
 
@@ -41,6 +41,10 @@ export class SquadService {
             return squads.map(squad => {
                 if (squad.name === existing.name) {
                     return { ...squad, ...updated };
+                }
+
+                if (squad.state === existing.state && squad.state == updated.state && squad.position >= existing.position) {
+                    return squad;
                 }
 
                 if (squad.state === existing.state && squad.position >= existing.position) {
