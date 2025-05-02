@@ -1,35 +1,50 @@
-import { Injectable, ViewContainerRef } from '@angular/core';
-import { ContextMenuEntry } from './interfaces/context-menu-entry.interface';
-import { PhContextMenuComponent } from '../../../../../lib/ph-elements/ph-context-menu/ph-context-menu.component';
+import { Injectable, ViewContainerRef } from "@angular/core";
+import { ContextMenuEntry } from "./interfaces/context-menu-entry.interface";
+import { PhContextMenuComponent } from "../../../../../lib/ph-elements/ph-context-menu/ph-context-menu.component";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: "root",
 })
 export class ContextMenuService {
-    private host: ViewContainerRef | null = null;
-    private ref: any = null;
-    
-    constructor() {}
+  private host: ViewContainerRef | null = null;
+  private ref: any = null;
 
-    registerHost(container: ViewContainerRef) {
-        this.host = container;
+  constructor() {
+    window.addEventListener("mousedown", (e) => {
+      if (this.ref && !this.ref.location.nativeElement.contains(e.target)) {
+        this.ref.instance.close();
+      }
+    });
+
+    window.addEventListener("wheel", (e) => {
+      if (this.ref && !this.ref.location.nativeElement.contains(e.target)) {
+        this.ref.instance.close();
+      }
+    });
+  }
+
+  registerHost(container: ViewContainerRef) {
+    this.host = container;
+  }
+
+  open(config: {
+    entries: ContextMenuEntry[];
+    position: { x: number; y: number };
+  }) {
+    if (!this.host) {
+      throw new Error("ContextMenuHost not registered.");
     }
 
-    open(config: {entries: ContextMenuEntry[], position: { x: number; y: number }}) {
-        if (!this.host) {
-          throw new Error('ContextMenuHost not registered.');
-        }
+    if (this.ref) {
+      this.ref.destroy();
+    }
 
-        if (this.ref) {
-          this.ref.destroy();
-        }
-    
-        this.ref = this.host.createComponent(PhContextMenuComponent);
+    this.ref = this.host.createComponent(PhContextMenuComponent);
 
-        this.ref.instance.entries = config.entries;
-        this.ref.instance.position = config.position;
-        this.ref.instance.close = () => {
-          this.ref.destroy();
-        };
-      }
+    this.ref.instance.entries = config.entries;
+    this.ref.instance.position = config.position;
+    this.ref.instance.close = () => {
+      this.ref.destroy();
+    };
+  }
 }
