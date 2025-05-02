@@ -1,37 +1,7 @@
 @use '../theme.scss';
 
-div.login {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-}
-
-div.inputs {
-    display: grid;
-    grid-template-columns: 35% 12px 65%;
-}
-
-div.label {
-    color: theme.$pb-primary;
-
-    font-weight: 500;
-    font-size: 14px;
-
-    height: 24px;
-    line-height: 24px;
-
-    padding-left: 12px;
-}
-
-div.divider {
-    border-top: 3px solid theme.$pb-primary;
-    margin-top: 18px;
-    margin-bottom: 18px;
-}
-
-ph-window {
+:host{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
 }

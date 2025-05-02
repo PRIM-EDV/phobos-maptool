@@ -8,13 +8,14 @@ import {
 
 import { Squad, SquadState } from "@phobos-maptool/models";
 
-import { Dialog } from "../../../infrastructure/ui/dialog/dialog.interface";
-import { PhWindowComponent } from "../../../../../lib/ph-elements/ph-window/ph-window.component";
+import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
+import { PhWindowComponent } from "../../../../../../lib/ph-elements/ph-window/ph-window.component";
 
 @Component({
   selector: "squad-create-popup",
   standalone: false,
   templateUrl: "./create-squad.dialog.component.html",
+  styleUrls: ["./create-squad.dialog.component.scss"],
 })
 export class CreateSquadDialogComponent implements Dialog, AfterViewInit {
   @ViewChild(PhWindowComponent) window!: PhWindowComponent;

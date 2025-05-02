@@ -3,6 +3,7 @@ import { OverlayComponent } from './overlay/overlay.component';
 import { RouterOutlet } from '@angular/router';
 import { SquadModule } from './squad/squad.module';
 import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
+import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
 // import { LsxBackendService } from './backend/lsx.backend.service';
 
 declare global {
@@ -22,7 +23,8 @@ declare global {
     imports: [
       SquadModule,
       RouterOutlet,
-      DialogComponent
+      DialogComponent,
+      ContextMenuModule
     ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']

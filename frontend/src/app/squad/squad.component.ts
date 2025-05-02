@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   computed,
-  effect,
   OnDestroy,
   OnInit,
   QueryList,
@@ -16,8 +15,9 @@ import { SquadService } from "./core/squad.service";
 import { PhContextMenuComponent } from "../../../lib/ph-elements/ph-context-menu/ph-context-menu.component";
 import { PhDropListComponent } from "../../../lib/ph-elements/ph-drop-list/ph-drop-list.component";
 import { DialogService } from "../infrastructure/ui/dialog/dialog.service";
-import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad.dialog.component";
+import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/create-squad.dialog.component";
 import { SquadFacadeService } from "./application/squad.facade.service";
+import { ContextMenuService } from "../infrastructure/ui/context-menu/context-menu.service";
 
 @Component({
   selector: "squad",
@@ -46,7 +46,8 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public readonly squad: SquadService,
     public readonly facade: SquadFacadeService,
-    private readonly dialog: DialogService
+    private readonly dialog: DialogService,
+    private readonly contextMenu: ContextMenuService
   ) {}
 
   ngOnInit(): void {}
@@ -55,9 +56,6 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     for (const item of this.dropListComponents) {
       this.connectedLists.push(item);
     }
-
-    this.existingContextMenu.close();
-    this.newContextMenu.close();
   }
 
   ngOnDestroy(): void {}
@@ -67,11 +65,26 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   //   this.existingContextMenu.close();
   // }
 
-  public openEditContextMenu(ev: MouseEvent, squad: Squad) {
+  public openEditSquadContextMenu(ev: MouseEvent, squad: Squad) {
     ev.preventDefault();
     ev.stopPropagation();
-    this.contextSquad = squad;
-    this.existingContextMenu.open({ x: ev.clientX, y: ev.clientY });
+    this.contextMenu.open({
+      entries: [
+        {
+          label: "Edit",
+          action: async () => {
+
+          },
+        },
+        {
+          label: "Delete",
+          action: async () => {
+            this.facade.deleteSquad(squad);
+          },
+        },
+      ],
+      position: { x: ev.clientX, y: ev.clientY },
+    })
   }
 
   public openNewContextMenu(ev: MouseEvent, state: SquadState) {
@@ -83,7 +96,7 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
       state: state,
       position: 0,
     };
-    this.newContextMenu.open({ x: ev.clientX, y: ev.clientY });
+    // this.newContextMenu.open({ x: ev.clientX, y: ev.clientY });
   }
 
   public async openCreateSquadDialog(ev: MouseEvent) {

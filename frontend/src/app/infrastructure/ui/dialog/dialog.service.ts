@@ -4,6 +4,7 @@ import { Dialog } from "./dialog.interface";
 @Injectable({ providedIn: 'root' })
 export class DialogService {
   private host: ViewContainerRef | null = null;
+  private ref: any = null;
 
   registerHost(container: ViewContainerRef) {
     this.host = container;
@@ -18,15 +19,19 @@ export class DialogService {
     }
 
     return new Promise((resolve) => {
-      const ref = this.host!.createComponent(component);
+      if (this.ref) {
+        this.ref.destroy();
+      }
+      
+      this.ref = this.host!.createComponent(component);
 
-      if ('data' in ref.instance) {
-        (ref.instance as any).data = data;
+      if ('data' in this.ref.instance) {
+        (this.ref.instance as any).data = data;
       }
 
-      if ('close' in ref.instance) {
-        (ref.instance as any).close = (result: any) => {
-          ref.destroy();
+      if ('close' in this.ref.instance) {
+        (this.ref.instance as any).close = (result: any) => {
+          this.ref.destroy();
           resolve(result);
         };
       }
