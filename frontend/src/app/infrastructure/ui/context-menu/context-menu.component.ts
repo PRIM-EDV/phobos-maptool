@@ -6,6 +6,7 @@ import { ContextMenuService } from './context-menu.service';
     selector: 'app-context-menu',
     standalone: false,
     template: `<ng-template #contextMenuContainer></ng-template>`,
+    styles: [ `:host { position: fixed; top: 0; left: 0; } `]
 })
 export class ContextMenuComponent {
 

@@ -20,4 +20,8 @@ export class SquadFacadeService {
     public deleteSquad(squad: Squad) {
         this.squad.deleteSquad(squad);
     }
+
+    public updateSquad(squad: Squad) {
+        this.squad.setSquad(squad);
+    }
 }

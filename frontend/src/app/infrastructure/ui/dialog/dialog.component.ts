@@ -4,7 +4,8 @@ import { DialogService } from "./dialog.service";
 @Component({
     selector: 'app-dialog',
     template: `<ng-template #dialogContainer></ng-template>`,
-    standalone: true
+    standalone: true,
+    styles: [ `:host { position: fixed; top: 0; left: 0; } `]
   })
   export class DialogComponent {
     @ViewChild('dialogContainer', { read: ViewContainerRef }) container!: ViewContainerRef;

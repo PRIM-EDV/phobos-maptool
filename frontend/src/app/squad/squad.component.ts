@@ -18,6 +18,7 @@ import { DialogService } from "../infrastructure/ui/dialog/dialog.service";
 import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/create-squad.dialog.component";
 import { SquadFacadeService } from "./application/squad.facade.service";
 import { ContextMenuService } from "../infrastructure/ui/context-menu/context-menu.service";
+import { EditSquadDialogComponent } from "./presentation/dialogs/edit-squad/edit-squad.dialog.component";
 
 @Component({
   selector: "squad",
@@ -73,7 +74,7 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
         {
           label: "Edit",
           action: async () => {
-
+            this.openEditSquadDialog(ev, squad);
           },
         },
         {
@@ -100,9 +101,17 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public async openCreateSquadDialog(ev: MouseEvent) {
-    const squad = await this.dialog.open(CreateSquadDialogComponent);
-    if (squad) {
-      this.facade.createSquad(squad);
+    const newSquad = await this.dialog.open(CreateSquadDialogComponent);
+    if (newSquad) {
+      this.facade.createSquad(newSquad);
+    }
+  }
+
+  public async openEditSquadDialog(ev: MouseEvent, squad: Squad) {
+    const editedSquad = await this.dialog.open(EditSquadDialogComponent, { squad: squad, position: { x: ev.clientX, y: ev.clientY } },
+    );
+    if (editedSquad) {
+      this.facade.updateSquad(editedSquad);
     }
   }
 
