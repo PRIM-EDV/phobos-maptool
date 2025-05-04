@@ -1,5 +1,4 @@
 import { Injectable, signal, WritableSignal } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
@@ -12,7 +11,9 @@ const MAPTOOL_SERVER_PORT = window?.__env?.trxServerPort != null ? window.__env.
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
 
-@Injectable()
+@Injectable(
+    { providedIn: 'root' }
+)
 export class MaptoolGateway {
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
     public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
@@ -24,7 +25,7 @@ export class MaptoolGateway {
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
-    constructor(private http: HttpClient) {}
+    constructor() {}
 
     public async connect() {
         this.ws = webSocket({url: WS_URL, openObserver: { next: () => { this.isConnected.set(true); this.onOpen.next()} }});

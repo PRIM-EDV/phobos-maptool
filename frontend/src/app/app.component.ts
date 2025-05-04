@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OverlayComponent } from './overlay/overlay.component';
 import { RouterOutlet } from '@angular/router';
-import { SquadModule } from './squad/squad.module';
 import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
-// import { LsxBackendService } from './backend/lsx.backend.service';
 
 declare global {
     interface Window {
@@ -21,7 +19,6 @@ declare global {
     selector: 'app-root',
     standalone: true,
     imports: [
-      SquadModule,
       RouterOutlet,
       DialogComponent,
       ContextMenuModule

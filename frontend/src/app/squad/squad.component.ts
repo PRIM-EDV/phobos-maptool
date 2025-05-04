@@ -15,12 +15,17 @@ import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/
 import { SquadFacadeService } from "./application/squad.facade.service";
 import { ContextMenuService } from "../infrastructure/ui/context-menu/context-menu.service";
 import { EditSquadDialogComponent } from "./presentation/dialogs/edit-squad/edit-squad.dialog.component";
+import { CommonModule } from "@angular/common";
+import { PhElementsModule } from "../../../lib/ph-elements/ph-elements.module";
 
 @Component({
   selector: "squad",
-  standalone: false,
   templateUrl: "./squad.component.html",
   styleUrls: ["./squad.component.scss"],
+  imports: [
+    CommonModule,
+    PhElementsModule,
+  ],
 })
 export class SquadComponent implements AfterViewInit {
   @ViewChildren(PhDropListComponent)

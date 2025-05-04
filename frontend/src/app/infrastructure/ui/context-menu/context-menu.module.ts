@@ -12,7 +12,7 @@ import { ContextMenuComponent } from './context-menu.component';
         PhElementsModule
     ],
     exports: [
-        ContextMenuComponent
+        ContextMenuComponent,
     ]
 })
 export class ContextMenuModule { }

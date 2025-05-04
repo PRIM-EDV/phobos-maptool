@@ -9,12 +9,14 @@ import {
   
   import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
   import { PhWindowComponent } from "../../../../../../lib/ph-elements/ph-window/ph-window.component";
+import { PhElementsModule } from "../../../../../../lib/ph-elements/ph-elements.module";
   
   @Component({
     selector: "squad-edit-dialog",
-    standalone: false,
+    standalone: true,
     templateUrl: "./edit-squad.dialog.component.html",
     styleUrls: ["./edit-squad.dialog.component.scss"],
+    imports: [PhElementsModule],
   })
   export class EditSquadDialogComponent implements Dialog, OnInit, AfterViewInit {
     @ViewChild(PhWindowComponent) window!: PhWindowComponent;
