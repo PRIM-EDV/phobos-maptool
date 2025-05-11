@@ -1,12 +1,36 @@
-import { MapEntity, MapEntityEnemy, MapEntityObjective, MapEntitySquad, MapEntityStatus, MapEntityType } from "@phobos-maptool/models"
+import { MapEntity, MapEntityFoe, MapEntityObjective, MapEntitySquad, MapEntityStatus, MapEntityType } from "@phobos-maptool/models"
 import { MapEntityDto, MapEntityDto_Enemy, MapEntityDto_Objective, MapEntityDto_Squad, MapEntityDtoStatus, MapEntityDtoType } from "@phobos-maptool/protocol"
 
 export function fromMapEntityDto(dto: MapEntityDto): MapEntity {
-    return {
+    const base = {
         id: dto.id,
-        type: fromDtoType(dto.type),
         position: dto.position ? dto.position : { x: 0, y: 0 },
         entity: fromDtoEntity(dto),
+    }
+    switch (dto.type) {
+        case 1:
+        case MapEntityDtoType.TYPE_FOE:
+            return {
+                ...base,
+                type: MapEntityType.FOE,
+                entity: fromDtoEntity(dto) as MapEntityFoe,
+            }
+        case 2:
+        case MapEntityDtoType.TYPE_FRIEND:
+            return {
+                ...base,
+                type: MapEntityType.FRIEND,
+                entity: fromDtoEntity(dto) as MapEntitySquad,
+            }
+        case 3:
+        case MapEntityDtoType.TYPE_OBJECT:
+            return {
+                ...base,
+                type: MapEntityType.OBJECT,
+                entity: fromDtoEntity(dto) as MapEntityObjective,
+            }
+        default:
+            throw new Error(`Error while parsing MapEntityDto entity: Unknown MapEntityDtoType: ${dto.type}`);
     }
 }
 
@@ -15,13 +39,13 @@ export function toMapEntityDto(mapEntity: MapEntity): MapEntityDto {
         id: mapEntity.id,
         type: toDtoType(mapEntity.type),
         position: mapEntity.position,
-        squad: mapEntity.type === MapEntityType.FRIEND ? toDtoSquad(mapEntity.entity as MapEntitySquad) : undefined,
-        enemy: mapEntity.type === MapEntityType.FOE ? toDtoEnemy(mapEntity.entity as MapEntityEnemy) : undefined,
-        objective: mapEntity.type === MapEntityType.OBJECT ? toDtoObjective(mapEntity.entity as MapEntityObjective) : undefined,
+        squad: mapEntity.type === MapEntityType.FRIEND ? toDtoSquad(mapEntity.entity) : undefined,
+        enemy: mapEntity.type === MapEntityType.FOE ? toDtoEnemy(mapEntity.entity) : undefined,
+        objective: mapEntity.type === MapEntityType.OBJECT ? toDtoObjective(mapEntity.entity) : undefined,
     }
 }
 
-function fromDtoEntity(dto: MapEntityDto): MapEntitySquad | MapEntityEnemy | MapEntityObjective {
+function fromDtoEntity(dto: MapEntityDto) {
     switch (dto.type) {
         case MapEntityDtoType.TYPE_FOE:
             return fromDtoEnemy(dto.enemy as MapEntityDto_Enemy);
@@ -34,7 +58,7 @@ function fromDtoEntity(dto: MapEntityDto): MapEntitySquad | MapEntityEnemy | Map
     }
 }
 
-function fromDtoEnemy(dto: MapEntityDto_Enemy): MapEntityEnemy {
+function fromDtoEnemy(dto: MapEntityDto_Enemy): MapEntityFoe {
     return {
         combattants: dto.combattants,
     }
@@ -57,25 +81,6 @@ function fromDtoObjective(dto: MapEntityDto_Objective): MapEntityObjective {
     }
 }
 
-function fromDtoType(type: MapEntityDtoType): MapEntityType {
-    switch (type) {
-        case 0:
-        case MapEntityDtoType.TYPE_UNDEFINED:
-            return MapEntityType.UNDEFINED;
-        case 1:
-        case MapEntityDtoType.TYPE_FOE:
-            return MapEntityType.FOE;
-        case 2:
-        case MapEntityDtoType.TYPE_FRIEND:
-            return MapEntityType.FRIEND;
-        case 3:
-        case MapEntityDtoType.TYPE_OBJECT:
-            return MapEntityType.OBJECT;
-        default:
-            return MapEntityType.UNDEFINED;
-    }
-}
-
 function fromDtoStatus(status: MapEntityDtoStatus): MapEntityStatus {
     switch (status) {
         case 0:
@@ -92,7 +97,7 @@ function fromDtoStatus(status: MapEntityDtoStatus): MapEntityStatus {
     }
 }
 
-function toDtoEnemy(enemy: MapEntityEnemy): MapEntityDto_Enemy {
+function toDtoEnemy(enemy: MapEntityFoe): MapEntityDto_Enemy {
     return {
         combattants: enemy.combattants,
     }

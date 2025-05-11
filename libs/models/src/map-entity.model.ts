@@ -19,7 +19,15 @@ export interface MapEntityBase {
   };
 }
 
-export interface MapEntityFriend extends MapEntityBase {
+export interface MapEntitySquad {
+  name: string;
+  callsign: string;
+  trackerId: number;
+  combattants: number;
+  status: MapEntityStatus;
+}
+
+interface IMapEntitySquad extends MapEntityBase {
   type: MapEntityType.FRIEND;
   entity: {
     name: string;
@@ -30,19 +38,21 @@ export interface MapEntityFriend extends MapEntityBase {
   };
 }
 
-export interface MapEntityFoe extends MapEntityBase {
+export interface MapEntityFoe {
+  combattants: number;
+}
+interface IMapEntityFoe extends MapEntityBase {
   type: MapEntityType.FOE;
-  entity: {
-    combattants: number;
-  };
+  entity: MapEntityFoe;
 }
 
-export interface MapEntityObject extends MapEntityBase {
+export interface MapEntityObjective {
+  name: string;
+  description: string;
+}
+interface IMapEntityObject extends MapEntityBase {
   type: MapEntityType.OBJECT;
-  entity: {
-    name: string;
-    description: string;
-  };
+  entity: MapEntityObjective;
 }
 
-export type MapEntity = MapEntityFriend | MapEntityFoe | MapEntityObject;
+export type MapEntity = IMapEntitySquad | IMapEntityFoe | IMapEntityObject;
