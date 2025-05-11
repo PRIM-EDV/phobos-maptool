@@ -26,7 +26,8 @@ const {
       // 'rxjs/webSocket',
       '@phobos-maptool/dto',
       '@phobos-maptool/protocol',
-      '@phobos-maptool/models'
+      '@phobos-maptool/models',
+      '@trx/map',
       // Add further packages you don't need at runtime
     ],
   });

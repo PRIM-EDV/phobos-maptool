@@ -4,7 +4,7 @@
 	"newProjectRoot": "projects",
 	"cli": {
 		"cache": {
-			"enabled": true
+			"enabled": false
 		}
 	},
 	"projects": {
@@ -12,8 +12,8 @@
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
-					"inlineTemplate": true,
-					"inlineStyle": true,
+					"inlineTemplate": false,
+					"inlineStyle": false,
 					"style": "scss",
 					"skipTests": true
 				},
@@ -45,7 +45,8 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {},
+					"options": {
+					},
 					"configurations": {
 						"production": {
 							"target": "phobos-maptool:esbuild:production"
