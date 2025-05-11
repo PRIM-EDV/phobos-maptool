@@ -1,0 +1,34 @@
+<ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 512px;">
+    <ph-form>
+        <ph-dropdown [label]="'Type'" [(value)]="entity.type" (valueChange)="this.onTypeChange($event)">
+            <ph-dropdown-item [label]="'Squad'" [value]="MapEntityType.FRIEND"></ph-dropdown-item>
+            <ph-dropdown-item [label]="'Enemy'" [value]="MapEntityType.FOE"></ph-dropdown-item>
+            <ph-dropdown-item [label]="'Objective'" [value]="MapEntityType.OBJECT"></ph-dropdown-item>
+        </ph-dropdown>
+    </ph-form>
+    @switch (entity.type) {
+      @case(MapEntityType.FRIEND){
+        <ph-form>
+            <ph-input [label]="'Squad'" [(value)]="this.entity.entity.name"></ph-input>
+            <ph-input [label]="'Callsign'" [(value)]="this.entity.entity.callsign"></ph-input>
+            <ph-input [label]="'Tracker ID'" [(value)]="this.entity.entity.trackerId"></ph-input>
+            <ph-slider [label]="'Combattants'" [(value)]="this.entity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+        </ph-form>
+      } 
+      @case(MapEntityType.FOE){
+        <ph-form>
+            <ph-slider [label]="'Combattants'" [(value)]="this.entity.entity.combattants" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+        </ph-form>
+      }
+      @case(MapEntityType.OBJECT){
+        <ph-form>
+            <ph-input [label]="'Name'" [(value)]="this.entity.entity.name"></ph-input>
+            <ph-input [label]="'Description'" [(value)]="this.entity.entity.description"></ph-input>
+        </ph-form>
+      }
+    }
+    <ph-button-list>
+        <ph-button (click)="submit()">APPLY</ph-button>
+        <ph-button (click)="cancel()">CANCEL</ph-button>
+    </ph-button-list>
+</ph-window>
