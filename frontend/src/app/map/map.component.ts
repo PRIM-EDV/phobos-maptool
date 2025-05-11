@@ -6,6 +6,7 @@ import { EntityFacadeService } from './application/entity.facade.service';
 import { ContextMenuService } from '../infrastructure/ui/context-menu/context-menu.service';
 import { EntityService } from './core/entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
+import { Point } from './interfaces/point.interface';
 
 @Component({
   selector: 'app-map',
@@ -30,16 +31,14 @@ export class MapComponent {
 
   }
 
-  public async openCreateEntityDialog(ev: MouseEvent) {
-    const newEntity = await this.dialog.open(CreateEntityDialogComponent, {x: ev.clientX, y: ev.clientY});
+  public async openCreateEntityDialog(ev: {cursorPosition: Point, mapPosition: Point}) {
+    const newEntity = await this.dialog.open(CreateEntityDialogComponent, ev);
     if (newEntity) {
       this.facade.createEntity(newEntity);
     }
   }
 
-  public openNewContextMenu(ev: MouseEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
+  public openNewContextMenu(ev: {cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}}) {
     this.contextMenu.open({
       entries: [
         {
@@ -49,7 +48,7 @@ export class MapComponent {
           },
         },
       ],
-      position: { x: ev.clientX, y: ev.clientY },
+      position: { x: ev.cursorPosition.x, y: ev.cursorPosition.y },
     });
   }
 }
