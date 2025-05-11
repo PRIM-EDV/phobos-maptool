@@ -1,38 +1,48 @@
 export enum MapEntityType {
-    UNDEFINED = 0,
-    FOE = 1,
-    FRIEND = 2,
-    OBJECT = 3,
+  UNDEFINED = 0,
+  FOE = 1,
+  FRIEND = 2,
+  OBJECT = 3,
 }
 
 export enum MapEntityStatus {
-    UNDEFINED = 0,
-    REGULAR = 1,
-    COMBAT = 2,
+  UNDEFINED = 0,
+  REGULAR = 1,
+  COMBAT = 2,
 }
 
-export interface MapEntitySquad {
-    name: string,
-    callsign: string,
-    trackerId: number,
-    combattants: number,
-    status: MapEntityStatus
+export interface MapEntityBase {
+  id: string;
+  position: {
+    x: number;
+    y: number;
+  };
 }
 
-export interface MapEntityEnemy {
+export interface MapEntityFriend extends MapEntityBase {
+  type: MapEntityType.FRIEND;
+  entity: {
+    name: string;
+    callsign: string;
+    trackerId: number;
     combattants: number;
+    status: MapEntityStatus;
+  };
 }
 
-export interface MapEntityObjective {
+export interface MapEntityFoe extends MapEntityBase {
+  type: MapEntityType.FOE;
+  entity: {
+    combattants: number;
+  };
+}
+
+export interface MapEntityObject extends MapEntityBase {
+  type: MapEntityType.OBJECT;
+  entity: {
     name: string;
     description: string;
+  };
 }
-export interface MapEntity {
-    id: string;
-    type: MapEntityType;
-    position: {
-        x: number;
-        y: number;
-    };
-    entity: MapEntitySquad | MapEntityEnemy | MapEntityObjective;
-}
+
+export type MapEntity = MapEntityFriend | MapEntityFoe | MapEntityObject;
