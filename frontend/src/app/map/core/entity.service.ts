@@ -2,7 +2,7 @@ import { Injectable, signal, WritableSignal } from "@angular/core";
 import { MapEntity } from "@phobos-maptool/models";
 
 @Injectable({ providedIn: "root" })
-export class MapEntityService {
+export class EntityService {
   public entities: WritableSignal<MapEntity[]> = signal<MapEntity[]>([]);
 
   public setEntity(entity: MapEntity) {
