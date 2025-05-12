@@ -7,6 +7,7 @@ import { PhElementsModule } from "../../../../../../lib/ph-elements/ph-elements.
 import { CommonModule } from "@angular/common";
 import { Point } from "../../../interfaces/point.interface";
 import { EntityService } from "../../../core/entity.service";
+import { MapClickEvent } from "@trx/map";
 
 @Component({
   selector: "entity-create-popup",
@@ -26,7 +27,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
   public MapEntityType = MapEntityType;
   public MapEntityStatus = MapEntityStatus;
 
-  public data?: {cursorPosition: Point, mapPosition: Point};
+  public data?: MapClickEvent;
 
   constructor(
     private readonly entity: EntityService,
@@ -36,8 +37,8 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.data) {
-      this.window.ref.nativeElement.style.top = `${this.data.cursorPosition.y}px`;
-      this.window.ref.nativeElement.style.left = `${this.data.cursorPosition.x}px`;
+      this.window.ref.nativeElement.style.top = `${this.data.clientY}px`;
+      this.window.ref.nativeElement.style.left = `${this.data.clientX}px`;
     }
   }
 
@@ -63,7 +64,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
 
   private getDefaultEntity(type: MapEntityType): MapEntity {
     const entity = this.entity.getDefaultEntity(type);
-    entity.position = this.data?.mapPosition || { x: 0, y: 0 };
+    entity.position = this.data ? {x: this.data.mapX, y: this.data.mapY } : { x: 0, y: 0 };
     return entity;
   }
 

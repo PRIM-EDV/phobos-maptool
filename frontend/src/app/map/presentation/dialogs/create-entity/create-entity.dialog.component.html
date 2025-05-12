@@ -5,28 +5,22 @@
             <ph-dropdown-item [label]="'Enemy'" [value]="MapEntityType.FOE"></ph-dropdown-item>
             <ph-dropdown-item [label]="'Objective'" [value]="MapEntityType.OBJECT"></ph-dropdown-item>
         </ph-dropdown>
-    </ph-form>
     @switch (newEntity.type) {
       @case(MapEntityType.FRIEND){
-        <ph-form>
-            <ph-input [label]="'Squad'" [(value)]="this.newEntity.entity.name"></ph-input>
-            <ph-input [label]="'Callsign'" [(value)]="this.newEntity.entity.callsign"></ph-input>
-            <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
-            <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
-        </ph-form>
+        <ph-input [label]="'Squad'" [(value)]="this.newEntity.entity.name"></ph-input>
+        <ph-input [label]="'Callsign'" [(value)]="this.newEntity.entity.callsign"></ph-input>
+        <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
+        <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
       } 
       @case(MapEntityType.FOE){
-        <ph-form>
-            <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
-        </ph-form>
+        <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
       }
       @case(MapEntityType.OBJECT){
-        <ph-form>
-            <ph-input [label]="'Name'" [(value)]="this.newEntity.entity.name"></ph-input>
-            <ph-input [label]="'Description'" [(value)]="this.newEntity.entity.description"></ph-input>
-        </ph-form>
+        <ph-input [label]="'Name'" [(value)]="this.newEntity.entity.name"></ph-input>
+        <ph-input [label]="'Description'" [(value)]="this.newEntity.entity.description"></ph-input>
       }
     }
+    </ph-form>
     <ph-button-list>
         <ph-button (click)="submit()">APPLY</ph-button>
         <ph-button (click)="cancel()">CANCEL</ph-button>
