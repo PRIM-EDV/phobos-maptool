@@ -6,7 +6,7 @@ import { PhWindowComponent } from "../../../../../../lib/ph-elements/ph-window/p
 import { PhElementsModule } from "../../../../../../lib/ph-elements/ph-elements.module";
 import { CommonModule } from "@angular/common";
 import { Point } from "../../../interfaces/point.interface";
-import { EntityService } from "../../../core/entity.service";
+import { MapEntityService } from "../../../core/map-entity.service";
 import { MapClickEvent } from "@trx/map";
 
 @Component({
@@ -30,7 +30,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
   public data?: MapClickEvent;
 
   constructor(
-    private readonly entity: EntityService,
+    private readonly entity: MapEntityService,
   ) {
     this.newEntity = this.getDefaultEntity(MapEntityType.FOE);
   }

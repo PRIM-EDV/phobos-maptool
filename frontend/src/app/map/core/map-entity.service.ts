@@ -3,7 +3,7 @@ import { MapEntity, MapEntityStatus, MapEntityType } from "@phobos-maptool/model
 
 import { v4 as uuidv4 } from 'uuid';
 @Injectable({ providedIn: "root" })
-export class EntityService {
+export class MapEntityService {
   public entities: WritableSignal<MapEntity[]> = signal<MapEntity[]>([]);
 
   public getDefaultEntity(type: MapEntityType): MapEntity {

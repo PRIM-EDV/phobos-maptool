@@ -4,7 +4,7 @@ import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
 import { EntityFacadeService } from './application/entity.facade.service';
 import { ContextMenuService } from '../infrastructure/ui/context-menu/context-menu.service';
-import { EntityService } from './core/entity.service';
+import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
 
 @Component({
@@ -22,7 +22,7 @@ export class MapComponent {
   }); 
 
   constructor(
-    public readonly  entity: EntityService,
+    public readonly  entity: MapEntityService,
     private readonly contextMenu: ContextMenuService,
     private readonly dialog: DialogService,
     private readonly facade: EntityFacadeService,
@@ -36,7 +36,6 @@ export class MapComponent {
   }
 
   public openNewContextMenu(e: MapClickEvent) {
-    console.log(e);
     this.contextMenu.open({
       entries: [
         {
