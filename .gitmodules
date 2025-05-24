@@ -1,6 +1,3 @@
 [submodule "backend/src/infrastructure/logger/winston"]
 	path = backend/src/infrastructure/logger/winston
 	url = https://github.com/lmoesch/nestjs-winston
-[submodule "frontend/lib/ph-elements"]
-	path = frontend/lib/ph-elements
-	url = https://github.com/PRIM-EDV/phobos-elements
