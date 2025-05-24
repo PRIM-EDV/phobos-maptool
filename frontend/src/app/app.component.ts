@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OverlayComponent } from './overlay/overlay.component';
 import { RouterOutlet } from '@angular/router';
 import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
@@ -19,9 +18,9 @@ declare global {
     selector: 'app-root',
     standalone: true,
     imports: [
-      RouterOutlet,
+      ContextMenuModule,
       DialogComponent,
-      ContextMenuModule
+      RouterOutlet
     ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']

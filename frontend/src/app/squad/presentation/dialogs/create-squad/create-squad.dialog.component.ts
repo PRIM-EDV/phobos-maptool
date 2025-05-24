@@ -1,26 +1,30 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
-  Output,
   ViewChild,
 } from "@angular/core";
 
+import { PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhWindow } from "@phobos/elements";
 import { Squad, SquadState } from "@phobos-maptool/models";
 
 import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
-import { PhWindowComponent } from "../../../../../../lib/ph-elements/ph-window/ph-window.component";
-import { PhElementsModule } from "../../../../../../lib/ph-elements/ph-elements.module";
 
 @Component({
   selector: "squad-create-popup",
   standalone: true,
   templateUrl: "./create-squad.dialog.component.html",
   styleUrls: ["./create-squad.dialog.component.scss"],
-  imports: [PhElementsModule],
+  imports: [
+    PhButton,
+    PhButtonList,
+    PhInput,
+    PhForm,
+    PhSlider,
+    PhWindow,
+  ],
 })
 export class CreateSquadDialogComponent implements Dialog, AfterViewInit {
-  @ViewChild(PhWindowComponent) window!: PhWindowComponent;
+  @ViewChild(PhWindow) window!: PhWindow;
 
   public data?: { x: number; y: number };
   public squad: Squad = {

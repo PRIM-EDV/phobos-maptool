@@ -1,6 +1,6 @@
 import { Injectable, ViewContainerRef } from "@angular/core";
 import { ContextMenuEntry } from "./interfaces/context-menu-entry.interface";
-import { PhContextMenuComponent } from "../../../../../lib/ph-elements/ph-context-menu/ph-context-menu.component";
+import { PhContextMenu } from "@phobos/elements";
 
 @Injectable({
   providedIn: "root",
@@ -39,7 +39,7 @@ export class ContextMenuService {
       this.ref.destroy();
     }
 
-    this.ref = this.host.createComponent(PhContextMenuComponent);
+    this.ref = this.host.createComponent(PhContextMenu);
 
     this.ref.instance.entries = config.entries;
     this.ref.instance.position = config.position;

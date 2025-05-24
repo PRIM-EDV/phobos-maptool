@@ -1,40 +1,29 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  QueryList,
-  ViewChildren,
-} from "@angular/core";
+import { AfterViewInit, Component, computed, QueryList, ViewChildren } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { PhButton, PhDropList, PhDropListItem } from "@phobos/elements";
 import { Squad } from "@phobos-maptool/models";
 import { SquadState } from "@phobos-maptool/models";
 
 import { SquadService } from "./core/squad.service";
-import { PhDropListComponent } from "../../../lib/ph-elements/ph-drop-list/ph-drop-list.component";
 import { DialogService } from "../infrastructure/ui/dialog/dialog.service";
 import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/create-squad.dialog.component";
 import { SquadFacadeService } from "./application/squad.facade.service";
 import { ContextMenuService } from "../infrastructure/ui/context-menu/context-menu.service";
 import { EditSquadDialogComponent } from "./presentation/dialogs/edit-squad/edit-squad.dialog.component";
-import { CommonModule } from "@angular/common";
-import { PhElementsModule } from "../../../lib/ph-elements/ph-elements.module";
 
 @Component({
   selector: "squad",
   templateUrl: "./squad.component.html",
   styleUrls: ["./squad.component.scss"],
-  imports: [
-    CommonModule,
-    PhElementsModule,
-  ],
+  imports: [CommonModule, PhButton, PhDropList, PhDropListItem],
 })
 export class SquadComponent implements AfterViewInit {
-  @ViewChildren(PhDropListComponent)
-
-  dropListComponents!: QueryList<PhDropListComponent>;
+  @ViewChildren(PhDropList)
+  dropListComponents!: QueryList<PhDropList>;
 
   public SquadState = SquadState;
 
-  public connectedLists: Array<PhDropListComponent> = [];
+  public connectedLists: Array<PhDropList> = [];
 
   public squadsUnstaged = this.filterSquads(SquadState.UNSTAGED);
   public squadsReady = this.filterSquads(SquadState.READY);
@@ -73,7 +62,7 @@ export class SquadComponent implements AfterViewInit {
         },
       ],
       position: { x: ev.clientX, y: ev.clientY },
-    })
+    });
   }
 
   public openNewContextMenu(ev: MouseEvent, state: SquadState) {
@@ -100,8 +89,7 @@ export class SquadComponent implements AfterViewInit {
   }
 
   public async openEditSquadDialog(ev: MouseEvent, squad: Squad) {
-    const editedSquad = await this.dialog.open(EditSquadDialogComponent, { squad: squad, position: { x: ev.clientX, y: ev.clientY } },
-    );
+    const editedSquad = await this.dialog.open(EditSquadDialogComponent, { squad: squad, position: { x: ev.clientX, y: ev.clientY } });
     if (editedSquad) {
       this.facade.updateSquad(editedSquad);
     }
@@ -114,9 +102,7 @@ export class SquadComponent implements AfterViewInit {
 
   private filterSquads(state: SquadState) {
     return computed(() => {
-      const squads = this.squad
-        .squads()
-        .filter((squad) => squad.state === state);
+      const squads = this.squad.squads().filter((squad) => squad.state === state);
       return squads.sort((a, b) => a.position - b.position);
     });
   }

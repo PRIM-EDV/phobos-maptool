@@ -1,26 +1,22 @@
+import { CommonModule } from "@angular/common";
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhWindow } from "@phobos/elements";
 import { MapEntity, MapEntityStatus, MapEntityType } from "@phobos-maptool/models";
+import { MapClickEvent } from "@trx/map";
+
 
 import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
-import { PhWindowComponent } from "../../../../../../lib/ph-elements/ph-window/ph-window.component";
-import { PhElementsModule } from "../../../../../../lib/ph-elements/ph-elements.module";
-import { CommonModule } from "@angular/common";
-import { Point } from "../../../interfaces/point.interface";
 import { MapEntityService } from "../../../core/map-entity.service";
-import { MapClickEvent } from "@trx/map";
 
 @Component({
   selector: "entity-create-popup",
   standalone: true,
   templateUrl: "./create-entity.dialog.component.html",
   styleUrls: ["./create-entity.dialog.component.scss"],
-  imports: [
-    CommonModule,
-    PhElementsModule
-  ],
+  imports: [CommonModule, PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhWindow],
 })
 export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
-  @ViewChild(PhWindowComponent) window!: PhWindowComponent;
+  @ViewChild(PhWindow) window!: PhWindow;
 
   public newEntity: MapEntity;
 
@@ -29,9 +25,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
 
   public data?: MapClickEvent;
 
-  constructor(
-    private readonly entity: MapEntityService,
-  ) {
+  constructor(private readonly entity: MapEntityService) {
     this.newEntity = this.getDefaultEntity(MapEntityType.FOE);
   }
 
@@ -44,7 +38,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
 
   close(result: any = null): MapEntity | null {
     if (result) {
-      return this.newEntity
+      return this.newEntity;
     } else {
       return null;
     }
@@ -64,8 +58,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
 
   private getDefaultEntity(type: MapEntityType): MapEntity {
     const entity = this.entity.getDefaultEntity(type);
-    entity.position = this.data ? {x: this.data.mapX, y: this.data.mapY } : { x: 0, y: 0 };
+    entity.position = this.data ? { x: this.data.mapX, y: this.data.mapY } : { x: 0, y: 0 };
     return entity;
   }
-
 }

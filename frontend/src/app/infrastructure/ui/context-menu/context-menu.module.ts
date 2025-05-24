@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PhElementsModule } from '../../../../../lib/ph-elements/ph-elements.module';
 import { ContextMenuComponent } from './context-menu.component';
 
 @NgModule({
@@ -9,7 +8,6 @@ import { ContextMenuComponent } from './context-menu.component';
     ],
     imports: [
         CommonModule,
-        PhElementsModule
     ],
     exports: [
         ContextMenuComponent,
