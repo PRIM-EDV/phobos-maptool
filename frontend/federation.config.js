@@ -12,11 +12,8 @@ const {
     },
   
     shared: {
-      ...shareAll({
-        singleton: true,
-        strictVersion: true,
-        requiredVersion: 'auto',
-      }),
+      ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto', }),
+    '@phobos/core': { requiredVersion: 'auto', import: '@phobos/core', singleton: true },
     },
   
     skip: [

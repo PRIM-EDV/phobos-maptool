@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
+
+import { TOKEN_SERVICE_TOKEN, ITokenService } from '@phobos/core';
 
 declare global {
     interface Window {
@@ -26,10 +28,12 @@ declare global {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
     constructor(
+      @Optional() @Inject(TOKEN_SERVICE_TOKEN) private tokenService: ITokenService
         // private readonly lsxBackend: LsxBackendService,
-    ) { }
+    ) { 
+      console.log(this.tokenService);
+    }
 
     ngOnInit(): void {
         // this.lsxBackend.connect();
