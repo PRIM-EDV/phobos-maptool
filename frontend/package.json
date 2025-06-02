@@ -23,6 +23,7 @@
     "@phobos-maptool/dto": "file:../libs/dto",
     "@phobos-maptool/models": "file:../libs/models",
     "@phobos-maptool/protocol": "file:../libs/protocol",
+    "@phobos/core": "file:../libs/core",
     "@phobos/elements": "file:../libs/phobos-elements",
     "@softarc/native-federation-node": "^2.0.10",
     "@trx/map": "file:../../../trx-map",
