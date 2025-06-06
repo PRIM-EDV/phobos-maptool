@@ -7,9 +7,19 @@
     "libs/*"
   ],
   "scripts": {
-
+    "build:backend": "npm run build -w apps/backend",
+    "build:frontend": "npm run build -w apps/frontend",
+    "build:core": "npm run build -w libs/core",
+    "build:protocol": "npm run build -w libs/protocol",
+    "build:models": "npm run build -w libs/models",
+    "build:dto": "npm run build -w libs/dto",
+    "build:elements": "npm run build -w libs/phobos-elements",
+    "build:map": "npm run build -w libs/trx-map",
+    "start": "npm run start -w apps/frontend"
   },
   "devDependencies": {
-    
+    "@angular-devkit/build-angular": "^19.2.8",
+    "@angular/cli": "^19.2.8",
+    "@angular/compiler-cli": "^19.2.8"
   }
 }

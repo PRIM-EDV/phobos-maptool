@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run proto:generate && npm run build",
+    "prepare": "npm run proto:generate",
     "proto:generate": "protoc -I=./proto/maptool --ts_proto_opt=messages=true --ts_proto_out=./src ./proto/maptool/phobos.maptool.proto"
   },
   "devDependencies": {

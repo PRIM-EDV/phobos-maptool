@@ -1,41 +1,40 @@
-FROM node:23.11.0-slim AS frontend
-RUN apt update && apt install protobuf-compiler -y 
+FROM node:24.1.0-slim AS deps
+RUN apt update && apt install python3 build-essential protobuf-compiler -y
 
-WORKDIR /opt/phobos-maptool/frontend
+WORKDIR /opt/phobos-maptool
 
-# Install webapp source dependancies
-COPY ./frontend/*.json ./
+COPY package*.json ./
+COPY apps/backend/package.json ./apps/backend/
+COPY apps/frontend/package.json ./apps/frontend/
+COPY libs ./libs
+
 RUN npm install
+
+FROM deps AS libs
+
+RUN npm run build:core
+RUN npm run build:models
+RUN npm run build:protocol
+RUN npm run build:dto
+RUN npm run build:elements
+RUN npm run build:map
 
 # Build webapp
-COPY ./frontend/src ./src
-COPY ./frontend/lib ./lib
-COPY ./frontend/public ./public
-COPY ./protocol ../protocol
-COPY ./libs ../libs
+FROM libs AS frontend
 
-RUN npm run proto:generate
-RUN npm run build
+COPY apps/frontend ./apps/frontend
+RUN npm run build:frontend
 
-FROM node:23.11.0-slim AS backend
-RUN apt update && apt install protobuf-compiler -y 
+# Build backend
+FROM libs AS backend
 
-WORKDIR /opt/phobos-maptool/backend
+COPY ./apps/backend ./apps/backend
+RUN npm run build:backend
 
-# Install server source dependancies
-COPY ./backend/*.json ./
-RUN npm install
+# Final image
+FROM backend
 
-# Build server
-COPY ./backend/src ./src
-COPY ./backend/lib ./lib 
-COPY ./protocol ../protocol
-COPY ./libs ../libs
-
-
-RUN npm run proto:generate
-
-# Get webapp artifact
+WORKDIR /opt/phobos-maptool
 COPY --from=frontend /opt/phobos-maptool/frontend/dist/phobos-maptool/browser ./dist/public
 
 # Run startscript

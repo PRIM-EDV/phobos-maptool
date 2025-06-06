@@ -1,12 +1,12 @@
-import * as Hammer from "hammerjs";
-
 import { Component, ViewChild, AfterViewInit,ElementRef, Output, EventEmitter } from "@angular/core";
 import { MapLayer } from "./common/map-layer";
 import { TerrainLayer } from "./map-layers/terrain.layer";
 import { ReplaySubject } from "rxjs";
 import { EntitiesLayer } from "./map-layers/entities.layer";
 import { MapEntityData } from "./common/map-entity-data";
-import { MapEntityStatus } from "proto/trx/trx.entity";
+
+import * as Hammer from "hammerjs";
+import { MapEntityStatus } from "@phobos-maptool/models";
 
 @Component({
     selector: "rld-map",

@@ -1,12 +1,10 @@
 {
-  "name": "@phobos-maptool/frontend",
-  "version": "0.0.0",
+  "name": "phobos-maptool",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "proto:generate": "cpx \"../protocol/*/*\" ./proto && protoc -I=./proto/maptool --ts_proto_opt=messages=true --ts_proto_out=./proto/maptool ./proto/maptool/phobos.maptool.proto"
+    "build": "ng build"
   },
   "private": true,
   "dependencies": {
@@ -19,14 +17,13 @@
     "@angular/platform-browser": "^19.2.8",
     "@angular/platform-browser-dynamic": "^19.2.8",
     "@angular/router": "^19.2.8",
-    "@phobos-maptool/core": "file:../libs/core",
-    "@phobos-maptool/dto": "file:../libs/dto",
-    "@phobos-maptool/models": "file:../libs/models",
-    "@phobos-maptool/protocol": "file:../libs/protocol",
-    "@phobos/core": "file:../libs/core",
-    "@phobos/elements": "file:../libs/phobos-elements",
+    "@phobos-maptool/dto": "^0.1.0",
+    "@phobos-maptool/models": "^0.1.0",
+    "@phobos-maptool/protocol": "^0.1.0",
+    "@phobos/core": "^0.1.0",
+    "@phobos/elements": "^0.2.0",
     "@softarc/native-federation-node": "^2.0.10",
-    "@trx/map": "file:../../../trx-map",
+    "@trx/map": "^0.1.0",
     "es-module-shims": "^1.5.12",
     "hammerjs": "^2.0.8",
     "rxjs": "~7.8.0",
@@ -35,8 +32,8 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.9",
-    "@angular/cli": "^19.2.9",
+    "@angular-devkit/build-angular": "^19.2.8",
+    "@angular/cli": "^19.2.8",
     "@angular/compiler-cli": "^19.2.8",
     "@types/hammerjs": "^2.0.46",
     "@types/node": "^22.15.2",

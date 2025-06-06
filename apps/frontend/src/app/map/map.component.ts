@@ -12,6 +12,7 @@ import { toEntity } from './infrastructure/mapper/entity.mapper';
   imports: [
     TrxMap,
   ],
+  standalone: true,
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
