@@ -1,5 +1,5 @@
 {
-  "name": "phobos-maptool",
+  "name": "@phobos-maptool/frontend",
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",

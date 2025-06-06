@@ -4,38 +4,30 @@ RUN apt update && apt install python3 build-essential protobuf-compiler -y
 WORKDIR /opt/phobos-maptool
 
 COPY package*.json ./
+COPY lerna*.json ./
 COPY apps/backend/package.json ./apps/backend/
 COPY apps/frontend/package.json ./apps/frontend/
 COPY libs ./libs
 
 RUN npm install
 
-FROM deps AS libs
-
-RUN npm run build:core
-RUN npm run build:models
-RUN npm run build:protocol
-RUN npm run build:dto
-RUN npm run build:elements
-RUN npm run build:map
-
-# Build webapp
-FROM libs AS frontend
+# Build frontend
+FROM deps AS frontend
 
 COPY apps/frontend ./apps/frontend
-RUN npm run build:frontend
+RUN npx lerna run build --scope @phobos-maptool/frontend --include-dependencies
 
 # Build backend
-FROM libs AS backend
+FROM deps AS backend
 
-COPY ./apps/backend ./apps/backend
-RUN npm run build:backend
+COPY apps/backend ./apps/backend
+RUN npx lerna run build --scope @phobos-maptool/backend --include-dependencies
 
 # Final image
 FROM backend
 
 WORKDIR /opt/phobos-maptool
-COPY --from=frontend /opt/phobos-maptool/frontend/dist/phobos-maptool/browser ./dist/public
+COPY --from=frontend /opt/phobos-maptool/apps/frontend/dist/phobos-maptool/browser ./dist/public
 
 # Run startscript
 COPY ./docker-entrypoint.sh ./
