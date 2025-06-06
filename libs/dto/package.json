@@ -11,5 +11,8 @@
     "@phobos-maptool/models": "file:../models",
     "@phobos-maptool/protocol": "file:../protocol"
   },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
   "private": true
 }

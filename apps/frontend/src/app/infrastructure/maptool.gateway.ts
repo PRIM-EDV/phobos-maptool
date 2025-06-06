@@ -2,7 +2,7 @@ import { Injectable, signal, WritableSignal } from "@angular/core";
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { MaptoolMessage, Request, Response } from "../../../proto/maptool/phobos.maptool";
+import { MaptoolMessage, Request, Response } from "@phobos-maptool/protocol";
 
 
 const MAPTOOL_SERVER_HOSTNAME = window?.__env?.trxServerHostname != null ? `${window.__env.trxServerHostname}` : window.location.hostname;

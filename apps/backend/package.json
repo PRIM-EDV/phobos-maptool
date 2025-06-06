@@ -1,5 +1,5 @@
 {
-  "name": "trx-maptool-server",
+  "name": "@phobos-maptool/backend",
   "version": "1.0.1",
   "description": "",
   "author": "Lucas Moesch",

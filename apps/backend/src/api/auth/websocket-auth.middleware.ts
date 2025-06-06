@@ -6,7 +6,7 @@ export class WebSocketAuthMiddleware implements NestMiddleware {
   constructor() {}
 
   // Middleware für den Handshake-Prozess
-  use(req: WebSocket.Request, _: WebSocket, next: (err?: any) => void) {
+  use(req: WebSocket, _: WebSocket, next: (err?: any) => void) {
     const token = req.url?.split('?token=')[1]; // Token aus URL-Parameter extrahieren
 
     if (!token) {
