@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Squad, SquadState } from '@phobos-maptool/models';
 import { HydratedDocument } from 'mongoose';
 
-export type SquadDocument = HydratedDocument<SquadDbo>;
+// export type SquadDocument = HydratedDocument<SquadDbo>;
 
 @Schema()
 export class SquadDbo implements Squad {

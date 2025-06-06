@@ -3,15 +3,14 @@ import { InjectModel } from "@nestjs/mongoose";
 import { MapEntity } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
-
 import { IMapEntityRepository } from "src/core/map-entity/interfaces/map-entity.repository.interface";
-import { MapEntityDocument } from "./schemas/map-entity.schema";
 
 @Injectable()
 export class MapEntityRepository implements IMapEntityRepository {
 
+
     constructor(
-        @InjectModel("MapEntity") private mapEntityModel: Model<MapEntityDocument>
+        @InjectModel("MapEntity") private mapEntityModel: Model<MapEntity>
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {

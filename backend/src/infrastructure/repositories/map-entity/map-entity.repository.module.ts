@@ -1,17 +1,39 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MapEntityRepository } from './map-entity.repository';
-import { MapEntitySchema } from './schemas/map-entity.schema';
+import { MapEntityType } from '@phobos-maptool/models';
+
+import { MapEntityBaseSchema } from './schemas/map-entity-base.schema';
+import { MapEntitySquadSchema } from './schemas/map-entity-squad.schema';
+import { MapEntityFoeSchema } from './schemas/map-entity-foe.schema';
+import { MapEntityObjectiveSchema } from './schemas/map-entity-objective.schema';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: "MapEntity", schema: MapEntitySchema }])],
-    providers: [{
-        provide: 'MapEntityRepository',
-        useClass: MapEntityRepository
-    }],
-    exports: [{
-        provide: 'MapEntityRepository',
-        useClass: MapEntityRepository
-    }]
+  imports: [
+    MongooseModule.forFeatureAsync([
+      {
+        name: 'MapEntity',
+        useFactory: () => {
+          const schema = MapEntityBaseSchema;
+          schema.discriminator(MapEntityType.FRIEND, MapEntitySquadSchema);
+          schema.discriminator(MapEntityType.FOE, MapEntityFoeSchema);
+          schema.discriminator(MapEntityType.OBJECT, MapEntityObjectiveSchema);
+          return schema;
+        },
+      },
+    ]),
+  ],
+  providers: [
+    {
+      provide: 'MapEntityRepository',
+      useClass: MapEntityRepository,
+    },
+  ],
+  exports: [
+    {
+      provide: 'MapEntityRepository',
+      useClass: MapEntityRepository,
+    },
+  ],
 })
-export class MapEntityRepositoryModule { }
+export class MapEntityRepositoryModule {}

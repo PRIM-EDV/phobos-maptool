@@ -4,13 +4,12 @@ import { Squad } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
-import { SquadDocument } from "./schemas/squad.schema";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {
 
     constructor(
-        @InjectModel("Squad") private squadModel: Model<SquadDocument>
+        @InjectModel("Squad") private squadModel: Model<Squad>
     ) {}
 
 

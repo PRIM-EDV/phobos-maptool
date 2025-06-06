@@ -1,9 +1,8 @@
-import { Schema } from 'mongoose';
-import { MapEntitySchema } from './map-entity.schema';
+// import { Schema } from 'mongoose';
 
-export const MapEntityReplaySchema: Schema = new Schema({
-    entity: MapEntitySchema,
-    positions: [{x: Number, y: Number, timestamp: Date}],
-    createdAt: Date,
-    deletedAt: Date
-});
+// export const MapEntityReplaySchema: Schema = new Schema({
+//     entity: MapEntity,
+//     positions: [{x: Number, y: Number, timestamp: Date}],
+//     createdAt: Date,
+//     deletedAt: Date
+// });
