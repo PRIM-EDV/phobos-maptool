@@ -12,6 +12,7 @@ import { Subject } from 'rxjs';
 
 import { Ws } from './common/interfaces/ws';
 import { WinstonLogger } from './infrastructure/logger/winston/winston.logger';
+import { AuthService } from './infrastructure/auth/auth.service';
 
 import * as WebSocket from 'ws';
 
@@ -25,7 +26,10 @@ export class AppGateway implements OnGatewayConnection{
 
   @WebSocketServer() server: WebSocket.Server;
 
-  constructor(private readonly logger: WinstonLogger) {
+  constructor(
+    private readonly auth: AuthService,
+    private readonly logger: WinstonLogger
+  ) {
     this.logger.setContext('AppGateway');
   }
 
@@ -53,6 +57,13 @@ export class AppGateway implements OnGatewayConnection{
 
   handleConnection(client: Ws, ...args: any[]) {
     const urlParams = new URLSearchParams(args[0].url.split('?')[1]);
+    const token = urlParams.get('token');
+
+    if (!token || !this.auth.validateToken(token)) {
+      this.logger.warn(`Unauthorized connection attempt from ${args[0]?.socket?.remoteAddress || 'unknown'}`);
+      client.close(1008, 'Unauthorized');
+      return;
+    }
 
     client.token = urlParams.get('token');
     client.id = uuidv4();

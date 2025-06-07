@@ -12,12 +12,14 @@ import { SquadModule } from './core/squad/squad.module';
 import { WebSocketAuthMiddleware } from './api/auth/websocket-auth.middleware';
 import { MapApiModule } from './api/map/map.api.module';
 import { SquadApiModule } from './api/squad/squad.api.module';
+import { AuthModule } from './infrastructure/auth/auth.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
 @Global()
 @Module({
   imports: [
+    AuthModule,
     MapApiModule,
     SquadApiModule,
     MapEntityModule,
