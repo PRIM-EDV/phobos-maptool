@@ -2,10 +2,13 @@
 
 # Compiled output
 dist
-tmp
 out-tsc
 bazel-out
+
+# Local data
+tmp
 data
+logs
 
 # Node
 node_modules
@@ -31,7 +34,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+.angular
 .sass-cache/
 /connect.lock
 /coverage
