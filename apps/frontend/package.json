@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:dev": "ng serve --configuration development",
     "build": "ng build"
   },
   "private": true,
@@ -21,7 +22,7 @@
     "@phobos-maptool/models": "^0.1.0",
     "@phobos-maptool/protocol": "^0.1.0",
     "@phobos/core": "^0.1.0",
-    "@phobos/elements": "^0.2.0",
+    "@phobos/elements": "^0.2.1",
     "@softarc/native-federation-node": "^2.0.10",
     "@trx/map": "^0.1.0",
     "es-module-shims": "^1.5.12",

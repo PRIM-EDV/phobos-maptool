@@ -27,7 +27,7 @@ RUN npx lerna run build --scope @phobos-maptool/backend --include-dependencies
 FROM backend
 
 WORKDIR /opt/phobos-maptool
-COPY --from=frontend /opt/phobos-maptool/apps/frontend/dist/phobos-maptool/browser ./dist/public
+COPY --from=frontend /opt/phobos-maptool/apps/frontend/dist/phobos-maptool/browser ./apps/backend/public
 
 # Run startscript
 COPY ./docker-entrypoint.sh ./

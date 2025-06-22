@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 
 import * as jose from 'jose';
 
-const PHOBOS_AUTH_URL = process.env.phobosAuthUrl ? process.env.phobosAuthUrl : 'http://localhost:3100';
+const PHOBOS_AUTH_URL = process.env.phobosAuthUrl ? process.env.phobosAuthUrl : 'http://localhost:3000';
 
 @Injectable()
 export class AuthService {

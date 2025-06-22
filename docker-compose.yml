@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     ports:
-      - "${PHOBOS_MAPTOOL_PORT:-3002}:3002"
+      - "${PHOBOS_MAPTOOL_PORT:-3002}:4002"
     environment:
       - MONGO_DB_HOST=db
 

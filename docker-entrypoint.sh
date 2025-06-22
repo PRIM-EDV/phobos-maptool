@@ -1,2 +1,2 @@
 #!/bin/sh
-cd "/opt/phobos-maptool/backend" && npm run start
+cd "/opt/phobos-maptool/apps/backend" && npm run start

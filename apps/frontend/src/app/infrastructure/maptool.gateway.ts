@@ -4,9 +4,10 @@ import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { MaptoolMessage, Request, Response } from "@phobos-maptool/protocol";
 
+import { environment } from "../../environments/environment";
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.trxServerHostname != null ? `${window.__env.trxServerHostname}` : window.location.hostname;
-const MAPTOOL_SERVER_PORT = window?.__env?.trxServerPort != null ? window.__env.trxServerPort : window.location.port;
+const MAPTOOL_SERVER_HOSTNAME = environment.maptoolApiHostname || window?.__env?.trxServerHostname || window.location.hostname;
+const MAPTOOL_SERVER_PORT = environment.maptoolApiPort || window?.__env?.trxServerPort || 3002;
 
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
@@ -27,8 +28,12 @@ export class MaptoolGateway {
 
     constructor() {}
 
-    public async connect() {
-        this.ws = webSocket({url: WS_URL, openObserver: { next: () => { this.isConnected.set(true); this.onOpen.next()} }});
+    public async connect(jwt: string) {
+        this.ws = webSocket({url: `${WS_URL}?token=${jwt}`, openObserver: { 
+            next: () => { 
+                this.isConnected.set(true); 
+                this.onOpen.next();
+        }}});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),

@@ -1,0 +1,30 @@
+services:
+  db:
+    image: mongo:8.0
+
+  app:
+    build:
+      context: ../
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    depends_on:
+      - db
+    ports:
+      - "3002:3002"
+      - "4002:4002"
+    environment:
+      - MONGO_DB_HOST=db
+    volumes:
+      - ..:/workspace
+
+      - /workspace/node_modules
+      - /workspace/apps/frontend/dist
+      - /workspace/apps/backend/dist
+
+
+
+
+
+
+    
+

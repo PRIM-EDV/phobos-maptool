@@ -16,6 +16,6 @@ async function bootstrap() {
 
   rpcModule.register(app["container"]);
 
-  await app.listen(3002);
+  await app.listen(4002);
 }
 bootstrap();

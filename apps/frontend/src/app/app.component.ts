@@ -4,6 +4,7 @@ import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
 
 import { TOKEN_SERVICE_TOKEN, ITokenService } from '@phobos/core';
+import { MaptoolGateway } from './infrastructure/maptool.gateway';
 
 declare global {
     interface Window {
@@ -29,14 +30,17 @@ declare global {
 })
 export class AppComponent implements OnInit {
     constructor(
+      private readonly maptoolGateway: MaptoolGateway,
       @Optional() @Inject(TOKEN_SERVICE_TOKEN) private tokenService: ITokenService
-        // private readonly lsxBackend: LsxBackendService,
-    ) { 
-      console.log(this.tokenService);
-    }
+    ) {}
 
-    ngOnInit(): void {
-        // this.lsxBackend.connect();
+    async ngOnInit(): Promise<void> {
+      const token = await this.tokenService?.accessToken() || '';
+      
+      if (token) {
+        await this.maptoolGateway.connect(token);
+      } else {
+        console.warn('No token found, unable to connect to Maptool Gateway');
+      }
     }
-
 }

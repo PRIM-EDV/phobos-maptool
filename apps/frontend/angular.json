@@ -5,7 +5,8 @@
 	"cli": {
 		"cache": {
 			"enabled": false
-		}
+    },
+    "analytics": false
 	},
 	"projects": {
 		"phobos-maptool": {
@@ -53,13 +54,13 @@
 						},
 						"development": {
 							"target": "phobos-maptool:esbuild:development",
-              "dev": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
-              ]
+							"dev": true,
+							"fileReplacements": [
+								{
+								"replace": "src/environments/environment.ts",
+								"with": "src/environments/environment.development.ts"
+								}
+							]
 						}
 					},
 					"defaultConfiguration": "production"
@@ -71,6 +72,14 @@
 						"rebuildDelay": 0,
 						"dev": true,
 						"port": 0
+						},
+					"configurations": {
+						"development": {
+							"target": "phobos-maptool:serve-original:development"
+						},
+						"production": {
+							"target": "phobos-maptool:serve-original:production"
+						}
 					}
 				},
 				"extract-i18n": {
@@ -139,7 +148,8 @@
 					},
 					"defaultConfiguration": "development",
 					"options": {
-						"port": 3002
+						"port": 3002,
+						"host": "0.0.0.0"
 					}
 				}
 			}
