@@ -3,8 +3,8 @@ import { toMapEntityDto } from '@phobos-maptool/dto';
 import { MapEntity } from '@phobos-maptool/models';
 import { Request as MaptoolRequest } from '@phobos-maptool/protocol';
 
-import { AppGateway } from 'src/app.gateway';
-import { IMapEntityRpcAdapter } from 'src/core/map-entity/interfaces/map-entity.rpc.adapter.interface';
+import { AppGateway } from 'src/app/app.gateway';
+import { IMapEntityRpcAdapter } from 'src/app/core/map-entity/interfaces/map-entity.rpc.adapter.interface';
 
 @Injectable()
 export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {

@@ -2,9 +2,9 @@ import { fromSquadDto, toSquadDto } from "@phobos-maptool/dto";
 import { GetAllSquads_Response, SetSquad_Request } from "@phobos-maptool/protocol";
 
 import { Rpc, RpcHandler } from "lib/rpc/decorators";
-import { AppGateway } from "src/app.gateway";
-import { Ws } from "src/common/interfaces/ws";
-import { SquadService } from "src/core/squad/squad.service";
+import { AppGateway } from "src/app/app.gateway";
+import { Ws } from "src/app/common/interfaces/ws";
+import { SquadService } from "src/app/core/squad/squad.service";
 
 @RpcHandler(AppGateway)
 export class SquadApiController { 

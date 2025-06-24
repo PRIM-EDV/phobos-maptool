@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { MapEntity } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
-import { IMapEntityRepository } from "src/core/map-entity/interfaces/map-entity.repository.interface";
+import { IMapEntityRepository } from "src/app/core/map-entity/interfaces/map-entity.repository.interface";
 
 @Injectable()
 export class MapEntityRepository implements IMapEntityRepository {

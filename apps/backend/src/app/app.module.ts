@@ -26,8 +26,6 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     WinstonLoggerModule,
     EventEmitterModule.forRoot(),
     MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
-
-    
   ],
   controllers: [],
   providers: [AppGateway],

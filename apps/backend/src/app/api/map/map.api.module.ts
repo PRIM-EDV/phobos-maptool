@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MapApiController } from './map.api.controller';
-import { MapEntityModule } from 'src/core/map-entity/map-entity.module';
-import { WinstonLoggerModule } from 'src/infrastructure/logger/winston/winston.logger.module';
+import { MapEntityModule } from 'src/app/core/map-entity/map-entity.module';
+import { WinstonLoggerModule } from 'src/app/infrastructure/logger/winston/winston.logger.module';
 
 @Module({
     imports: [

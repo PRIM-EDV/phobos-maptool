@@ -3,9 +3,9 @@ import { toSquadDto } from '@phobos-maptool/dto';
 import { Squad } from '@phobos-maptool/models';
 import { Request as MaptoolRequest } from '@phobos-maptool/protocol';
 
-import { AppGateway } from 'src/app.gateway';
-import { ISquadRpcAdapter } from 'src/core/squad/interfaces/squad.rpc.adapter.interface';
-import { WinstonLogger } from 'src/infrastructure/logger/winston/winston.logger';
+import { AppGateway } from 'src/app/app.gateway';
+import { ISquadRpcAdapter } from 'src/app/core/squad/interfaces/squad.rpc.adapter.interface';
+import { WinstonLogger } from 'src/app/infrastructure/logger/winston/winston.logger';
 
 @Injectable()
 export class SquadRpcAdapter implements ISquadRpcAdapter {

@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Squad } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
-import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
+import { ISquadRepository } from "src/app/core/squad/interfaces/squad.repository.interface";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {

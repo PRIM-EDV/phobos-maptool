@@ -1,6 +1,5 @@
 import {
   OnGatewayConnection,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
