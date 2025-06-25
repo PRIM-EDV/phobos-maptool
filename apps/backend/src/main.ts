@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
 import { WsAdapter } from '@nestjs/platform-ws';
+
+import { AppModule } from 'src/app/app.module';
 import { RpcModule } from 'lib/rpc/rpc-module';
-import { WinstonLogger } from './app/infrastructure/logger/winston/winston.logger';
+import { WinstonLogger } from 'src/app/infrastructure/logger/winston/winston.logger';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const rpcModule = new RpcModule();
   const logger = await app.resolve(WinstonLogger);
-
 
   app.enableCors();
   app.useWebSocketAdapter(new WsAdapter(app));
@@ -18,4 +19,5 @@ async function bootstrap() {
 
   await app.listen(4002);
 }
+
 bootstrap();
