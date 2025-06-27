@@ -1,5 +1,5 @@
 import { fromSquadDto, toSquadDto } from "@phobos-maptool/dto";
-import { GetAllSquads_Response, SetSquad_Request } from "@phobos-maptool/protocol";
+import { GetAllSquads_Response, SetSquad_Request, SetSquads_Request } from "@phobos-maptool/protocol";
 
 import { Rpc, RpcHandler } from "lib/rpc/decorators";
 import { AppGateway } from "src/app/app.gateway";
@@ -22,6 +22,14 @@ export class SquadApiController {
     }
 
     @Rpc()
+    public async setSquads(client: Ws, req: SetSquads_Request) {
+        const squads = req.squads.map(s => fromSquadDto(s));
+
+        await Promise.all(squads.map(squad => this.squad.place(squad)));
+        this.gateway.requestAllButOne(client.id, { setSquads: req }).then().catch(console.error);
+    }
+
+    @Rpc()
     public async deleteSquad(client: Ws, req: SetSquad_Request) {
         const squad = fromSquadDto(req.squad);
 
@@ -32,7 +40,6 @@ export class SquadApiController {
     @Rpc()
     public async getAllSquads(): Promise<GetAllSquads_Response> {
         const squads = (await this.squad.getAll()).map(squad => toSquadDto(squad));
-        
         return { squads: squads };
     }
 }

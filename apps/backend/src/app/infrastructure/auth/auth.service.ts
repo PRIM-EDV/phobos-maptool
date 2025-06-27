@@ -1,17 +1,25 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
 import { firstValueFrom } from 'rxjs';
 
 import * as jose from 'jose';
+import { WinstonLogger } from '../logger/winston/winston.logger';
 
-const PHOBOS_AUTH_URL = process.env.phobosAuthUrl ? process.env.phobosAuthUrl : 'http://localhost:3000';
 
 @Injectable()
 export class AuthService {
 
+  private phobosAuthUrl: string;
+
   constructor(
-    private readonly http: HttpService
+    private readonly config: ConfigService,
+    private readonly http: HttpService,
+    private readonly logger: WinstonLogger,
   ) {
+    this.logger.setContext(AuthService.name);
+    this.phobosAuthUrl = this.config.get<string>('phobosAuthUrl') || process.env.phobosAuthUrl || 'http://localhost:3000';
   }
 
   /**
@@ -23,15 +31,9 @@ export class AuthService {
   public async validateToken(token: string): Promise<boolean> {
     try {
       const jwks = await this.fetchCerts();
-
       const publicKey = await jose.importJWK(jwks[0], "RS256");
-      const { payload } = await jose.jwtVerify(token, publicKey);
-
-      // Check if token has expired
-      const now = Math.floor(Date.now() / 1000);
-      if (!payload.exp || now >= payload.exp) {
-        return false
-      }
+      
+      await jose.jwtVerify(token, publicKey);
 
       return true;
     } catch (error) {
@@ -41,7 +43,7 @@ export class AuthService {
   }
 
   private async fetchCerts(): Promise<any[]> {
-    const url = `${PHOBOS_AUTH_URL}/auth/certs`;
+    const url = `${this.phobosAuthUrl}/auth/certs`;
     const response = await firstValueFrom(this.http.get<{ keys: any[] }>(url));
 
     return response.data.keys;

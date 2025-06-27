@@ -1,3 +1,5 @@
+import { HttpAdapterHost } from '@nestjs/core';
+import { OnModuleInit } from '@nestjs/common';
 import {
   OnGatewayConnection,
   SubscribeMessage,
@@ -8,15 +10,19 @@ import { MaptoolMessage, Response as MaptoolResponse, Request as MaptoolRequest 
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from 'rxjs';
 
-
 import { Ws } from './common/interfaces/ws';
 import { WinstonLogger } from './infrastructure/logger/winston/winston.logger';
 import { AuthService } from './infrastructure/auth/auth.service';
 
+
+import { IncomingMessage } from 'http';
+import Stream from 'stream';
+
 import * as WebSocket from 'ws';
 
+
 @WebSocketGateway()
-export class AppGateway implements OnGatewayConnection{
+export class AppGateway implements OnGatewayConnection, OnModuleInit{
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: MaptoolResponse) => void> = new Map<string, (value: MaptoolResponse) => void>();
 
@@ -27,9 +33,17 @@ export class AppGateway implements OnGatewayConnection{
 
   constructor(
     private readonly auth: AuthService,
-    private readonly logger: WinstonLogger
+    private readonly logger: WinstonLogger,
+    private readonly http: HttpAdapterHost
   ) {
     this.logger.setContext('AppGateway');
+  }
+
+  onModuleInit() {
+    const server = this.http.httpAdapter.getHttpServer();
+
+    server.removeAllListeners('upgrade');
+    server.on('upgrade', this.handleUpgrade.bind(this));
   }
 
   @SubscribeMessage('msg')
@@ -54,21 +68,29 @@ export class AppGateway implements OnGatewayConnection{
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
+  async handleUpgrade(request: IncomingMessage, socket: Stream.Duplex, head: Buffer) {
+    const urlParams = new URLSearchParams(request.url?.split('?')[1]);
+    const token = urlParams.get('token');
+
+    if (!token || !(await this.auth.validateToken(token))) {
+      this.logger.warn(`Unauthorized connection attempt from ${request.socket.remoteAddress || 'unknown'}`);
+      socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+      socket.destroy();
+    } else {
+      this.server.handleUpgrade(request, socket, head, (client: WebSocket, request: IncomingMessage) => {
+        this.server.emit('connection',  client, request);
+      });
+    }
+  }
+
   handleConnection(client: Ws, ...args: any[]) {
     const urlParams = new URLSearchParams(args[0].url.split('?')[1]);
     const token = urlParams.get('token');
 
-    if (!token || !this.auth.validateToken(token)) {
-      this.logger.warn(`Unauthorized connection attempt from ${args[0]?.socket?.remoteAddress || 'unknown'}`);
-      client.close(1008, 'Unauthorized');
-      return;
-    }
-
-    client.token = urlParams.get('token');
+    client.token = token;
     client.id = uuidv4();
 
     this.activeClients.set(client.id, client);
-    this.logger.log(`Client connected: ${client.id}`);
   }
 
   public error(clientId: string, msgId: string, err: Error) {
@@ -133,7 +155,11 @@ export class AppGateway implements OnGatewayConnection{
   }
 
   protected sendToClient(client: Ws, msg: MaptoolMessage) {
-    const buffer = { event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg)) };
-    client.send(JSON.stringify(buffer))
+    try {
+      const buffer = { event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg)) };
+      client.send(JSON.stringify(buffer))
+    } catch (error) {
+      this.logger.error(`Failed to send message to client: ${error}`);
+    }
   }
 }

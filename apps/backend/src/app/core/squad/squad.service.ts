@@ -19,6 +19,10 @@ export class SquadService {
         @SquadRpcAdapter() private readonly squadRpcAdapter: ISquadRpcAdapter
     ) {}
 
+    public async override(squads: Squad): Promise<void> {
+        
+    }
+
     public async place(squad: Squad): Promise<void> {
         this.eventEmitter.emit('squad.placed', new SquadPlacedEvent(squad));
         return await this.squadRepository.store(squad);
