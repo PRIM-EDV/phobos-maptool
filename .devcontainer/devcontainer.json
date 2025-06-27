@@ -4,6 +4,7 @@
     "service": "app",
     "workspaceFolder": "/workspace",
     "features": {
-        // "ghcr.io/devcontainers/features/git:1": {}
-    }
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    "postCreateCommand": "git config --global core.autocrlf input"
 }
