@@ -97,7 +97,7 @@ export class SquadComponent implements AfterViewInit {
 
   public handleDrop(event: { index: number; data: Squad }, state: SquadState) {
     const squad = { ...event.data, state: state, position: event.index };
-    this.squad.setSquad(squad);
+    this.facade.updateSquad(squad);
   }
 
   private filterSquads(state: SquadState) {

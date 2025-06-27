@@ -1,3 +1,3 @@
-export const environment = {
-    phobosAuthUrl: 'host.docker.internal:3000',
-};
+export default() => ({
+    phobosAuthUrl: 'http://host.docker.internal:3000'
+});

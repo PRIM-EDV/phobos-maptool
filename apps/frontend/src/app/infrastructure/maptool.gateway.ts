@@ -82,7 +82,7 @@ export class MaptoolGateway {
 
     private handleClose() {
         this.isConnected.set(false);
-        setTimeout(this.connect.bind(this), 5000);
+        // setTimeout(this.connect.bind(this), 5000);
         this.onClose.next();
     }
 
