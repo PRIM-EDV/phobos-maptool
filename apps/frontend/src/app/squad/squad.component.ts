@@ -65,7 +65,7 @@ export class SquadComponent implements AfterViewInit {
     });
   }
 
-  public openNewContextMenu(ev: MouseEvent, state: SquadState) {
+  public openNewSquadContextMenu(ev: MouseEvent, state: SquadState) {
     ev.preventDefault();
     ev.stopPropagation();
     this.contextMenu.open({
@@ -73,18 +73,19 @@ export class SquadComponent implements AfterViewInit {
         {
           label: "Create",
           action: async () => {
-            this.openCreateSquadDialog(ev);
+            this.openCreateSquadDialog(ev, state);
           },
         },
       ],
       position: { x: ev.clientX, y: ev.clientY },
     });
+
   }
 
-  public async openCreateSquadDialog(ev: MouseEvent) {
+  public async openCreateSquadDialog(ev: MouseEvent, state: SquadState) {
     const newSquad = await this.dialog.open(CreateSquadDialogComponent);
     if (newSquad) {
-      this.facade.createSquad(newSquad);
+      this.facade.createSquad({...newSquad, state});
     }
   }
 

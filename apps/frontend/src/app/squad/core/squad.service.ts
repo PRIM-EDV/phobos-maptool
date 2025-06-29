@@ -1,5 +1,5 @@
 import { Injectable, signal, WritableSignal } from "@angular/core";
-import { Squad } from "@phobos-maptool/models";
+import { Squad, SquadState } from "@phobos-maptool/models";
 
 @Injectable({ providedIn: "root" })
 export class SquadService {
@@ -12,10 +12,7 @@ export class SquadService {
     if (existing) {
       this.updateSquad(existing, squad);
     } else {
-      this.squads.update((squads) => {
-        squads.push(squad);
-        return [...squads];
-      });
+      this.addSquad(squad);
     }
   }
 
@@ -23,53 +20,51 @@ export class SquadService {
     this.squads.set(squads);
   }
 
-  public async deleteSquad(deleted: Squad) {
+  public async deleteSquad(target: Squad) {
     this.squads.update((squads) => {
-      return squads
-        .filter((squad) => squad.name !== deleted.name)
-        .map((squad) => {
-            if (squad.state === deleted.state && squad.position >= deleted.position) {
-                return { ...squad, position: squad.position - 1 };
-            } else {
-                return squad;
-            }
-        });
+      const peers = this.getPeers(squads, target);
+
+      this.reindex(peers);
+      return squads.filter((squad) => squad.name !== target.name);
     });
   }
 
-  private addSquad(squad: Squad) {}
-
-  private updateSquad(existing: Squad, updated: Squad) {
+  private addSquad(squad: Squad) {
     this.squads.update((squads) => {
-      return squads.map((squad) => {
-        if (squad.name === existing.name) {
-          return { ...squad, ...updated };
-        }
+      const peers = this.getPeers(squads, squad);
 
-        if (
-          squad.state === existing.state &&
-          squad.state == updated.state &&
-          squad.position >= existing.position
-        ) {
-          return squad;
-        }
+      peers.splice(squad.position, 0, squad);
+      this.reindex(peers);
 
-        if (
-          squad.state === existing.state &&
-          squad.position >= existing.position
-        ) {
-          return { ...squad, position: squad.position - 1 };
-        }
+      return [...squads, squad];
+    });
+  }
 
-        if (
-          squad.state === updated.state &&
-          squad.position >= updated.position
-        ) {
-          return { ...squad, position: squad.position + 1 };
-        }
+  private updateSquad(previous: Squad, next: Squad) {
+    this.squads.update((squads) => {
+      const squad = squads.find((item) => item.name == previous.name) as Squad;
+      const originalPeers = this.getPeers(squads, previous);
+      const nextPeers = this.getPeers(squads, next);
+      
+      Object.assign(squad, next);
+      nextPeers.splice(next.position, 0, squad);
 
-        return squad;
-      });
+      this.reindex(originalPeers);
+      this.reindex(nextPeers);
+
+      return [...squads];
+    });
+  }
+
+  private getPeers(squads: Squad[], target: Squad): Squad[] {
+    return squads
+        .filter(squad => squad.state === target.state && squad.name !== target.name)
+        .sort((a, b) => a.position - b.position);
+  }
+
+  private reindex(squads: Squad[]) {
+    squads.forEach((squad, index) => {
+      squad.position = index;
     });
   }
 }

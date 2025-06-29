@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, effect, Inject, OnInit, Optional } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
@@ -29,14 +29,24 @@ declare global {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+    autoGatewayConnection = effect(() => {
+      if (this.tokenService && !this.maptoolGateway.isConnected()) {
+          this.connectToMaptoolGateway().catch(error => {
+            console.error('Failed to connect to Maptool Gateway:', error);
+          });
+      }
+    });
+
     constructor(
       private readonly maptoolGateway: MaptoolGateway,
       @Optional() @Inject(TOKEN_SERVICE_TOKEN) private tokenService: ITokenService
     ) {}
 
-    async ngOnInit(): Promise<void> {
+    async ngOnInit(): Promise<void> { }
+
+    private async connectToMaptoolGateway(): Promise<void> {
       const token = await this.tokenService?.accessToken() || '';
-      
       if (token) {
         await this.maptoolGateway.connect(token);
       } else {

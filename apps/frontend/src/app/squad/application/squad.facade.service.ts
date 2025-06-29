@@ -25,7 +25,6 @@ export class SquadFacadeService {
 
   public async createSquad(squad: Squad) {
     this.squad.setSquad(squad);
-
     await this.rpc.setSquads(this.squad.squads());
   }
 
