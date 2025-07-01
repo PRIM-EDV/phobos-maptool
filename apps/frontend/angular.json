@@ -149,7 +149,9 @@
 					"defaultConfiguration": "development",
 					"options": {
 						"port": 3002,
-						"host": "0.0.0.0"
+						"host": "0.0.0.0",
+						"poll": 500,
+						"watch": true
 					}
 				}
 			}

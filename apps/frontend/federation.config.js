@@ -21,6 +21,7 @@ const {
       'rxjs/fetch',
       'rxjs/testing',
       // 'rxjs/webSocket',
+      '@phobos/elements',
       '@phobos-maptool/dto',
       '@phobos-maptool/protocol',
       '@phobos-maptool/models',
