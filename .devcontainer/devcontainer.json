@@ -12,7 +12,7 @@
     },
 
     "initializeCommand": "echo 'Preparing devcontainer for cross-platform git integration...'",
-    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
+    "postCreateCommand": "git config --global --add safe.directory /workspace && git config --global --add safe.directory '*' && /workspace/.devcontainer/setup-git.sh",
     "remoteUser": "node",
     "customizations": {
         "vscode": {

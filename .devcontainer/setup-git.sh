@@ -11,11 +11,9 @@ if [ -f /tmp/host-gitconfig ]; then
     cp /tmp/host-gitconfig ~/.gitconfig
 fi
 
-# Ensure safe directory is set for monorepo
-git config --global --add safe.directory /workspace
-git config --global --add safe.directory /workspace/apps/frontend
-git config --global --add safe.directory /workspace/apps/backend
-git config --global --add safe.directory /workspace/libs
+# Ensure safe directory is set for monorepo and all subdirectories
+# Use '*' to trust all directories to avoid ownership issues in containers
+git config --global --add safe.directory '*'
 
 # Set up credential storage based on platform
 if [ -f ~/.git-credentials ]; then
