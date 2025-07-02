@@ -4,7 +4,35 @@
     "service": "app",
     "workspaceFolder": "/workspace",
     "features": {
-        "ghcr.io/devcontainers/features/git:1": {}
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/git-lfs:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "postCreateCommand": "git config --global core.autocrlf input"
+    "mounts": [
+        {
+            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig",
+            "target": "/tmp/host-gitconfig",
+            "type": "bind"
+        }
+    ],
+    "initializeCommand": "echo 'Preparing devcontainer for cross-platform git integration...'",
+    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
+    "remoteUser": "node",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-typescript-next",
+                "angular.ng-template",
+                "ms-vscode.vscode-json"
+            ],
+            "settings": {
+                "git.enableSmartCommit": true,
+                "git.autofetch": true,
+                "git.confirmSync": false,
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    }
 }
