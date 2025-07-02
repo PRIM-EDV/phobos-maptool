@@ -14,8 +14,6 @@ services:
       - "4002:4002"
     environment:
       - MONGO_DB_HOST=db
-      # Forward SSH agent for git operations (Unix systems)
-      - SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-}
     volumes:
       # Main workspace mount
       - ..:/workspace
@@ -24,6 +22,15 @@ services:
       - /workspace/node_modules
       - /workspace/apps/frontend/dist
       - /workspace/apps/backend/dist
+      
+      # Git configuration forwarding
+      - type: bind
+        source: ${HOME:-${USERPROFILE}}/.gitconfig
+        target: /tmp/host-gitconfig
+        read_only: true
+        consistency: cached
+        bind:
+          create_host_path: true
       
       # Git credential forwarding (conditional mounts based on platform)
       # These mounts will only work if the source files exist
@@ -43,12 +50,3 @@ services:
         consistency: cached
         bind:
           create_host_path: true
-      
-      # SSH agent socket forwarding (Unix systems only)
-      # This will be ignored on Windows
-      - type: bind
-        source: ${SSH_AUTH_SOCK:-/tmp/ssh-agent-fallback}
-        target: ${SSH_AUTH_SOCK:-/tmp/ssh-agent-fallback}
-        consistency: cached
-        bind:
-          create_host_path: false

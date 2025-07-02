@@ -10,13 +10,7 @@
         "ghcr.io/devcontainers/features/git-lfs:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
-    "mounts": [
-        {
-            "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig",
-            "target": "/tmp/host-gitconfig",
-            "type": "bind"
-        }
-    ],
+
     "initializeCommand": "echo 'Preparing devcontainer for cross-platform git integration...'",
     "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
     "remoteUser": "node",
