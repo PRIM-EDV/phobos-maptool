@@ -21,6 +21,6 @@ services:
       - /workspace/apps/backend/dist
       
       # Git configuration and credentials forwarding (cross-platform)
-      - ${HOME}/.gitconfig:/tmp/host-gitconfig:ro
-      - ${HOME}/.git-credentials:/home/node/.git-credentials:ro
-      - ${HOME}/.ssh:/home/node/.ssh:ro
+      - ~/.gitconfig:/tmp/host-gitconfig:ro
+      - ~/.git-credentials:/home/node/.git-credentials:ro
+      - ~/.ssh:/home/node/.ssh:ro
