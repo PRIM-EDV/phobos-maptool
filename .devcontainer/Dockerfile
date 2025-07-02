@@ -11,8 +11,8 @@ COPY libs ./libs
 
 RUN npm install
 
-FROM deps
-COPY apps/frontend ./apps/frontend
-COPY apps/backend ./apps/backend
+# FROM deps
+# COPY apps/frontend ./apps/frontend
+# COPY apps/backend ./apps/backend
 
-RUN npx lerna run build
+# RUN npx lerna run build
