@@ -25,7 +25,9 @@
                 "git.enableSmartCommit": true,
                 "git.autofetch": true,
                 "git.confirmSync": false,
-                "terminal.integrated.defaultProfile.linux": "bash"
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "extensions.autoUpdate": false,
+                "extensions.autoCheckUpdates": false
             }
         }
     }

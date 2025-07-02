@@ -11,8 +11,11 @@ if [ -f /tmp/host-gitconfig ]; then
     cp /tmp/host-gitconfig ~/.gitconfig
 fi
 
-# Ensure safe directory is set
+# Ensure safe directory is set for monorepo
 git config --global --add safe.directory /workspace
+git config --global --add safe.directory /workspace/apps/frontend
+git config --global --add safe.directory /workspace/apps/backend
+git config --global --add safe.directory /workspace/libs
 
 # Set up credential storage based on platform
 if [ -f ~/.git-credentials ]; then
@@ -26,9 +29,11 @@ if [ -d ~/.ssh ]; then
     chmod 700 ~/.ssh
     chmod 600 ~/.ssh/* 2>/dev/null || true
     
-    # Start SSH agent if not running
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-        eval "$(ssh-agent -s)"
+    # Start SSH agent if available and needed
+    if [ -n "$SSH_AUTH_SOCK" ] || command -v ssh-agent >/dev/null; then
+        if [ -z "$SSH_AUTH_SOCK" ]; then
+            eval "$(ssh-agent -s)"
+        fi
         ssh-add ~/.ssh/id_* 2>/dev/null || true
     fi
 fi
