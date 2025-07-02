@@ -15,38 +15,12 @@ services:
     environment:
       - MONGO_DB_HOST=db
     volumes:
-      # Main workspace mount
       - ..:/workspace
-      
-      # Exclude node_modules and dist folders from sync for performance
       - /workspace/node_modules
       - /workspace/apps/frontend/dist
       - /workspace/apps/backend/dist
       
-      # Git configuration forwarding
-      - type: bind
-        source: ${HOME:-${USERPROFILE}}/.gitconfig
-        target: /tmp/host-gitconfig
-        read_only: true
-        consistency: cached
-        bind:
-          create_host_path: true
-      
-      # Git credential forwarding (conditional mounts based on platform)
-      # These mounts will only work if the source files exist
-      - type: bind
-        source: ${HOME:-${USERPROFILE}}/.git-credentials
-        target: /home/node/.git-credentials
-        read_only: true
-        consistency: cached
-        bind:
-          create_host_path: true
-      
-      # SSH key forwarding for git operations
-      - type: bind
-        source: ${HOME:-${USERPROFILE}}/.ssh
-        target: /home/node/.ssh
-        read_only: true
-        consistency: cached
-        bind:
-          create_host_path: true
+      # Git configuration and credentials forwarding
+      - ~/.gitconfig:/tmp/host-gitconfig:ro
+      - ~/.git-credentials:/home/node/.git-credentials:ro
+      - ~/.ssh:/home/node/.ssh:ro
