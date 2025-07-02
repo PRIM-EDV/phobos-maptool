@@ -16,15 +16,11 @@ services:
       - MONGO_DB_HOST=db
     volumes:
       - ..:/workspace
-
       - /workspace/node_modules
       - /workspace/apps/frontend/dist
       - /workspace/apps/backend/dist
-
-
-
-
-
-
-    
-
+      
+      # Git configuration and credentials forwarding (cross-platform)
+      - ~/.gitconfig:/tmp/host-gitconfig:ro
+      - ~/.git-credentials:/home/node/.git-credentials:ro
+      - ~/.ssh:/home/node/.ssh:ro
