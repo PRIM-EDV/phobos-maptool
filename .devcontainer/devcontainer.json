@@ -6,5 +6,6 @@
     "features": {
         "ghcr.io/devcontainers/features/git:1": {}
     },
-    "postCreateCommand": "git config --global core.autocrlf input"
+    "postCreateCommand": "git config --global --add safe.directory /workspace && git config --global core.autocrlf input",
+    "remoteUser": "node"
 }

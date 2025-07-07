@@ -1,5 +1,5 @@
 FROM node:24.1.0-slim as deps
-RUN apt update && apt install python3 build-essential protobuf-compiler -y
+RUN apt update && apt install python3 build-essential protobuf-compiler git -y
 
 WORKDIR /workspace
 
