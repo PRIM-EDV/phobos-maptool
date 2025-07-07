@@ -22,3 +22,5 @@ services:
       
       # Basic git configuration forwarding
       - ~/.gitconfig:/tmp/host-gitconfig:ro
+      - ~/.git-credentials:/home/node/.git-credentials:ro
+      - ~/.ssh:/home/node/.ssh:ro
