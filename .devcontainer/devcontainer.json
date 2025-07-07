@@ -4,31 +4,8 @@
     "service": "app",
     "workspaceFolder": "/workspace",
     "features": {
-        "ghcr.io/devcontainers/features/git:1": {
-            "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/git-lfs:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/git:1": {}
     },
-
-    "initializeCommand": "echo 'Preparing devcontainer for cross-platform git integration...'",
-    "postCreateCommand": "sudo chown -R node:node /workspace && git config --global --add safe.directory /workspace && git config --global --add safe.directory '*' && /workspace/.devcontainer/setup-git.sh",
-    "remoteUser": "node",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-vscode.vscode-typescript-next",
-                "angular.ng-template",
-                "ms-vscode.vscode-json"
-            ],
-            "settings": {
-                "git.enableSmartCommit": true,
-                "git.autofetch": true,
-                "git.confirmSync": false,
-                "terminal.integrated.defaultProfile.linux": "bash",
-                "extensions.autoUpdate": false,
-                "extensions.autoCheckUpdates": false
-            }
-        }
-    }
+    "postCreateCommand": "git config --global --add safe.directory /workspace && git config --global core.autocrlf input",
+    "remoteUser": "node"
 }
