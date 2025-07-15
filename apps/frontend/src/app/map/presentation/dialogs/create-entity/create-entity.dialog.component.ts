@@ -45,7 +45,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
   }
 
   public submit() {
-    this.close(this.entity);
+    this.close(this.newEntity);
   }
 
   public cancel() {

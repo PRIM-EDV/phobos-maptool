@@ -29,7 +29,7 @@ export class MapEntityService {
             name: "",
             callsign: "",
             trackerId: -1,
-            combattants: 1,
+            combattants: 0,
             status: MapEntityStatus.REGULAR
           }
         }
@@ -48,6 +48,13 @@ export class MapEntityService {
   }
 
   public setEntity(entity: MapEntity) {
+    const existing = this.entities().find((e) => e.id === entity.id);
+    if (existing) {
+      this.updateEntity(existing, entity);
+    }
+    else {
+      this.entities.update((entities) => [...entities, entity]);
+    }
   }
 
   public setEntities(entities: MapEntity[]) {
