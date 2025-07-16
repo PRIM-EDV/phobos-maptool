@@ -33,6 +33,7 @@ export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
     if (this.data) {
       this.window.ref.nativeElement.style.top = `${this.data.clientY}px`;
       this.window.ref.nativeElement.style.left = `${this.data.clientX}px`;
+      this.newEntity.position = { x: this.data.mapX, y: this.data.mapY };
     }
   }
 

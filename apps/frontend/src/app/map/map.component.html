@@ -1,1 +1,1 @@
-<trx-map [entities]="this.entities()" (terrainContextMenu)="this.openNewContextMenu($event)"></trx-map>
+<trx-map [entities]="this.entities()" (terrainContextMenu)="this.openNewContextMenu($event)" (entityMoved)="this.handleEntityMoved($event)"></trx-map>

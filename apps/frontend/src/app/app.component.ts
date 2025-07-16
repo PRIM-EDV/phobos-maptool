@@ -5,6 +5,7 @@ import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu
 
 import { TOKEN_SERVICE_TOKEN, ITokenService } from '@phobos/core';
 import { MaptoolGateway } from './infrastructure/maptool.gateway';
+import { OverlayComponent } from './overlay/overlay.component';
 
 declare global {
     interface Window {
@@ -23,7 +24,8 @@ declare global {
     imports: [
       ContextMenuModule,
       DialogComponent,
-      RouterOutlet
+      RouterOutlet,
+      // OverlayComponent
     ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
@@ -43,7 +45,11 @@ export class AppComponent implements OnInit {
       @Optional() @Inject(TOKEN_SERVICE_TOKEN) private tokenService: ITokenService
     ) {}
 
-    async ngOnInit(): Promise<void> { }
+    async ngOnInit(): Promise<void> {
+      if (!this.tokenService) {
+        console.warn('Token service is not available, skipping Maptool Gateway connection');
+      }
+     }
 
     private async connectToMaptoolGateway(): Promise<void> {
       const token = await this.tokenService?.accessToken() || '';

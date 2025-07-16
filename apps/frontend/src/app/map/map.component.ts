@@ -29,6 +29,10 @@ export class MapComponent {
     private readonly facade: EntityFacadeService,
   ) { }
 
+  public handleEntityMoved(entity: Entity) {
+    console.log('Entity moved:', entity);
+  }
+
   public async openCreateEntityDialog(e: MapClickEvent) {
     const newEntity = await this.dialog.open(CreateEntityDialogComponent, e);
     if (newEntity) {
