@@ -47,10 +47,13 @@ export function toMapEntityDto(mapEntity: MapEntity): MapEntityDto {
 
 function fromDtoEntity(dto: MapEntityDto) {
     switch (dto.type) {
+        case 1:
         case MapEntityDtoType.TYPE_FOE:
             return fromDtoEnemy(dto.enemy as MapEntityDto_Enemy);
+        case 2:
         case MapEntityDtoType.TYPE_FRIEND:
             return fromDtoSquad(dto.squad as MapEntityDto_Squad);
+        case 3:
         case MapEntityDtoType.TYPE_OBJECT:
             return fromDtoObjective(dto.objective as MapEntityDto_Objective);
         default:
