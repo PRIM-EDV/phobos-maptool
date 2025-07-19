@@ -11,7 +11,7 @@ COPY libs ./libs
 
 RUN npm install
 
-RUN chown -R node:node /workspace
+# RUN chown -R node:node /workspace
 
 # FROM deps
 # COPY apps/frontend ./apps/frontend
