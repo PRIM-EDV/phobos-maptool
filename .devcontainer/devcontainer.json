@@ -9,7 +9,7 @@
         "ghcr.io/devcontainers/features/github-cli:1": {}
     },
     "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
-    "remoteUser": "node",
+    // "remoteUser": "node",
      "customizations": {
         "vscode": {
             "extensions": [

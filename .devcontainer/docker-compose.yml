@@ -17,6 +17,7 @@ services:
     volumes:
       - ..:/workspace
       - /workspace/node_modules
+      - /workspace/dist
       - /workspace/apps/frontend/dist
       - /workspace/apps/backend/dist
       
