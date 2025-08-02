@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { MapEntityBase, MapEntityType } from '@phobos-maptool/models';
+import { MapEntityBase } from '@phobos-maptool/models';
 
 import { HydratedDocument } from 'mongoose';
 
@@ -16,4 +16,13 @@ export class MapEntityBaseDbo implements MapEntityBase {
     y: number;
   };
 }
+
 export const MapEntityBaseSchema = SchemaFactory.createForClass(MapEntityBaseDbo);
+
+MapEntityBaseSchema.set('toObject', {
+  transform: (doc, ret) => {
+    ret["type"] = parseInt(ret["type"]);
+
+    return ret;
+  },
+});

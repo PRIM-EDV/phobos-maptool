@@ -84,7 +84,7 @@ function fromDtoObjective(dto: MapEntityDto_Objective): MapEntityObjective {
     }
 }
 
-function fromDtoStatus(status: MapEntityDtoStatus): MapEntityStatus {
+function fromDtoStatus(status: MapEntityDtoStatus | Number): MapEntityStatus {
     switch (status) {
         case 0:
         case MapEntityDtoStatus.ENTITY_STATUS_UNDEFINED:
@@ -96,7 +96,7 @@ function fromDtoStatus(status: MapEntityDtoStatus): MapEntityStatus {
         case MapEntityDtoStatus.ENTITY_STATUS_COMBAT:
             return MapEntityStatus.COMBAT;
         default:
-            return MapEntityStatus.UNDEFINED;
+            throw new Error(`Error while parsing MapEntityDtoStatus: Unknown MapEntityDtoStatus: ${status}`);
     }
 }
 
@@ -123,7 +123,7 @@ function toDtoObjective(objective: MapEntityObjective): MapEntityDto_Objective {
     }
 }
 
-function toDtoType(type: MapEntityType): MapEntityDtoType {
+function toDtoType(type: MapEntityType | number | string): MapEntityDtoType {
     switch (type) {
         case 0:
         case MapEntityType.UNDEFINED:
@@ -138,7 +138,7 @@ function toDtoType(type: MapEntityType): MapEntityDtoType {
         case MapEntityType.OBJECT:
             return MapEntityDtoType.TYPE_OBJECT;
         default:
-            return MapEntityDtoType.UNRECOGNIZED;
+            throw new Error(`Error while converting MapEntityType to MapEntityDtoType: Unknown MapEntityType: ${type}`);
     }
 }
 
@@ -154,6 +154,6 @@ function toDtoStatus(status: MapEntityStatus): MapEntityDtoStatus {
         case MapEntityStatus.COMBAT:
             return MapEntityDtoStatus.ENTITY_STATUS_COMBAT;
         default:
-            return MapEntityDtoStatus.UNRECOGNIZED;
+            throw new Error(`Error while converting MapEntityStatus to MapEntityDtoStatus: Unknown MapEntityStatus: ${status}`);
     }
 }

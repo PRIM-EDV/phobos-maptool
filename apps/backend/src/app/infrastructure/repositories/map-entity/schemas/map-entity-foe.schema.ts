@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { MapEntityFoe, MapEntitySquad, MapEntityStatus } from '@phobos-maptool/models';
+import { MapEntityFoe } from '@phobos-maptool/models';
 
 import { MapEntityBaseDbo } from './map-entity-base.schema';
 

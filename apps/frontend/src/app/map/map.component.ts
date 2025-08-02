@@ -1,5 +1,5 @@
 import { Component, computed, Signal } from '@angular/core';
-import { Entity, MapClickEvent, TrxMap } from '@trx/map';
+import { Entity, EntityClickEvent, MapClickEvent, TrxMap } from '@trx/map';
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
 import { EntityFacadeService } from './application/entity.facade.service';
@@ -40,17 +40,44 @@ export class MapComponent {
     }
   }
 
-  public openNewContextMenu(e: MapClickEvent) {
+  public async openEditEntityDialog(ev: EntityClickEvent) 
+  {
+    console.log('Edit entity:', ev.entity);
+    // Todo
+  }
+
+  public openEditContextMenu(ev: EntityClickEvent) {
+    this.contextMenu.open({
+      entries: [
+        {
+          label: "Edit",
+          action: async () => {
+            this.openEditEntityDialog(ev);
+          },
+        },
+        {
+          label: "Delete",
+          action: async () => {
+            const entity = this.entity.entities().find((e) => e.id === ev.entity.id);
+            this.facade.deleteEntity(entity!);
+          },
+        },
+      ],
+      position: { x: ev.clientX, y: ev.clientY },
+    });
+  }
+
+  public openNewContextMenu(ev: MapClickEvent) {
     this.contextMenu.open({
       entries: [
         {
           label: "Create",
           action: async () => {
-            this.openCreateEntityDialog(e);
+            this.openCreateEntityDialog(ev);
           },
         },
       ],
-      position: { x: e.clientX, y: e.clientY },
+      position: { x: ev.clientX, y: ev.clientY },
     });
   }
 }

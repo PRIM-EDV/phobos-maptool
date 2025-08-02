@@ -23,12 +23,12 @@ export class MapEntityRepository implements IMapEntityRepository {
 
     public async get(): Promise<MapEntity[]> {
         const entities = await this.mapEntityModel.find().exec();
-        return entities;
+        return entities.map(entity => entity.toObject());
     }
 
     public async getBySquadName(name: string): Promise<MapEntity | null> {
         const mapEntityDbo = await this.mapEntityModel.findOne({"squad.name": name}).exec();
-        return mapEntityDbo || null;
+        return mapEntityDbo ? mapEntityDbo.toObject() : null;
     }
 
     private async upsert(entity: MapEntity): Promise<void> {
