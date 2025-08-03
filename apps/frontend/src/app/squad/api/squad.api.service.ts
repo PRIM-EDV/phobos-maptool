@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Request, SetSquad_Response, SetSquad_Request, DeleteSquad_Request, DeleteSquad_Response } from "@phobos-maptool/protocol";
+import { Request, SetSquad_Response, SetSquad_Request, DeleteSquad_Request, DeleteSquad_Response, SetSquads_Request, SetSquads_Response } from "@phobos-maptool/protocol";
 import { fromSquadDto } from "@phobos-maptool/dto";
 import { Subscription } from "rxjs";
 
@@ -37,7 +37,14 @@ export class SquadApiService {
     const squad = fromSquadDto(squadDto);
 
     this.squadService.setSquad(squad);
-    
+    return {}
+  }
+
+  private async setSquads(request: SetSquads_Request): Promise<SetSquads_Response> {
+    const squadsDto = request.squads!;
+    const squads = squadsDto.map(fromSquadDto);
+
+    this.squadService.setSquads(squads);
     return {}
   }
 
@@ -46,7 +53,6 @@ export class SquadApiService {
     const squad = fromSquadDto(squadDto);
 
     this.squadService.deleteSquad(squad);
-    
     return {}
   }
 }
