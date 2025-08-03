@@ -7,6 +7,7 @@ import { ContextMenuService } from '../infrastructure/ui/context-menu/context-me
 import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
 import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
+import { MapApiService } from './api/map.api.service';
 
 @Component({
   selector: 'app-map',
@@ -28,9 +29,18 @@ export class MapComponent {
     private readonly contextMenu: ContextMenuService,
     private readonly dialog: DialogService,
     private readonly facade: EntityFacadeService,
+    private readonly mapApi: MapApiService
   ) { }
 
-  public handleEntityMoved(entityMoved: Entity) {
+  public handleEntityMoved(entity: Entity) {
+    const entityMoved = this.entity.entities().find((e) => e.id === entity.id);
+
+    if (entityMoved) {
+      entityMoved.position = entity.position;
+      
+
+      this.facade.updateEntity(entityMoved);
+    }
   }
 
   public async openCreateEntityDialog(e: MapClickEvent) {

@@ -10,6 +10,7 @@ import { CreateSquadDialogComponent } from "./presentation/dialogs/create-squad/
 import { SquadFacadeService } from "./application/squad.facade.service";
 import { ContextMenuService } from "../infrastructure/ui/context-menu/context-menu.service";
 import { EditSquadDialogComponent } from "./presentation/dialogs/edit-squad/edit-squad.dialog.component";
+import { SquadApiService } from "./api/squad.api.service";
 
 @Component({
   selector: "squad",
@@ -34,7 +35,8 @@ export class SquadComponent implements AfterViewInit {
     public readonly squad: SquadService,
     public readonly facade: SquadFacadeService,
     private readonly dialog: DialogService,
-    private readonly contextMenu: ContextMenuService
+    private readonly contextMenu: ContextMenuService,
+    private readonly squadApi: SquadApiService
   ) {}
 
   ngAfterViewInit() {

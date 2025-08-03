@@ -32,7 +32,7 @@ export class MapEntityRepository implements IMapEntityRepository {
     }
 
     private async upsert(entity: MapEntity): Promise<void> {
-        let mapEntityDbo = await this.mapEntityModel.findOne({uuid: entity.id}).exec();
+        let mapEntityDbo = await this.mapEntityModel.findOne({id: entity.id}).exec();
         if(mapEntityDbo) {
             mapEntityDbo.id = entity.id;
             mapEntityDbo.position = entity.position;

@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Request, SetSquad_Response, SetSquad_Request, DeleteSquad_Request, DeleteSquad_Response } from "@phobos-maptool/protocol";
 import { fromSquadDto } from "@phobos-maptool/dto";
-import { Squad } from "@phobos-maptool/models";
 import { Subscription } from "rxjs";
 
 import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
 import { SquadService } from "../core/squad.service";
 
-@Injectable()
+@Injectable(
+    { providedIn: 'root' }
+)
 export class SquadApiService { 
 
   private onRequestSubscription: Subscription;

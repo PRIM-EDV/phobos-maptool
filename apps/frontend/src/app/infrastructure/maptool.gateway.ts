@@ -65,7 +65,7 @@ export class MaptoolGateway {
 
     private handleMessage(buffer: {event: 'msg', data: string}) {
         const msg = MaptoolMessage.fromJSON(JSON.parse(buffer.data));
-
+        console.log('MaptoolGateway: Received message', msg);
         if(msg.request) {
             this.onRequest.next({id: msg.id, request: msg.request});
         }
