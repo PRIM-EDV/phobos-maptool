@@ -6,6 +6,7 @@ import { EntityFacadeService } from './application/entity.facade.service';
 import { ContextMenuService } from '../infrastructure/ui/context-menu/context-menu.service';
 import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
+import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
 
 @Component({
   selector: 'app-map',
@@ -29,8 +30,7 @@ export class MapComponent {
     private readonly facade: EntityFacadeService,
   ) { }
 
-  public handleEntityMoved(entity: Entity) {
-    console.log('Entity moved:', entity);
+  public handleEntityMoved(entityMoved: Entity) {
   }
 
   public async openCreateEntityDialog(e: MapClickEvent) {
@@ -42,8 +42,13 @@ export class MapComponent {
 
   public async openEditEntityDialog(ev: EntityClickEvent) 
   {
-    console.log('Edit entity:', ev.entity);
-    // Todo
+    const clickedEntity = this.entity.entities().find((e) => e.id === ev.entity.id);
+    const data = { event: ev, entity: clickedEntity };
+
+    const editedEntity  = await this.dialog.open(EditEntityDialogComponent, data);
+    if (editedEntity ) {
+      this.facade.updateEntity(editedEntity);
+    }
   }
 
   public openEditContextMenu(ev: EntityClickEvent) {
