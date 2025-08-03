@@ -51,7 +51,6 @@ export class RpcModule {
             });
 
         gateway.onRequest.subscribe((event: { client: Ws, msgId: string, request: Request }) => {
-            console.debug(`RPC request received: ${event.client.id} - ${event.msgId}`, event.request);
             for (const rpcMethod of rpcMethods) {
                 if (event.request[rpcMethod.name] !== undefined) {
                     rpcMethod.call(instance, event.client, event.request[rpcMethod.name]).then((value) => {

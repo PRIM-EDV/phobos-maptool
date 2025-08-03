@@ -14,7 +14,7 @@ export class MapEntityRepository implements IMapEntityRepository {
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {
-        await this.mapEntityModel.deleteMany({uuid: entity.id}).exec();
+        await this.mapEntityModel.deleteMany({id: entity.id}).exec();
     }
 
     public async store(entity: MapEntity): Promise<void> {
