@@ -21,12 +21,14 @@ export class SquadApiService {
   } 
 
   private async handleRequest(e: {id: string, request: Request}) {
-    const method = Object.keys(e.request)[0];
-    const args = (e.request as any)[method] as any
+    const method = Object.keys(e.request).find(key => (e.request as any)[key] !== undefined);
 
-    if (typeof (this as any)[method] === 'function') {
-      const res = await (this as any)[method](args);
-      this.gateway.respond(e.id, res);
+    if (method) {
+      const args = (e.request as any)[method] as any
+      if (typeof (this as any)[method] === 'function') {
+        const res = await (this as any)[method](args);
+        this.gateway.respond(e.id, res);
+      }
     }
   }
 
