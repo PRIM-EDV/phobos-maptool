@@ -47,6 +47,7 @@ message MapEntityDto {
         Enemy enemy = 5;
         Objective objective = 6;
     }
+    string notes = 7;
 }
 
 message DeleteMapEntity {

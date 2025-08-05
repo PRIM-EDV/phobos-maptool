@@ -17,6 +17,7 @@ export interface MapEntityBase {
     x: number;
     y: number;
   };
+  notes?: string;
 }
 
 export interface MapEntitySquad {

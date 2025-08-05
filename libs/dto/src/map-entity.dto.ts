@@ -5,6 +5,7 @@ export function fromMapEntityDto(dto: MapEntityDto): MapEntity {
     const base = {
         id: dto.id,
         position: dto.position ? dto.position : { x: 0, y: 0 },
+        notes: dto.notes ?? "",
         entity: fromDtoEntity(dto),
     }
     switch (dto.type) {
@@ -39,6 +40,7 @@ export function toMapEntityDto(mapEntity: MapEntity): MapEntityDto {
         id: mapEntity.id,
         type: toDtoType(mapEntity.type),
         position: mapEntity.position,
+        notes: mapEntity.notes ?? "",
         squad: mapEntity.type === MapEntityType.FRIEND ? toDtoSquad(mapEntity.entity) : undefined,
         enemy: mapEntity.type === MapEntityType.FOE ? toDtoEnemy(mapEntity.entity) : undefined,
         objective: mapEntity.type === MapEntityType.OBJECT ? toDtoObjective(mapEntity.entity) : undefined,

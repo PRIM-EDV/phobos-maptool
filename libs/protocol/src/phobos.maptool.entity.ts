@@ -100,6 +100,7 @@ export interface MapEntityDto {
   squad?: MapEntityDto_Squad | undefined;
   enemy?: MapEntityDto_Enemy | undefined;
   objective?: MapEntityDto_Objective | undefined;
+  notes: string;
 }
 
 export interface MapEntityDto_Squad {
@@ -164,7 +165,7 @@ export interface GetAllMapEntities_Response {
 }
 
 function createBaseMapEntityDto(): MapEntityDto {
-  return { id: "", type: 0, position: undefined, squad: undefined, enemy: undefined, objective: undefined };
+  return { id: "", type: 0, position: undefined, squad: undefined, enemy: undefined, objective: undefined, notes: "" };
 }
 
 export const MapEntityDto = {
@@ -186,6 +187,9 @@ export const MapEntityDto = {
     }
     if (message.objective !== undefined) {
       MapEntityDto_Objective.encode(message.objective, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.notes !== "") {
+      writer.uint32(58).string(message.notes);
     }
     return writer;
   },
@@ -239,6 +243,13 @@ export const MapEntityDto = {
 
           message.objective = MapEntityDto_Objective.decode(reader, reader.uint32());
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.notes = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -256,6 +267,7 @@ export const MapEntityDto = {
       squad: isSet(object.squad) ? MapEntityDto_Squad.fromJSON(object.squad) : undefined,
       enemy: isSet(object.enemy) ? MapEntityDto_Enemy.fromJSON(object.enemy) : undefined,
       objective: isSet(object.objective) ? MapEntityDto_Objective.fromJSON(object.objective) : undefined,
+      notes: isSet(object.notes) ? globalThis.String(object.notes) : "",
     };
   },
 
@@ -279,6 +291,9 @@ export const MapEntityDto = {
     if (message.objective !== undefined) {
       obj.objective = MapEntityDto_Objective.toJSON(message.objective);
     }
+    if (message.notes !== "") {
+      obj.notes = message.notes;
+    }
     return obj;
   },
 
@@ -301,6 +316,7 @@ export const MapEntityDto = {
     message.objective = (object.objective !== undefined && object.objective !== null)
       ? MapEntityDto_Objective.fromPartial(object.objective)
       : undefined;
+    message.notes = object.notes ?? "";
     return message;
   },
 };
