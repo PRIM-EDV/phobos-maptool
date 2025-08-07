@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhWindow } from "@phobos/elements";
 import { MapEntityType, MapEntityStatus, MapEntity } from "@phobos-maptool/models";
-import { EntityClickEvent } from "@trx/map";
+import { EntityMouseEvent } from "@trx/map";
 
 import { MapEntityService } from "../../../core/map-entity.service";
 import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
@@ -18,7 +18,7 @@ export class EditEntityDialogComponent implements Dialog, AfterViewInit {
   @ViewChild(PhWindow) window!: PhWindow;
 
   public editEntity: MapEntity;
-  public data?: {event: EntityClickEvent, entity: MapEntity};
+  public data?: {event: EntityMouseEvent, entity: MapEntity};
 
   public MapEntityType = MapEntityType;
   public MapEntityStatus = MapEntityStatus;

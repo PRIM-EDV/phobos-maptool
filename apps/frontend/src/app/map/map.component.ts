@@ -1,5 +1,5 @@
 import { Component, computed, Signal } from '@angular/core';
-import { Entity, EntityClickEvent, MapClickEvent, TrxMap } from '@trx/map';
+import { Entity, EntityMouseEvent, MapClickEvent, TrxMap } from '@trx/map';
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
 import { EntityFacadeService } from './application/entity.facade.service';
@@ -50,9 +50,9 @@ export class MapComponent {
     }
   }
 
-  public async openEditEntityDialog(ev: EntityClickEvent) 
+  public async openEditEntityDialog(ev: EntityMouseEvent) 
   {
-    const clickedEntity = this.entity.entities().find((e) => e.id === ev.entity.id);
+    const clickedEntity = this.entity.entities().find((e) => e.id === ev.entity!.id);
     const data = { event: ev, entity: clickedEntity };
 
     const editedEntity  = await this.dialog.open(EditEntityDialogComponent, data);
@@ -61,7 +61,7 @@ export class MapComponent {
     }
   }
 
-  public openEditContextMenu(ev: EntityClickEvent) {
+  public openEditContextMenu(ev: EntityMouseEvent) {
     this.contextMenu.open({
       entries: [
         {
@@ -73,7 +73,7 @@ export class MapComponent {
         {
           label: "Delete",
           action: async () => {
-            const entity = this.entity.entities().find((e) => e.id === ev.entity.id);
+            const entity = this.entity.entities().find((e) => e.id === ev.entity!.id);
             this.facade.deleteEntity(entity!);
           },
         },

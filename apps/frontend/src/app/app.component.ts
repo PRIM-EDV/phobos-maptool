@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
      }
 
     private async connectToMaptoolGateway(): Promise<void> {
-      const token = await this.tokenService?.accessToken() || '';
+      const token = this.tokenService?.accessToken() || '';
       if (token) {
         await this.maptoolGateway.connect(token);
       } else {
