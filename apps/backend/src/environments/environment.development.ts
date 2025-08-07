@@ -1,3 +1,4 @@
 export default() => ({
-    phobosAuthUrl: 'http://host.docker.internal:3000'
+    phobosAuthUrl: 'http://host.docker.internal:3000',
+    port: 4002
 });

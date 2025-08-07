@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { WsAdapter } from '@nestjs/platform-ws';
 
@@ -10,6 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const rpcModule = new RpcModule();
   const logger = await app.resolve(WinstonLogger);
+  const config = app.get<ConfigService>(ConfigService);
 
   app.enableCors();
   app.useWebSocketAdapter(new WsAdapter(app));
@@ -17,7 +19,7 @@ async function bootstrap() {
 
   rpcModule.register(app["container"]);
 
-  await app.listen(4002);
+  await app.listen(config.get<number>('port') || 3002);
 }
 
 bootstrap();
