@@ -1,9 +1,11 @@
-import { join } from 'path';
 import { Global, MiddlewareConsumer, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
-
 import { MongooseModule } from '@nestjs/mongoose';
+
+import { join } from 'node:path';
+import { parseArgs } from 'node:util';
+
 import { AppGateway } from './app.gateway';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { WinstonLoggerModule } from './infrastructure/logger/winston/winston.logger.module';
@@ -14,7 +16,8 @@ import { MapApiModule } from './api/map/map.api.module';
 import { SquadApiModule } from './api/squad/squad.api.module';
 import { AuthModule } from './infrastructure/auth/auth.module';
 
-import { parseArgs } from 'node:util';
+import environment  from 'src/environments/environment';
+import environmentDevelopment from 'src/environments/environment.development';
 
 const { values } = parseArgs({
   options: {
@@ -23,7 +26,6 @@ const { values } = parseArgs({
 });
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
-const ENV_FILE = values.configuration == "development" ? 'environment.development.ts' : 'environment.ts';
 
 @Global()
 @Module({
@@ -37,9 +39,13 @@ const ENV_FILE = values.configuration == "development" ? 'environment.developmen
     EventEmitterModule.forRoot(),
     MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
     ConfigModule.forRoot({
-      envFilePath: `src/environments/${ENV_FILE}`,
+      load: [ values.configuration == "development" ? environmentDevelopment : environment ],
       isGlobal: true,
-    })
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      exclude: ['/auth/'],
+    }),
   ],
   controllers: [],
   providers: [AppGateway],

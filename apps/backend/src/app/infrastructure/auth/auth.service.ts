@@ -19,7 +19,7 @@ export class AuthService {
     private readonly logger: WinstonLogger,
   ) {
     this.logger.setContext(AuthService.name);
-    this.phobosAuthUrl = this.config.get<string>('phobosAuthUrl') || process.env.phobosAuthUrl || 'http://localhost:3000';
+    this.phobosAuthUrl = this.config.get<string>('phobosAuthUrl') || 'http://localhost:3000';
   }
 
   /**
