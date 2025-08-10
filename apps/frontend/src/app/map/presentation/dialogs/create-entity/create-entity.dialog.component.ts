@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhWindow } from "@phobos/elements";
+import { PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhTextarea, PhWindow } from "@phobos/elements";
 import { MapEntity, MapEntityStatus, MapEntityType } from "@phobos-maptool/models";
 import { MapClickEvent } from "@trx/map";
 
@@ -13,7 +13,7 @@ import { MapEntityService } from "../../../core/map-entity.service";
   standalone: true,
   templateUrl: "./create-entity.dialog.component.html",
   styleUrls: ["./create-entity.dialog.component.scss"],
-  imports: [CommonModule, PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhWindow],
+  imports: [CommonModule, PhButton, PhButtonList, PhDropdown, PhDropdownItem, PhForm, PhInput, PhSlider, PhTextarea, PhWindow],
 })
 export class CreateEntityDialogComponent implements Dialog, AfterViewInit {
   @ViewChild(PhWindow) window!: PhWindow;

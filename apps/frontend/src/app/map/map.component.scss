@@ -3,3 +3,39 @@
     flex-grow: 1;
     overflow: hidden;
 }
+
+div.notes {
+    display: flex;
+    position: absolute;
+    bottom: 24px;
+    width: 300px;
+    right: 2px;
+    background-color: #1e1e1e;
+    font-size: 12px;
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    align-items: stretch;
+    flex-direction: column;
+
+    div.header {
+      display: flex;
+      font-family: 'Fira Code', monospace;
+      height: 18px;
+      background-color: #1e1e1e;
+      border-bottom: 2px solid #252526;
+      flex-direction: row;
+      padding: 1px;
+      flex-direction: row-reverse;
+
+      div.title {
+        padding: 3px;
+        color: #a9aaac;
+        background-color: #252526;
+      }
+    }
+
+    div.content {
+      padding: 3px;
+      color: #a9aaac;
+    }
+}

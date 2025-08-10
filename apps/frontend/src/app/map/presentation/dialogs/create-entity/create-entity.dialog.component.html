@@ -10,6 +10,7 @@
         <ph-input [label]="'Squad'" [(value)]="this.newEntity.entity.name"></ph-input>
         <ph-input [label]="'Callsign'" [(value)]="this.newEntity.entity.callsign"></ph-input>
         <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
+        <ph-textarea [label]="'Description'" [(value)]="this.newEntity.notes"></ph-textarea>
         <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 0, 1, 2, 3, 4, 5]"></ph-slider>
       } 
       @case(MapEntityType.FOE){
@@ -17,7 +18,7 @@
       }
       @case(MapEntityType.OBJECT){
         <ph-input [label]="'Name'" [(value)]="this.newEntity.entity.name"></ph-input>
-        <ph-input [label]="'Description'" [(value)]="this.newEntity.entity.description"></ph-input>
+        <ph-textarea [label]="'Description'" [(value)]="this.newEntity.entity.description"></ph-textarea>
       }
     }
     </ph-form>

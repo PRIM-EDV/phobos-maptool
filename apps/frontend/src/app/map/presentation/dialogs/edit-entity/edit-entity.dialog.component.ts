@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhWindow } from "@phobos/elements";
+import { PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhTextarea, PhWindow } from "@phobos/elements";
 import { MapEntityType, MapEntityStatus, MapEntity } from "@phobos-maptool/models";
 import { EntityMouseEvent } from "@trx/map";
 
@@ -12,7 +12,7 @@ import { Dialog } from "../../../../infrastructure/ui/dialog/dialog.interface";
   standalone: true,
   templateUrl: "./edit-entity.dialog.component.html",
   styleUrls: ["./edit-entity.dialog.component.scss"],
-  imports: [CommonModule, PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhWindow],
+  imports: [CommonModule, PhButton, PhButtonList, PhForm, PhInput, PhSlider, PhTextarea, PhWindow],
 })
 export class EditEntityDialogComponent implements Dialog, AfterViewInit {
   @ViewChild(PhWindow) window!: PhWindow;

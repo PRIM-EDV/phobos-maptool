@@ -9,7 +9,8 @@ export class MapEntityService {
   public getDefaultEntity(type: MapEntityType): MapEntity {
     const base = {
       id: uuidv4(),
-      position: { x: 0, y: 0}
+      position: { x: 0, y: 0},
+      notes: ""
     }
 
     switch (type) {

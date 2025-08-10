@@ -1,6 +1,17 @@
 <trx-map 
     [entities]="this.entities()" 
-    (terrainContextMenu)="this.openNewContextMenu($event)" 
-    (entityContextMenu)="this.openEditContextMenu($event)" 
+    (terrainContextMenu)="this.openNewContextMenu($event)"
+    (entityDoubleClick)="this.handleEntityDoubleClick($event)" 
+    (entityContextMenu)="this.openEditContextMenu($event)"
+    (entityHover)="this.handleEntityHover($event)" 
     (entityMoved)="this.handleEntityMoved($event)">
 </trx-map>
+
+<div class="notes">
+    <div class="header">
+        <div class="title">NOTES</div>
+    </div>
+    <div class="content">
+        {{ this.notes }}
+    </div>
+</div>

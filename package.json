@@ -11,6 +11,7 @@
     "build": "lerna run build",
     "build:map": "npm run build -w libs/trx-map",
     "build:models": "npm run build -w libs/models",
+    "build:elements": "npm run build -w libs/phobos-elements",
     "build:protocol": "npm run build -w libs/protocol",
     "start:frontend": "npm run start -w apps/frontend",
     "start:frontend:dev": "npm run start:dev -w apps/frontend",

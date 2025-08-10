@@ -1,5 +1,5 @@
 import { Component, computed, Signal } from '@angular/core';
-import { Entity, EntityMouseEvent, MapClickEvent, TrxMap } from '@trx/map';
+import { Entity, EntityMouseEvent, EntityType, MapClickEvent, TrxMap } from '@trx/map';
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
 import { EntityFacadeService } from './application/entity.facade.service';
@@ -8,6 +8,7 @@ import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
 import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
 import { MapApiService } from './api/map.api.service';
+import { MapEntityStatus, MapEntityType } from '@phobos-maptool/models';
 
 @Component({
   selector: 'app-map',
@@ -19,6 +20,8 @@ import { MapApiService } from './api/map.api.service';
   styleUrl: './map.component.scss'
 })
 export class MapComponent {
+
+  public notes: string = '';
 
   public entities: Signal<Entity[]> = computed(() => {
     return this.entity.entities().map((e) => toEntity(e));
@@ -32,19 +35,32 @@ export class MapComponent {
     private readonly mapApi: MapApiService
   ) { }
 
+  public handleEntityDoubleClick(event: EntityMouseEvent) {
+    const clickedEntity = this.entity.entities().find((e) => e.id === event.entity!.id);
+    if (clickedEntity && clickedEntity.type === MapEntityType.FRIEND) {
+      clickedEntity.entity.status = clickedEntity.entity.status === MapEntityStatus.REGULAR ? MapEntityStatus.COMBAT : MapEntityStatus.REGULAR;
+      this.facade.updateEntity(clickedEntity);
+    }
+  }
+
+  public handleEntityHover(event: EntityMouseEvent) {
+    this.notes = event.entity 
+      ? this.entity.entities().find(e => e.id === event.entity!.id)?.notes || ''
+      : '';
+  }
+
   public handleEntityMoved(entity: Entity) {
     const entityMoved = this.entity.entities().find((e) => e.id === entity.id);
 
     if (entityMoved) {
       entityMoved.position = entity.position;
-      
-
       this.facade.updateEntity(entityMoved);
     }
   }
 
   public async openCreateEntityDialog(e: MapClickEvent) {
     const newEntity = await this.dialog.open(CreateEntityDialogComponent, e);
+
     if (newEntity) {
       this.facade.createEntity(newEntity);
     }

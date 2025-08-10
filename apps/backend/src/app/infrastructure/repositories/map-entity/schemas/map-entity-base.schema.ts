@@ -16,8 +16,8 @@ export class MapEntityBaseDbo implements MapEntityBase {
     y: number;
   };
 
-  @Prop()
-  notes?: string;
+  @Prop({ required: true, default: '' })
+  notes: string;
 }
 
 export const MapEntityBaseSchema = SchemaFactory.createForClass(MapEntityBaseDbo);
