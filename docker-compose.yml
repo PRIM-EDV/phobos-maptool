@@ -18,4 +18,5 @@ services:
       - "${PHOBOS_MAPTOOL_PORT:-3002}:4002"
     environment:
       - MONGO_DB_HOST=db
-
+      - PHOBOS_AUTH_URL=${PHOBOS_AUTH_URL:-http://localhost:3000}
+      - PHOBOS_MAPTOOL_PORT=${PHOBOS_MAPTOOL_PORT:-3002}
