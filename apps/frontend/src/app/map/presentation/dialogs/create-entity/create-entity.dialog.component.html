@@ -1,4 +1,4 @@
-<ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 512px;">
+<ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 572px;">
     <ph-form>
         <ph-dropdown [label]="'Type'" [(value)]="newEntity.type" (valueChange)="this.onTypeChange($event)">
             <ph-dropdown-item [label]="'Squad'" [value]="MapEntityType.FRIEND"></ph-dropdown-item>
@@ -11,6 +11,14 @@
         <ph-input [label]="'Callsign'" [(value)]="this.newEntity.entity.callsign"></ph-input>
         <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
         <ph-textarea [label]="'Description'" [(value)]="this.newEntity.notes"></ph-textarea>
+        <ph-select-list [label]="'Symbol'" (valueChange)="this.onSymbolChange($event)">
+          <ph-select-item [value]="0" >
+            <img src="symbols/crosshair.svg" />
+          </ph-select-item>
+          <ph-select-item [value]="1" >
+            <img src="symbols/crosshair.svg" />
+          </ph-select-item>
+        </ph-select-list>
         <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 0, 1, 2, 3, 4, 5]"></ph-slider>
       } 
       @case(MapEntityType.FOE){
