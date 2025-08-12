@@ -19,10 +19,6 @@ export class SquadService {
         @SquadRpcAdapter() private readonly squadRpcAdapter: ISquadRpcAdapter
     ) {}
 
-    public async override(squads: Squad): Promise<void> {
-        
-    }
-
     public async place(squad: Squad): Promise<void> {
         this.eventEmitter.emit('squad.placed', new SquadPlacedEvent(squad));
         return await this.squadRepository.store(squad);
@@ -36,25 +32,25 @@ export class SquadService {
         return await this.squadRepository.get();
     }
 
-    @OnEvent('entity.placed')
-    async handleEntityPlacedEvent(event: MapEntityPlacedEvent) {
-        if (event.mapEntity.type == MapEntityType.FRIEND) {
-            const entity = event.mapEntity.entity as MapEntitySquad;
-            const existing = await this.squadRepository.get(entity.name);
-            if (!existing) {
-                const squad: Squad = { 
-                    name:  entity.name, 
-                    combattants: entity.combattants, 
-                    callsign: entity.callsign, 
-                    state: SquadState.IN_FIELD, 
-                    position: 0 
-                };
+    // @OnEvent('entity.placed')
+    // async handleEntityPlacedEvent(event: MapEntityPlacedEvent) {
+    //     if (event.mapEntity.type == MapEntityType.FRIEND) {
+    //         const entity = event.mapEntity.entity as MapEntitySquad;
+    //         const existing = await this.squadRepository.get(entity.name);
+    //         if (!existing) {
+    //             const squad: Squad = { 
+    //                 name:  entity.name, 
+    //                 combattants: entity.combattants, 
+    //                 callsign: entity.callsign, 
+    //                 state: SquadState.IN_FIELD, 
+    //                 position: 0 
+    //             };
                 
-                await this.squadRepository.store(squad);
-                await this.squadRpcAdapter.set(squad);
-            }
-        }
-    }
+    //             await this.squadRepository.store(squad);
+    //             await this.squadRpcAdapter.set(squad);
+    //         }
+    //     }
+    // }
 
     // @OnEvent('entity.removed')
     // async handleEntityRemovedEvent(event: EntityRemovedEvent) {

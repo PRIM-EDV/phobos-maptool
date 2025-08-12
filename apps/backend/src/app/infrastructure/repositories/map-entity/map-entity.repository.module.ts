@@ -7,6 +7,7 @@ import { MapEntityBaseSchema } from './schemas/map-entity-base.schema';
 import { MapEntitySquadSchema } from './schemas/map-entity-squad.schema';
 import { MapEntityFoeSchema } from './schemas/map-entity-foe.schema';
 import { MapEntityObjectiveSchema } from './schemas/map-entity-objective.schema';
+import { WinstonLoggerModule } from '../../logger/winston/winston.logger.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MapEntityObjectiveSchema } from './schemas/map-entity-objective.schema'
         },
       },
     ]),
+    WinstonLoggerModule
   ],
   providers: [
     {

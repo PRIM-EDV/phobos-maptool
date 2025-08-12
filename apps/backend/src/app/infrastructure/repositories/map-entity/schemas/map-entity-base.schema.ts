@@ -16,10 +16,10 @@ export class MapEntityBaseDbo implements MapEntityBase {
     y: number;
   };
 
-  @Prop({ required: true, default: '' })
+  @Prop({ default: '' })
   notes: string;
 
-  @Prop({ required: true, default: -1 })
+  @Prop({ default: -1 })
   symbol: number;
 }
 

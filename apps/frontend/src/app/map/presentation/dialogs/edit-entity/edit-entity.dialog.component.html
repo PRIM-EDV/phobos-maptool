@@ -6,6 +6,14 @@
                 <ph-input [label]="'Callsign'" [(value)]="editEntity.entity.callsign"></ph-input>
                 <ph-input [label]="'Tracker ID'" [(value)]="editEntity.entity.trackerId"></ph-input>
                 <ph-textarea [label]="'Description'" [(value)]="editEntity.notes"></ph-textarea>
+                <ph-select-list [label]="'Symbol'" [(value)]="editEntity.symbol">
+                    <ph-select-item [value]="0" >
+                        <img src="symbols/crosshair.svg" />
+                    </ph-select-item>
+                    <ph-select-item [value]="1" >
+                        <img src="symbols/crosshair.svg" />
+                    </ph-select-item>
+                </ph-select-list>
                 <ph-slider [label]="'Combattants'" [(value)]="editEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 0, 1, 2, 3, 4, 5]"></ph-slider>
             }
             @case(MapEntityType.FOE){

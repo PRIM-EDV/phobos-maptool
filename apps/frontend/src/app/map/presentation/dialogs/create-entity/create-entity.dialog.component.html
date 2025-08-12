@@ -11,7 +11,7 @@
         <ph-input [label]="'Callsign'" [(value)]="this.newEntity.entity.callsign"></ph-input>
         <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
         <ph-textarea [label]="'Description'" [(value)]="this.newEntity.notes"></ph-textarea>
-        <ph-select-list [label]="'Symbol'" (valueChange)="this.onSymbolChange($event)">
+        <ph-select-list [label]="'Symbol'" [(value)]="this.newEntity.symbol">
           <ph-select-item [value]="0" >
             <img src="symbols/crosshair.svg" />
           </ph-select-item>

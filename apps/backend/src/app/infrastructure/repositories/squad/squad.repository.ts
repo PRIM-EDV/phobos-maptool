@@ -4,11 +4,13 @@ import { Squad } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/app/core/squad/interfaces/squad.repository.interface";
+import { WinstonLogger } from "../../logger/winston/winston.logger";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {
 
     constructor(
+        private readonly logger: WinstonLogger,
         @InjectModel("Squad") private squadModel: Model<Squad>
     ) {}
 
@@ -37,18 +39,22 @@ export class SquadRepository implements ISquadRepository {
     }
 
     private async upsert(squad: Squad): Promise<void> {
-        let dbSquad = await this.squadModel.findOne({name: squad.name}).exec();
-        
-        if(dbSquad) {        
-            dbSquad.state = squad.state ? squad.state : dbSquad.state;
-            dbSquad.combattants = squad.combattants ? squad.combattants : dbSquad.combattants;
-            dbSquad.callsign = squad.callsign ? squad.callsign : dbSquad.callsign
-            dbSquad.position = squad.position ? squad.position : dbSquad.position
+        try {
+            let dbSquad = await this.squadModel.findOne({name: squad.name}).exec();
             
-            await dbSquad.save();
-        } else {
-            dbSquad = new this.squadModel(squad);
-            await dbSquad.save();
+            if(dbSquad) {        
+                dbSquad.state = squad.state ? squad.state : dbSquad.state;
+                dbSquad.combattants = squad.combattants ? squad.combattants : dbSquad.combattants;
+                dbSquad.callsign = squad.callsign ? squad.callsign : dbSquad.callsign
+                dbSquad.position = squad.position ? squad.position : dbSquad.position
+                
+                await dbSquad.save();
+            } else {
+                dbSquad = new this.squadModel(squad);
+                await dbSquad.save();
+            }
+        } catch (error) {
+            this.logger.error(`Error upserting squad: ${error.message}`);
         }
     }
 
