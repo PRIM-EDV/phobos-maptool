@@ -19,7 +19,7 @@ async function bootstrap() {
 
   rpcModule.register(app["container"]);
 
-  await app.listen(config.get<number>('port') || 3002);
+  await app.listen(4002);
 }
 
 bootstrap();
