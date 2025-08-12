@@ -8,6 +8,7 @@ export function toEntity(entity: MapEntity): Entity {
       x: entity.position.x,
       y: entity.position.y,
     },
+    symbol: entity.symbol ?? -1
   };
 
   switch (entity.type) {

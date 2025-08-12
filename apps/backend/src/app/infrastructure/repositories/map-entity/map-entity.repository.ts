@@ -39,6 +39,7 @@ export class MapEntityRepository implements IMapEntityRepository {
             mapEntityDbo.notes = entity.notes ?? "";
             mapEntityDbo.type = entity.type;
             mapEntityDbo.entity = entity.entity;
+            mapEntityDbo.symbol = entity.symbol ?? -1;
             mapEntityDbo.save();
         } else {
             mapEntityDbo = new this.mapEntityModel(entity);

@@ -38,29 +38,31 @@ export class MapEntityService {
 
     @OnEvent('squad.placed')
     async handleSquadPlacedEvent(event: SquadPlacedEvent) {
-        // const squad = event.squad;
-        // const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
+        const squad = event.squad;
+        const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
 
-        // if (squad.state == SquadState.IN_FIELD && !repoMapEntity) {
-        //     const mapEntity: MapEntity = {
-        //         id: uuidv4(),
-        //         type: MapEntityType.FRIEND,
-        //         position: {x: 300, y: 1090},
-        //         entity: {
-        //             name: squad.name,
-        //             callsign: squad.callsign,
-        //             trackerId: -1,
-        //             combattants: squad.combattants,
-        //             status: MapEntityStatus.REGULAR
-        //         }
-        //     }
-        //     await this.mapEntityRepository.store(mapEntity);
-        //     await this.mapEntityRpcAdapter.set(mapEntity);
-        // }
+        if (squad.state == SquadState.IN_FIELD && !repoMapEntity) {
+            const mapEntity: MapEntity = {
+                id: uuidv4(),
+                type: MapEntityType.FRIEND,
+                position: {x: 300, y: 1090},
+                entity: {
+                    name: squad.name,
+                    callsign: squad.callsign,
+                    trackerId: -1,
+                    combattants: squad.combattants,
+                    status: MapEntityStatus.REGULAR
+                },
+                notes: "",
+                symbol: -1
+            }
+            await this.mapEntityRepository.store(mapEntity);
+            await this.mapEntityRpcAdapter.set(mapEntity);
+        }
 
-        // if (squad.state != SquadState.IN_FIELD && repoMapEntity) {
-        //     await this.remove(repoMapEntity);
-        //     await this.mapEntityRpcAdapter.delete(repoMapEntity);
-        // }     
+        if (squad.state != SquadState.IN_FIELD && repoMapEntity) {
+            await this.remove(repoMapEntity);
+            await this.mapEntityRpcAdapter.delete(repoMapEntity);
+        }     
     }
 }

@@ -48,6 +48,7 @@ message MapEntityDto {
         Objective objective = 6;
     }
     string notes = 7;
+    int32 symbol = 8;
 }
 
 message DeleteMapEntity {

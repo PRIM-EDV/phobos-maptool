@@ -10,7 +10,8 @@ export class MapEntityService {
     const base = {
       id: uuidv4(),
       position: { x: 0, y: 0},
-      notes: ""
+      notes: "",
+      symbol: -1
     }
 
     switch (type) {

@@ -101,6 +101,7 @@ export interface MapEntityDto {
   enemy?: MapEntityDto_Enemy | undefined;
   objective?: MapEntityDto_Objective | undefined;
   notes: string;
+  symbol: number;
 }
 
 export interface MapEntityDto_Squad {
@@ -165,7 +166,16 @@ export interface GetAllMapEntities_Response {
 }
 
 function createBaseMapEntityDto(): MapEntityDto {
-  return { id: "", type: 0, position: undefined, squad: undefined, enemy: undefined, objective: undefined, notes: "" };
+  return {
+    id: "",
+    type: 0,
+    position: undefined,
+    squad: undefined,
+    enemy: undefined,
+    objective: undefined,
+    notes: "",
+    symbol: 0,
+  };
 }
 
 export const MapEntityDto = {
@@ -190,6 +200,9 @@ export const MapEntityDto = {
     }
     if (message.notes !== "") {
       writer.uint32(58).string(message.notes);
+    }
+    if (message.symbol !== 0) {
+      writer.uint32(64).int32(message.symbol);
     }
     return writer;
   },
@@ -250,6 +263,13 @@ export const MapEntityDto = {
 
           message.notes = reader.string();
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.symbol = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -268,6 +288,7 @@ export const MapEntityDto = {
       enemy: isSet(object.enemy) ? MapEntityDto_Enemy.fromJSON(object.enemy) : undefined,
       objective: isSet(object.objective) ? MapEntityDto_Objective.fromJSON(object.objective) : undefined,
       notes: isSet(object.notes) ? globalThis.String(object.notes) : "",
+      symbol: isSet(object.symbol) ? globalThis.Number(object.symbol) : 0,
     };
   },
 
@@ -294,6 +315,9 @@ export const MapEntityDto = {
     if (message.notes !== "") {
       obj.notes = message.notes;
     }
+    if (message.symbol !== 0) {
+      obj.symbol = Math.round(message.symbol);
+    }
     return obj;
   },
 
@@ -317,6 +341,7 @@ export const MapEntityDto = {
       ? MapEntityDto_Objective.fromPartial(object.objective)
       : undefined;
     message.notes = object.notes ?? "";
+    message.symbol = object.symbol ?? 0;
     return message;
   },
 };
