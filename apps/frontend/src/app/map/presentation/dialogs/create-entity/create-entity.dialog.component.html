@@ -12,12 +12,10 @@
         <ph-input [label]="'Tracker ID'" [(value)]="this.newEntity.entity.trackerId"></ph-input>
         <ph-textarea [label]="'Description'" [(value)]="this.newEntity.notes"></ph-textarea>
         <ph-select-list [label]="'Symbol'" [(value)]="this.newEntity.symbol">
-          <ph-select-item [value]="0" >
-            <img src="symbols/crosshair.svg" />
-          </ph-select-item>
-          <ph-select-item [value]="1" >
-            <img src="symbols/crosshair.svg" />
-          </ph-select-item>
+          <ph-select-item [value]="0" > <img src="symbols/crosshair.svg" /></ph-select-item>
+          <ph-select-item [value]="1" > <img src="symbols/medkit.svg" /></ph-select-item>
+          <ph-select-item [value]="2" > <img src="symbols/tools.svg" /></ph-select-item>
+          <ph-select-item [value]="3" > <img src="symbols/leader.svg" /></ph-select-item>
         </ph-select-list>
         <ph-slider [label]="'Combattants'" [(value)]="this.newEntity.entity.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 0, 1, 2, 3, 4, 5]"></ph-slider>
       } 
