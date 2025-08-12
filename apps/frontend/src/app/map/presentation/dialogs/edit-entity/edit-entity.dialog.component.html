@@ -3,7 +3,9 @@
          @switch (editEntity.type) {
             @case(MapEntityType.FRIEND){
                 <ph-input [label]="'Squad'" [(value)]="editEntity.entity.name"></ph-input>
+                @if (this.validationErrorName) {<ph-error style="text-align: center;">{{this.validationErrorName}}</ph-error>}
                 <ph-input [label]="'Callsign'" [(value)]="editEntity.entity.callsign"></ph-input>
+                @if (this.validationErrorCallsign) {<ph-error style="text-align: center;">{{this.validationErrorCallsign}}</ph-error>}
                 <ph-input [label]="'Tracker ID'" [(value)]="editEntity.entity.trackerId"></ph-input>
                 <ph-textarea [label]="'Description'" [(value)]="editEntity.notes"></ph-textarea>
                 <ph-select-list [label]="'Symbol'" [(value)]="editEntity.symbol">
