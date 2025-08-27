@@ -1,5 +1,7 @@
 import { Component, computed, Signal } from '@angular/core';
-import { Entity, EntityMouseEvent, EntityType, MapClickEvent, TrxMap } from '@trx/map';
+import { Entity, EntityMouseEvent, MapClickEvent, TrxMap } from '@trx/map';
+import { MapEntityStatus, MapEntityType } from '@phobos-maptool/models';
+
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
 import { EntityFacadeService } from './application/entity.facade.service';
@@ -8,7 +10,6 @@ import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
 import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
 import { MapApiService } from './api/map.api.service';
-import { MapEntityStatus, MapEntityType } from '@phobos-maptool/models';
 
 @Component({
   selector: 'app-map',

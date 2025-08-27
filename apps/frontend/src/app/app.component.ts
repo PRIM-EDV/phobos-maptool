@@ -6,6 +6,7 @@ import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu
 import { TOKEN_SERVICE_TOKEN, ITokenService } from '@phobos/core';
 import { MaptoolGateway } from './infrastructure/maptool.gateway';
 import { OverlayComponent } from './overlay/overlay.component';
+import { LsxGateway } from './infrastructure/lsx.gateway';
 
 declare global {
   interface Window {
@@ -13,7 +14,9 @@ declare global {
       lsxServerHostname: string,
       lsxServerPort: string,
       MAPTOOL_SERVER_HOSTNAME: string,
-      MAPTOOL_SERVER_PORT: string
+      MAPTOOL_SERVER_PORT: string,
+      LSX_SERVER_HOSTNAME: string,
+      LSX_SERVER_PORT: string
     }
   }
 }
@@ -25,21 +28,28 @@ declare global {
     ContextMenuModule,
     DialogComponent,
     RouterOutlet,
-    // OverlayComponent
+    OverlayComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-  autoGatewayConnection = effect(async () => {
+  autoMaptoolGatewayConnection = effect(async () => {
     if (this.tokenService && !this.maptoolGateway.isConnected()) {
       await this.connectToMaptoolGateway();
     }
   });
 
+  autoLsxGatewayConnection = effect(async () => {
+    if (this.tokenService && !this.lsxGateway.isConnected()) {
+      await this.connectToLsxGateway();
+    }
+  });
+
   constructor(
     private readonly maptoolGateway: MaptoolGateway,
+    private readonly lsxGateway: LsxGateway,
     @Optional() @Inject(TOKEN_SERVICE_TOKEN) private tokenService: ITokenService
   ) { }
 
@@ -62,6 +72,23 @@ export class AppComponent implements OnInit {
       }
     } else {
       console.warn('No token found, unable to connect to Maptool Gateway');
+    }
+  }
+
+  private async connectToLsxGateway(): Promise<void> {
+    const token = this.tokenService?.accessToken() || '';
+    if (token) {
+      try {
+        console.log('Connecting to Lsx Gateway...');
+        await this.lsxGateway.connect(token);
+      } catch (error) {
+        console.error('Error connecting to Lsx Gateway:', error);
+        setTimeout(async () => {
+          await this.connectToLsxGateway();
+        }, 5000);
+      }
+    } else {
+      console.warn('No token found, unable to connect to Lsx Gateway');
     }
   }
 }

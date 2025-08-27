@@ -7,3 +7,6 @@
 [submodule "libs/core"]
 	path = libs/core
 	url = https://github.com/PRIM-EDV/phobos-core
+[submodule "libs/lsx/protocol"]
+	path = libs/lsx/protocol
+	url = https://github.com/PRIM-EDV/lsx-protocol

@@ -25,6 +25,7 @@ const {
       '@phobos-maptool/dto',
       '@phobos-maptool/protocol',
       '@phobos-maptool/models',
+      "@phobos-lsx/protocol",
       '@trx/map',
       // Add further packages you don't need at runtime
     ],

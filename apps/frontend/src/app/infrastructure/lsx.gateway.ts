@@ -1,21 +1,22 @@
 import { Injectable, signal, WritableSignal } from "@angular/core";
+import { LsxMessage, Request, Response } from "@phobos-lsx/protocol";
+
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { MaptoolMessage, Request, Response } from "@phobos-maptool/protocol";
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.MAPTOOL_SERVER_HOSTNAME || window.location.hostname;
-const MAPTOOL_SERVER_PORT = window?.__env?.MAPTOOL_SERVER_PORT || 3002;
+const LSX_SERVER_HOSTNAME = window?.__env?.LSX_SERVER_HOSTNAME || window.location.hostname;
+const LSX_SERVER_PORT = window?.__env?.LSX_SERVER_PORT || 3002;
 
 const WS_PROTOCOL = window.location.protocol === 'https:' ? 'wss' : 'ws';
-const WS_URL = `${WS_PROTOCOL}://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
+const WS_URL = `${WS_PROTOCOL}://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
 
 @Injectable(
   { providedIn: 'root' }
 )
-export class MaptoolGateway {
+export class LsxGateway {
   public onRequest: Subject<{ id: string, request: Request }> = new Subject<{ id: string, request: Request }>();
-  public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
+  public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
   public onOpen: Subject<void> = new Subject<void>();
   public onClose: Subject<void> = new Subject<void>();
 
@@ -28,10 +29,12 @@ export class MaptoolGateway {
 
   public connect(jwt: string): Promise<void> {
     return new Promise((resolve, reject) => {
+      console.log(`Connecting to LSX WebSocket at ${WS_URL}`);
       this.ws = webSocket({
-        url: `${WS_URL}?token=${jwt}`,
+        url: `${WS_URL}/api?token=${jwt}`,
         openObserver: {
           next: () => {
+            console.log("WebSocket connection established");
             this.isConnected.set(true);
             this.onOpen.next();
             resolve();
@@ -52,27 +55,27 @@ export class MaptoolGateway {
 
   public request(req: Request): Promise<Response> {
     return new Promise((resolve, reject) => {
-      const msg: MaptoolMessage = {
+      const msg: LsxMessage = {
         id: uuidv4(),
         request: req
       }
       this.requests.set(msg.id, resolve.bind(this));
       setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject.bind(this, `${req} timed out`)), 5000);
-      this.ws.next({ event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg)) });
+      this.ws.next({ event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg)) });
     });
 
   }
 
   public respond(id: string, res: Response) {
-    const msg: MaptoolMessage = {
+    const msg: LsxMessage = {
       id: id,
       response: res
     }
-    this.ws.next({ event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg)) });
+    this.ws.next({ event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg)) });
   }
 
   private handleMessage(buffer: { event: 'msg', data: string }) {
-    const msg = MaptoolMessage.fromJSON(JSON.parse(buffer.data));
+    const msg = LsxMessage.fromJSON(JSON.parse(buffer.data));
     if (msg.request) {
       this.onRequest.next({ id: msg.id, request: msg.request });
     }
@@ -89,7 +92,6 @@ export class MaptoolGateway {
 
   private handleClose() {
     this.isConnected.set(false);
-    setTimeout(this.connect.bind(this), 5000);
     this.onClose.next();
   }
 
