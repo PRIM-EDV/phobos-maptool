@@ -45,7 +45,7 @@ export class MapEntityService {
             const mapEntity: MapEntity = {
                 id: uuidv4(),
                 type: MapEntityType.FRIEND,
-                position: {x: 300, y: 1090},
+                position: {x: 1130, y: 1090},
                 entity: {
                     name: squad.name,
                     callsign: squad.callsign,
