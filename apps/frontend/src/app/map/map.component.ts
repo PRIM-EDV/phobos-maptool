@@ -45,9 +45,23 @@ export class MapComponent {
   }
 
   public handleEntityHover(event: EntityMouseEvent) {
-    this.notes = event.entity 
-      ? this.entity.entities().find(e => e.id === event.entity!.id)?.notes || ''
-      : '';
+    const entity = this.entity.entities().find(e => e.id === event.entity!.id)
+    
+    if (entity) {
+      switch(entity.type) {
+        case MapEntityType.FRIEND:
+          this.notes = entity.notes || '';
+          break;
+        case MapEntityType.FOE:
+          this.notes = entity.notes || '';
+          break;
+        case MapEntityType.OBJECT:
+          this.notes = entity.entity.description || '';
+          break;
+      }
+    } else {
+      this.notes = '';
+    }
   }
 
   public handleEntityMoved(entity: Entity) {
