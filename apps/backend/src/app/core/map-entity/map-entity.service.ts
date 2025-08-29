@@ -36,6 +36,12 @@ export class MapEntityService {
         return await this.mapEntityRepository.get();
     }
 
+    public async getEntityByTrackerId(trackerId: number): Promise<MapEntity | undefined> {
+       const entities = await this.mapEntityRepository.get();
+       
+       return entities.find(e => (e.type === MapEntityType.FRIEND && e.entity.trackerId === trackerId));
+    }
+
     @OnEvent('squad.placed')
     async handleSquadPlacedEvent(event: SquadPlacedEvent) {
         const squad = event.squad;

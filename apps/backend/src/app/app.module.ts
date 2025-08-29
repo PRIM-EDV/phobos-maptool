@@ -17,6 +17,7 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 
 import environment  from 'src/environments/environment';
 import environmentDevelopment from 'src/environments/environment.development';
+import { TrackerApiModule } from './api/tracker/tracker.api.module';
 
 const { values } = parseArgs({
   options: {
@@ -33,6 +34,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     MapApiModule,
     SquadApiModule,
     MapEntityModule,
+    TrackerApiModule,
     SquadModule,
     WinstonLoggerModule,
     EventEmitterModule.forRoot(),
