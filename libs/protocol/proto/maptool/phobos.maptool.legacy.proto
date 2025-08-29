@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package phobos.maptool;
+
+message LegacyTrackerDto {
+    message Position {
+        int32 x = 1;
+        int32 y = 2;
+    }
+
+    int32 id = 1;
+    Position position = 2;
+}
+
+message SetTracker {
+    message Request {
+        LegacyTrackerDto tracker = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}

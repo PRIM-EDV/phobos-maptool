@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "phobos.maptool.entity.proto";
 import "phobos.maptool.squad.proto";
-// import "trx.tracker.proto";
+import "phobos.maptool.legacy.proto";
 
 package phobos.maptool;
 
@@ -19,8 +19,8 @@ message Request {
         DeleteSquad.Request deleteSquad = 12;
         GetAllSquads.Request getAllSquads = 13;
 
-        // // Tracker
-        // SetTracker.Request setTracker = 7;
+        // Tracker
+        SetTracker.Request setTracker = 107;
     }
 }
 
@@ -36,8 +36,8 @@ message Response {
         DeleteSquad.Response deleteSquad = 12;
         GetAllSquads.Response getAllSquads = 13;
 
-        // // Tracker
-        // SetTracker.Response setTracker = 7;
+        //
+        SetTracker.Response setTracker = 107;
     }
 }
 
