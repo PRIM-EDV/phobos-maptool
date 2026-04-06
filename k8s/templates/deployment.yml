@@ -20,4 +20,4 @@ spec:
         - containerPort: 3002
         env:
         - name: MONGO_DB_HOST
-          value: "db"
+          value: {{ .Release.Name }}-mongo-service
