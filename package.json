@@ -5,7 +5,9 @@
   "workspaces": [
     "apps/*",
     "libs/*",
-    "libs/lsx/*"
+    "libs/lsx/*",
+    "libs/phobos/*",
+    "libs/phobos/trx/*"
   ],
   "scripts": {
     "lerna": "lerna",

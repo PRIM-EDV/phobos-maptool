@@ -1,11 +1,11 @@
 [submodule "libs/phobos-elements"]
-	path = libs/phobos-elements
+	path = libs/phobos/elements
 	url = https://github.com/PRIM-EDV/phobos-elements
 [submodule "libs/trx-map"]
-	path = libs/trx-map
+	path = libs/phobos/trx/map
 	url = https://github.com/PRIM-EDV/trx-map
 [submodule "libs/core"]
-	path = libs/core
+	path = libs/phobos/core
 	url = https://github.com/PRIM-EDV/phobos-core
 [submodule "libs/lsx/protocol"]
 	path = libs/lsx/protocol
