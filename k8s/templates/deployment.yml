@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phobos-maptool-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phobos-maptool
+  template:
+    metadata:
+      labels:
+        app: phobos-maptool
+    spec:
+      containers:
+      - name: phobos-maptool
+        image: prim/phobos-maptool:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3002
+        env:
+        - name: MONGO_DB_HOST
+          value: "db"

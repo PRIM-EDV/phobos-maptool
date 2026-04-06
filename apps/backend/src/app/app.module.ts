@@ -38,7 +38,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     SquadModule,
     WinstonLoggerModule,
     EventEmitterModule.forRoot(),
-    MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
+    MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/maptool`),
     ConfigModule.forRoot({
       load: [ values.configuration == "development" ? environmentDevelopment : environment ],
       isGlobal: true,
