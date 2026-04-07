@@ -3,4 +3,4 @@ name: phobos-maptool
 description: Maptool for PhobOS
 type: application
 version: 0.1.0
-appVersion: 2.0.0
+appVersion: 2.0.1-alpha.1

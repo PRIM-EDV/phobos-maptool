@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: phobos-maptool
-        image: prim/phobos-maptool:latest
+        image: "prim/phobos-maptool:{{ .Chart.AppVersion }}"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3002
