@@ -1,20 +1,35 @@
+#-----------------------
+# Base image layer
+#-----------------------
+FROM node:25.8.0-slim AS base
+
 # ----------------------
-# Base dependencies layer
+# Package.json layer
 # ----------------------
-FROM node:24.1.0-slim AS deps
-RUN apt update && apt install python3 build-essential protobuf-compiler -y
+FROM base AS package.json
+RUN apt-get update && apt-get install -y jq
 
 WORKDIR /opt/phobos-maptool
 
-# Copy root lerna workspace files
-COPY package*.json ./
-COPY lerna*.json ./
-
-# Copy workspace app' package.json files
+COPY package.json ./
 COPY apps/backend/package.json ./apps/backend/
 COPY apps/frontend/package.json ./apps/frontend/
 
-# Copy all libraries
+RUN jq 'del(.version)' package.json > package.json.slim && mv package.json.slim package.json
+RUN jq 'del(.version)' apps/backend/package.json > apps/backend/package.json.slim && mv apps/backend/package.json.slim apps/backend/package.json
+RUN jq 'del(.version)' apps/frontend/package.json > apps/frontend/package.json.slim && mv apps/frontend/package.json.slim apps/frontend/package.json
+
+# ----------------------
+# Base dependencies layer
+# ----------------------
+FROM base AS deps
+RUN apt update && apt install python3 build-essential protobuf-compiler alsa-utils libasound2-dev libasound2-plugins -y
+
+WORKDIR /opt/phobos-maptool
+
+COPY --from=package.json /opt/phobos-maptool ./
+
+COPY lerna*.json ./
 COPY libs ./libs
 
 RUN npm install
