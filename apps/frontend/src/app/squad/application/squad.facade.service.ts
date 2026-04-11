@@ -3,7 +3,7 @@ import { Squad } from "@phobos-maptool/models";
 
 import { SquadService } from "../core/squad.service";
 import { SquadRpcAdapter } from "../infrastructure/squad.rpc.adapter";
-import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 
 @Injectable({
   providedIn: "root",

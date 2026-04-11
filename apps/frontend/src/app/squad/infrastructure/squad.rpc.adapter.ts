@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 import { Request } from "@phobos-maptool/protocol";
 import { Squad } from "@phobos-maptool/models";
 import { toSquadDto, fromSquadDto } from "@phobos-maptool/dto";

@@ -1,7 +1,7 @@
 import { effect, Injectable } from "@angular/core";
 import { MapEntity } from "@phobos-maptool/models";
 
-import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 import { MapEntityRpcAdapter } from "../infrastructure/rpc/map-entity.rpc.adapter";
 import { MapEntityService } from "../core/map-entity.service";
 

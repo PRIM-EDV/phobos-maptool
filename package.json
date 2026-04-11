@@ -62,5 +62,8 @@
         "docker build -t prim/phobos-maptool:${version} -t prim/phobos-maptool:latest ."
       ]
     }
+  },
+  "dependencies": {
+    "@oxc-parser/binding-win32-x64-msvc": "^0.124.0"
   }
 }

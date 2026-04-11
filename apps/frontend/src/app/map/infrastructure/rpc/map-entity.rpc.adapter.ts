@@ -3,7 +3,7 @@ import { Request } from "@phobos-maptool/protocol";
 import { MapEntity } from "@phobos-maptool/models";
 import { fromMapEntityDto, toMapEntityDto } from "@phobos-maptool/dto";
 
-import { MaptoolGateway } from "../../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../../infrastructure/gateway/maptool/maptool.gateway";
 
 @Injectable({ providedIn: "root" })
 export class MapEntityRpcAdapter {

@@ -4,7 +4,7 @@ import { DialogComponent } from "./infrastructure/ui/dialog/dialog.component";
 import { ContextMenuModule } from './infrastructure/ui/context-menu/context-menu.module';
 
 import { TOKEN_SERVICE_TOKEN, ITokenService } from '@phobos/core';
-import { MaptoolGateway } from './infrastructure/maptool.gateway';
+import { MaptoolGateway } from './infrastructure/gateway/maptool/maptool.gateway';
 import { OverlayComponent } from './overlay/overlay.component';
 import { LsxGateway } from './infrastructure/lsx.gateway';
 

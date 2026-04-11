@@ -3,7 +3,7 @@ import { DeleteMapEntity_Request, DeleteMapEntity_Response, Request, SetMapEntit
 
 import { Subscription } from "rxjs";
 
-import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 import { MapEntityService } from "../core/map-entity.service";
 import { fromMapEntityDto } from "@phobos-maptool/dto";
 

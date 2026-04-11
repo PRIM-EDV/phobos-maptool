@@ -3,7 +3,7 @@ import { Request, SetSquad_Response, SetSquad_Request, DeleteSquad_Request, Dele
 import { fromSquadDto } from "@phobos-maptool/dto";
 import { Subscription } from "rxjs";
 
-import { MaptoolGateway } from "../../infrastructure/maptool.gateway";
+import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 import { SquadService } from "../core/squad.service";
 
 @Injectable(
