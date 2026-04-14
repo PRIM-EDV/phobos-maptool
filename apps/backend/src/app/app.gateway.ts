@@ -21,7 +21,7 @@ import Stream from 'stream';
 import * as WebSocket from 'ws';
 
 
-@WebSocketGateway()
+@WebSocketGateway({path: '/api'})
 export class AppGateway implements OnGatewayConnection, OnModuleInit{
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: MaptoolResponse) => void> = new Map<string, (value: MaptoolResponse) => void>();

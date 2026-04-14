@@ -1,21 +1,26 @@
 {
-    "name": "@phobos-maptool/devcontainer",
+    "name": "@phobos-maptool/maptool-devcontainer",
     "dockerComposeFile": "./docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspace",
     "features": {
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/git-lfs:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "version": "latest"
+        }
     },
     "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
-    // "remoteUser": "node",
      "customizations": {
         "vscode": {
             "extensions": [
-                "ms-vscode.vscode-typescript-next",
                 "angular.ng-template",
-                "ms-vscode.vscode-json"
+                "metalbear.mirrord",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "ms-vscode.vscode-json",
+                "ms-vscode.vscode-typescript-next",
+                "ms-azuretools.vscode-docker"
             ],
             "settings": {
                 "git.enableSmartCommit": true,
@@ -23,7 +28,8 @@
                 "git.confirmSync": false,
                 "terminal.integrated.defaultProfile.linux": "bash",
                 "extensions.autoUpdate": false,
-                "extensions.autoCheckUpdates": false
+                "extensions.autoCheckUpdates": false,
+                "mirrord.prompt_target": true
             }
         }
     }

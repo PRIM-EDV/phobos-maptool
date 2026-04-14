@@ -1,27 +1,29 @@
 services:
-  db:
-    image: mongo:8.0
-
   app:
     build:
       context: ../
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
-    depends_on:
-      - db
     ports:
       - "3002:3002"
-      - "4002:4002"
-    environment:
-      - MONGO_DB_HOST=db
     volumes:
-      - ..:/workspace
-      - /workspace/node_modules
-      - /workspace/dist
-      - /workspace/apps/frontend/dist
-      - /workspace/apps/backend/dist
+      - ..:/workspace:cached
+
+      # Docker Daemon socket
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - ~/.docker/config.json:/root/.docker/config.json:ro
       
+      # Local node_modules
+      - node_modules:/workspace/node_modules
+
+      # Kubernetes config forwarding
+      - ~/.kube/config:/root/.kube/config:ro
+
       # Basic git configuration forwarding
       - ~/.gitconfig:/tmp/host-gitconfig:ro
       - ~/.git-credentials:/home/node/.git-credentials:ro
       - ~/.ssh:/home/node/.ssh:ro
+    environment:
+      - DOCKER_CONTEXT=default
+volumes:
+  node_modules:
