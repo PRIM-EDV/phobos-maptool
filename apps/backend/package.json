@@ -1,6 +1,6 @@
 {
   "name": "@phobos-maptool/backend",
-  "version": "2.0.1-alpha.39",
+  "version": "2.0.1-alpha.40",
   "description": "",
   "author": "Lucas Moesch",
   "private": true,
@@ -25,7 +25,7 @@
     "@nestjs/platform-ws": "^11.1.0",
     "@nestjs/serve-static": "^5.0.3",
     "@nestjs/websockets": "^11.1.0",
-    "@phobos/infrastructure": "^0.1.0",
+    "@phobos/infrastructure": "^0.2.0",
     "@phobos-maptool/dto": "^0.1.0",
     "@phobos-maptool/models": "^0.1.0",
     "@phobos-maptool/protocol": "^0.1.0",

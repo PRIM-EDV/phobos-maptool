@@ -1,6 +1,6 @@
 {
   "name": "@phobos-maptool/maptool",
-  "version": "2.0.1-alpha.39",
+  "version": "2.0.1-alpha.40",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -17,7 +17,7 @@
     "k8s:status": "helm status phobos-maptool",
     "release": "release-it --workspaces",
     "release:pre": "npm run release -- --preRelease=alpha --no-git --no-github",
-    "mirrord:backend": "mirrord exec --config-file .mirrord/backend.mirrord.json --target deployment/phobos-maptool-deployment -- npm run start:backend",
+    "mirrord:backend": "mirrord exec --config-file .mirrord/backend.mirrord.json --target deployment/phobos-maptool-deployment -- npm run start:backend ",
     "mirrord:frontend": "mirrord exec --config-file .mirrord/frontend.mirrord.json --target deployment/phobos-maptool-deployment -- npm run start:frontend",
     "start:frontend": "npm run start -w apps/frontend",
     "start:frontend:dev": "npm run start:dev -w apps/frontend",
