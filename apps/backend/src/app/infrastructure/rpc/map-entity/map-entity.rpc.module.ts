@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { WinstonLoggerModule } from '@phobos/infrastructure';
+
 import { MapEntityRpcAdatper } from './map-entity.rpc.adapter';
-import { WinstonLoggerModule } from 'src/app/infrastructure/logger/winston/winston.logger.module';
 
 
 @Module({

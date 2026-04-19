@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MapEntityRepository } from './map-entity.repository';
+import { WinstonLoggerModule } from '@phobos/infrastructure';
 import { MapEntityType } from '@phobos-maptool/models';
 
+import { MapEntityRepository } from './map-entity.repository';
 import { MapEntityBaseSchema } from './schemas/map-entity-base.schema';
 import { MapEntitySquadSchema } from './schemas/map-entity-squad.schema';
 import { MapEntityFoeSchema } from './schemas/map-entity-foe.schema';
 import { MapEntityObjectiveSchema } from './schemas/map-entity-objective.schema';
-import { WinstonLoggerModule } from '../../logger/winston/winston.logger.module';
 
 @Module({
   imports: [

@@ -25,6 +25,7 @@
     "@nestjs/platform-ws": "^11.1.0",
     "@nestjs/serve-static": "^5.0.3",
     "@nestjs/websockets": "^11.1.0",
+    "@phobos/infrastructure": "^0.1.0",
     "@phobos-maptool/dto": "^0.1.0",
     "@phobos-maptool/models": "^0.1.0",
     "@phobos-maptool/protocol": "^0.1.0",

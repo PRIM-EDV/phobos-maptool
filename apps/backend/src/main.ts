@@ -1,9 +1,10 @@
-import { NestApplication, NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { WsAdapter } from '@nestjs/platform-ws';
+
+import { WinstonLogger } from '@phobos/infrastructure';
 
 import { AppModule } from 'src/app/app.module';
 import { RpcModule } from 'lib/rpc/rpc-module';
-import { WinstonLogger } from 'src/app/infrastructure/logger/winston/winston.logger';
 
 
 async function bootstrap() {

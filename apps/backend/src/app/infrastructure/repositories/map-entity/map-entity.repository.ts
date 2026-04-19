@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { WinstonLogger } from "@phobos/infrastructure";
 import { MapEntity, MapEntityType } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
 import { IMapEntityRepository } from "src/app/core/map-entity/interfaces/map-entity.repository.interface";
-import { WinstonLogger } from "../../logger/winston/winston.logger";
 
 @Injectable()
 export class MapEntityRepository implements IMapEntityRepository {

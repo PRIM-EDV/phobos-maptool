@@ -1,5 +1,6 @@
 import { fromSquadDto, toSquadDto } from "@phobos-maptool/dto";
 import { GetAllSquads_Response, SetSquad_Request, SetSquads_Request } from "@phobos-maptool/protocol";
+import { WinstonLogger } from "@phobos/infrastructure";
 
 import { Rpc, RpcHandler } from "lib/rpc/decorators";
 import { AppGateway } from "src/app/app.gateway";
@@ -9,6 +10,7 @@ import { SquadService } from "src/app/core/squad/squad.service";
 @RpcHandler(AppGateway)
 export class SquadApiController { 
     constructor(
+        protected readonly logger: WinstonLogger,
         private readonly gateway: AppGateway,
         private readonly squad: SquadService,
     ) {}

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
+import { WinstonLoggerModule } from '@phobos/infrastructure';
 
 import { AuthService } from './auth.service';
-import { WinstonLoggerModule } from '../logger/winston/winston.logger.module';
 
 
 @Module({

@@ -1,11 +1,11 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { WinstonLogger } from '@phobos/infrastructure';
 
 import { firstValueFrom } from 'rxjs';
 
 import * as jose from 'jose';
-import { WinstonLogger } from '../logger/winston/winston.logger';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AuthService {
     private readonly logger: WinstonLogger,
   ) {
     this.logger.setContext(AuthService.name);
-    this.phobosAuthUrl = this.config.get<string>('phobosAuthUrl') || 'http://localhost:3000';
+    this.phobosAuthUrl = this.config.get<string>('phobosAuthUrl');
   }
 
   /**

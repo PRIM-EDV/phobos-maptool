@@ -1,21 +1,16 @@
 import { HttpAdapterHost } from '@nestjs/core';
 import { OnModuleInit } from '@nestjs/common';
-import {
-  OnGatewayConnection,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer,
-} from '@nestjs/websockets';
+import { OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { WinstonLogger } from '@phobos/infrastructure';
 import { MaptoolMessage, Response as MaptoolResponse, Request as MaptoolRequest } from '@phobos-maptool/protocol';
+
 import { v4 as uuidv4 } from 'uuid';
+import { IncomingMessage } from 'http';
 import { Subject } from 'rxjs';
 
 import { Ws } from './common/interfaces/ws';
-import { WinstonLogger } from './infrastructure/logger/winston/winston.logger';
 import { AuthService } from './infrastructure/auth/auth.service';
 
-
-import { IncomingMessage } from 'http';
 import Stream from 'stream';
 
 import * as WebSocket from 'ws';

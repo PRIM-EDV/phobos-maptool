@@ -1,11 +1,11 @@
 import { fromMapEntityDto, toMapEntityDto } from '@phobos-maptool/dto';
 import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from '@phobos-maptool/protocol';
+import { WinstonLogger } from '@phobos/infrastructure';
 
 import { RpcHandler, Rpc } from 'lib/rpc/decorators';
 import { AppGateway } from 'src/app/app.gateway';
 import { Ws } from 'src/app/common/interfaces/ws';
 import { MapEntityService } from 'src/app/core/map-entity/map-entity.service';
-import { WinstonLogger } from 'src/app/infrastructure/logger/winston/winston.logger';
 
 @RpcHandler(AppGateway)
 export class MapApiController {

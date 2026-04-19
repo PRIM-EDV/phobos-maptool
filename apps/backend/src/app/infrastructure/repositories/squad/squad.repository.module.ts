@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { WinstonLoggerModule } from '@phobos/infrastructure';
+
 import { SquadRepository } from './squad.repository';
 import { SquadSchema } from './schemas/squad.schema';
-import { WinstonLoggerModule } from '../../logger/winston/winston.logger.module';
 
 @Module({
     imports: [

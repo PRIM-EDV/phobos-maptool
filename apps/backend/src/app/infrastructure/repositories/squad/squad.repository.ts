@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { WinstonLogger } from "@phobos/infrastructure";
 import { Squad } from "@phobos-maptool/models";
 
 import { Model } from "mongoose";
 import { ISquadRepository } from "src/app/core/squad/interfaces/squad.repository.interface";
-import { WinstonLogger } from "../../logger/winston/winston.logger";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {
