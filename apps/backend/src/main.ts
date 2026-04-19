@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestApplication, NestFactory } from '@nestjs/core';
 import { WsAdapter } from '@nestjs/platform-ws';
 
 import { AppModule } from 'src/app/app.module';
@@ -7,7 +7,9 @@ import { WinstonLogger } from 'src/app/infrastructure/logger/winston/winston.log
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+  });
   const rpcModule = new RpcModule();
   const logger = await app.resolve(WinstonLogger);
 
@@ -16,8 +18,7 @@ async function bootstrap() {
   app.useLogger(logger);
 
   rpcModule.register(app["container"]);
-
-  await app.listen(3002);
+  await app.listen(4002);
 }
 
 bootstrap();

@@ -98,7 +98,7 @@
 							},
 							{
 								"glob": "**/*",
-								"input": "node_modules/@trx/dist/assets"
+								"input": "../../node_modules/@trx/map/dist/assets"
 							}
 						],
 						"styles": [

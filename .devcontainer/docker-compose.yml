@@ -5,6 +5,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
     ports:
+      - "4002:4002"
       - "3002:3002"
     volumes:
       - ..:/workspace:cached

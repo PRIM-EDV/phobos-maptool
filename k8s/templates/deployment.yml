@@ -17,7 +17,7 @@ spec:
         image: "prim/phobos-maptool:{{ .Chart.AppVersion }}"
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3002
+        - containerPort: 4002
         env:
         - name: MONGO_DB_HOST
           value: {{ .Release.Name }}-mongo-service

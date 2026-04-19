@@ -27,6 +27,7 @@ const { values } = parseArgs({
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
+
 @Global()
 @Module({
   imports: [
@@ -45,7 +46,6 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../..', 'public'),
-      exclude: ['/auth/'],
     }),
   ],
   controllers: [],
