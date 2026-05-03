@@ -9,9 +9,9 @@
         "ghcr.io/devcontainers/features/github-cli:1": {},
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
             "version": "latest"
-        }
+        },
     },
-    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
+    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh && /workspace/.devcontainer/setup-nginx.sh",
      "customizations": {
         "vscode": {
             "extensions": [
