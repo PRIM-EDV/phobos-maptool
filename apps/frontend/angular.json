@@ -5,8 +5,8 @@
 	"cli": {
 		"cache": {
 			"enabled": false
-    },
-    "analytics": false
+		},
+		"analytics": false
 	},
 	"projects": {
 		"phobos-maptool": {
@@ -46,8 +46,7 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {
-					},
+					"options": {},
 					"configurations": {
 						"production": {
 							"target": "phobos-maptool:esbuild:production"
@@ -66,7 +65,7 @@
 						"rebuildDelay": 0,
 						"dev": true,
 						"port": 0
-						},
+					},
 					"configurations": {
 						"development": {
 							"target": "phobos-maptool:serve-original:development"
@@ -144,6 +143,10 @@
 						},
 						"development": {
 							"buildTarget": "phobos-maptool:esbuild:development"
+						},
+						"proxy": {
+							"buildTarget": "phobos-maptool:esbuild:development",
+							"proxyConfig": "proxy.conf.json"
 						}
 					},
 					"defaultConfiguration": "development",

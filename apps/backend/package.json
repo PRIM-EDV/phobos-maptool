@@ -1,6 +1,6 @@
 {
   "name": "@phobos-maptool/backend",
-  "version": "2.0.1-alpha.40",
+  "version": "2.0.1-alpha.41",
   "description": "",
   "author": "Lucas Moesch",
   "private": true,
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "nest start --debug --watch",
     "start:dev": "nest start --watch -- --configuration=development",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",

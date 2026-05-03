@@ -1,10 +1,11 @@
 {
   "name": "@phobos-maptool/frontend",
-  "version": "2.0.1-alpha.40",
+  "version": "2.0.1-alpha.41",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "start:dev": "ng serve --configuration=development",
+    "start:proxy": "ng serve --configuration=proxy",
     "build": "ng build"
   },
   "private": true,

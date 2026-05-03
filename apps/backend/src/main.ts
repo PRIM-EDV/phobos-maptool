@@ -21,5 +21,5 @@ async function bootstrap() {
   rpcModule.register(app["container"]);
   await app.listen(4002);
 }
-
+console.log("Starting backend...");
 bootstrap();
