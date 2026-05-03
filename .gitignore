@@ -36,6 +36,7 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+devcontainer-lock.json
 
 # Miscellaneous
 .angular

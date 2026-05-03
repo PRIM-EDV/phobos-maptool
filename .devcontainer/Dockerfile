@@ -1,5 +1,5 @@
 FROM node:24.1.0-slim as deps
-RUN apt update && apt install python3 build-essential protobuf-compiler git alsa-utils libasound2-dev -y
+RUN apt update && apt install python3 build-essential protobuf-compiler git alsa-utils libasound2-dev nginx -y
 
 WORKDIR /workspace
 
@@ -14,5 +14,8 @@ RUN apt update && apt install -y curl ca-certificates && curl -LO "https://dl.k8
 
 # Provide mirrord for k8s development
 RUN curl -fsSL https://raw.githubusercontent.com/metalbear-co/mirrord/main/scripts/install.sh | bash
+
+# Provide nginx config for fullstack development
+COPY .devcontainer/nginx.conf /etc/nginx/nginx.conf
 
 RUN npm install
