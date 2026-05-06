@@ -1,6 +1,6 @@
 {
   "name": "@phobos-maptool/maptool",
-  "version": "2.0.1-alpha.41",
+  "version": "2.0.1-alpha.42",
   "private": true,
   "workspaces": [
     "apps/*",

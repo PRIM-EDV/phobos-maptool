@@ -45,7 +45,7 @@ export class MapComponent {
   }
 
   public handleEntityHover(event: EntityMouseEvent) {
-    const entity = this.entity.entities().find(e => e.id === event.entity!.id)
+    const entity = this.getEventEntity(event);
     
     if (entity) {
       switch(entity.type) {
@@ -83,7 +83,7 @@ export class MapComponent {
 
   public async openEditEntityDialog(ev: EntityMouseEvent) 
   {
-    const clickedEntity = this.entity.entities().find((e) => e.id === ev.entity!.id);
+    const clickedEntity = this.getEventEntity(ev);
     const data = { event: ev, entity: clickedEntity };
 
     const editedEntity  = await this.dialog.open(EditEntityDialogComponent, data);
@@ -125,5 +125,9 @@ export class MapComponent {
       ],
       position: { x: ev.clientX, y: ev.clientY },
     });
+  }
+
+  private getEventEntity(ev: EntityMouseEvent) {
+    return ev.entity ? this.entity.entities().find((e) => e.id === ev.entity!.id) : null;
   }
 }
