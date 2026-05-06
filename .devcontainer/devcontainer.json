@@ -11,7 +11,7 @@
             "version": "latest"
         },
     },
-    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh && /workspace/.devcontainer/setup-nginx.sh",
+    "postCreateCommand": "/workspace/.devcontainer/setup-git.sh",
      "customizations": {
         "vscode": {
             "extensions": [
