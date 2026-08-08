@@ -29,7 +29,7 @@
     "@phobos/infrastructure": "^0.2.0",
     "@phobos-maptool/dto": "^0.1.0",
     "@phobos-maptool/models": "^0.1.0",
-    "@phobos-maptool/protocol": "^0.1.0",
+    "@phobos-maptool/protocol": "^0.2.0",
     "axios": "^1.9.0",
     "jose": "^6.0.11",
     "mongoose": "^8.13.1",
