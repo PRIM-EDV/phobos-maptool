@@ -1,7 +1,6 @@
 
 
-import { SetTracker_Request } from "@phobos-maptool/protocol/dist/phobos.maptool.legacy";
-import { Request } from '@phobos-maptool/protocol';
+import { Request, SetTracker_Request } from '@phobos-maptool/protocol';
 import { WinstonLogger } from "@phobos/infrastructure";
 
 import { Rpc, RpcHandler } from "lib/rpc/decorators";

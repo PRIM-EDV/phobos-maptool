@@ -6,6 +6,7 @@
     "libs/*",
     "libs/lsx/*",
     "libs/phobos/*",
-    "libs/phobos/trx/*"
+    "libs/phobos/trx/*",
+    "libs/phobos/maptool/*"
   ]
 }
