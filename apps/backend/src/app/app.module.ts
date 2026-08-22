@@ -9,6 +9,7 @@ import { join } from 'node:path';
 import { AppGateway } from './app.gateway';
 import { MapEntityModule } from './core/map-entity/map-entity.module';
 import { SquadModule } from './core/squad/squad.module';
+import { TrackerModule } from './core/tracker/tracker.module';
 import { MapApiModule } from './api/map/map.api.module';
 import { SquadApiModule } from './api/squad/squad.api.module';
 import { TrackerApiModule } from './api/tracker/tracker.api.module';
@@ -26,6 +27,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     MapEntityModule,
     TrackerApiModule,
     SquadModule,
+    TrackerModule,
     WinstonLoggerModule,
     EventEmitterModule.forRoot(),
     MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/maptool`),
