@@ -1,6 +1,6 @@
 {
   "name": "@phobos-maptool/backend",
-  "version": "2.0.1-alpha.42",
+  "version": "2.0.1",
   "description": "",
   "author": "Lucas Moesch",
   "private": true,
@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
-    "@nestjs/common": "^11.0.1",
+    "@nestjs/common": "~11.1.16",
     "@nestjs/config": "^4.0.2",
-    "@nestjs/core": "^11.0.1",
+    "@nestjs/core": "~11.1.16",
     "@nestjs/event-emitter": "^3.0.1",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
