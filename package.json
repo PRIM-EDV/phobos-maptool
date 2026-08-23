@@ -37,7 +37,11 @@
   },
   "overrides": {
     "@angular/build": "21.1.5",
-    "@angular-devkit/build-angular": "21.1.5"
+    "@angular-devkit/build-angular": "21.1.5",
+    "@angular-architects/native-federation": {
+      "@angular/build": "21.2.12",
+      "@angular-devkit/build-angular": "21.2.12"
+    }
   },
   "release-it": {
     "$schema": "https://unpkg.com/release-it/schema/release-it.json",
