@@ -15,60 +15,74 @@ const MapRpcAdapter = () => Inject('MapEntityRpcAdapter');
 
 @Injectable()
 export class MapEntityService {
-    constructor(
-        private readonly eventEmitter: EventEmitter2,
+  constructor(
+    private readonly eventEmitter: EventEmitter2,
 
-        @MapEntityRepository() private readonly mapEntityRepository: IMapEntityRepository,
-        @MapRpcAdapter() private readonly mapEntityRpcAdapter: IMapEntityRpcAdapter
-    ) {}
+    @MapEntityRepository() private readonly mapEntityRepository: IMapEntityRepository,
+    @MapRpcAdapter() private readonly mapEntityRpcAdapter: IMapEntityRpcAdapter
+  ) { }
 
-    public async place(entity: MapEntity): Promise<void> {
-        this.eventEmitter.emit('entity.placed', new MapEntityPlacedEvent(entity));
-        return await this.mapEntityRepository.store(entity);
+  public async place(entity: MapEntity): Promise<void> {
+    this.eventEmitter.emit('entity.placed', new MapEntityPlacedEvent(entity));
+    return await this.mapEntityRepository.store(entity);
+  }
+
+  public async remove(entity: MapEntity): Promise<void> {
+    this.eventEmitter.emit('entity.removed', new MapEntityRemovedEvent(entity));
+    return await this.mapEntityRepository.delete(entity);
+  }
+
+  public async getAll(): Promise<MapEntity[]> {
+    return await this.mapEntityRepository.get();
+  }
+
+  public async getEntityByTrackerId(trackerId: string): Promise<MapEntity | undefined> {
+    const entities = await this.mapEntityRepository.get();
+
+    const trxMatch = trackerId.match(/^trx-(\d+)$/);
+    const isTrxFormat = trxMatch !== null;
+    const trxNumber = trxMatch ? trxMatch[1] : null;
+
+    return entities.find(e => {
+      if (e.type !== MapEntityType.FRIEND) {
+        return false;
+      }
+
+      if (isTrxFormat) {
+        return String(e.entity.trackerId) === trxNumber;
+      } else {
+        return e.entity.callsign === trackerId;
+      }
+    });
+  }
+
+  @OnEvent('squad.placed')
+  async handleSquadPlacedEvent(event: SquadPlacedEvent) {
+    const squad = event.squad;
+    const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
+
+    if (squad.state == SquadState.IN_FIELD && !repoMapEntity) {
+      const mapEntity: MapEntity = {
+        id: uuidv4(),
+        type: MapEntityType.FRIEND,
+        position: { x: 1130, y: 1090 },
+        entity: {
+          name: squad.name,
+          callsign: squad.callsign,
+          trackerId: -1,
+          combattants: squad.combattants,
+          status: MapEntityStatus.REGULAR
+        },
+        notes: "",
+        symbol: -1
+      }
+      await this.mapEntityRepository.store(mapEntity);
+      await this.mapEntityRpcAdapter.set(mapEntity);
     }
 
-    public async remove(entity: MapEntity): Promise<void> {
-        this.eventEmitter.emit('entity.removed', new MapEntityRemovedEvent(entity));
-        return await this.mapEntityRepository.delete(entity);
+    if (squad.state != SquadState.IN_FIELD && repoMapEntity) {
+      await this.remove(repoMapEntity);
+      await this.mapEntityRpcAdapter.delete(repoMapEntity);
     }
-
-    public async getAll(): Promise<MapEntity[]> {
-        return await this.mapEntityRepository.get();
-    }
-
-    public async getEntityByTrackerId(trackerId: number): Promise<MapEntity | undefined> {
-       const entities = await this.mapEntityRepository.get();
-       
-       return entities.find(e => (e.type === MapEntityType.FRIEND && e.entity.trackerId === trackerId));
-    }
-
-    @OnEvent('squad.placed')
-    async handleSquadPlacedEvent(event: SquadPlacedEvent) {
-        const squad = event.squad;
-        const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
-
-        if (squad.state == SquadState.IN_FIELD && !repoMapEntity) {
-            const mapEntity: MapEntity = {
-                id: uuidv4(),
-                type: MapEntityType.FRIEND,
-                position: {x: 1130, y: 1090},
-                entity: {
-                    name: squad.name,
-                    callsign: squad.callsign,
-                    trackerId: -1,
-                    combattants: squad.combattants,
-                    status: MapEntityStatus.REGULAR
-                },
-                notes: "",
-                symbol: -1
-            }
-            await this.mapEntityRepository.store(mapEntity);
-            await this.mapEntityRpcAdapter.set(mapEntity);
-        }
-
-        if (squad.state != SquadState.IN_FIELD && repoMapEntity) {
-            await this.remove(repoMapEntity);
-            await this.mapEntityRpcAdapter.delete(repoMapEntity);
-        }     
-    }
+  }
 }

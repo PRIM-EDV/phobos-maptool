@@ -1,5 +1,6 @@
 <trx-map 
     [entities]="this.entities()" 
+    [trackers]="this.tracker.trackers()"
     (terrainContextMenu)="this.openNewContextMenu($event)"
     (entityDoubleClick)="this.handleEntityDoubleClick($event)" 
     (entityContextMenu)="this.openEditContextMenu($event)"

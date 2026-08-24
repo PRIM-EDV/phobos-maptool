@@ -1,6 +1,6 @@
 import { Component, computed, Signal } from '@angular/core';
 import { Entity, EntityMouseEvent, MapClickEvent, TrxMap } from '@trx/map';
-import { MapEntityStatus, MapEntityType } from '@phobos-maptool/models';
+import { MapEntityStatus, MapEntityType, Tracker } from '@phobos-maptool/models';
 
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
@@ -10,6 +10,7 @@ import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
 import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
 import { MapApiService } from './api/map.api.service';
+import { TrackerService } from './core/tracker.service';
 
 @Component({
   selector: 'app-map',
@@ -28,8 +29,13 @@ export class MapComponent {
     return this.entity.entities().map((e) => toEntity(e));
   }); 
 
+  public trackers: Signal<Tracker[]> = computed(() => {
+    return this.tracker.trackers().map((t) => t);
+  });
+
   constructor(
-    public readonly  entity: MapEntityService,
+    public readonly entity: MapEntityService,
+    public readonly tracker: TrackerService,
     private readonly contextMenu: ContextMenuService,
     private readonly dialog: DialogService,
     private readonly facade: EntityFacadeService,

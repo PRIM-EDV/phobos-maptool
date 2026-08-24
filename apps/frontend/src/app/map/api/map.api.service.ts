@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { DeleteMapEntity_Request, DeleteMapEntity_Response, Request, SetMapEntity_Request, SetMapEntity_Response } from "@phobos-maptool/protocol";
+import { DeleteMapEntity_Request, DeleteMapEntity_Response, Request, SetMapEntity_Request, SetMapEntity_Response, SetTracker_Request, SetTracker_Response } from "@phobos-maptool/protocol";
 
 import { Subscription } from "rxjs";
 
 import { MaptoolGateway } from "../../infrastructure/gateway/maptool/maptool.gateway";
 import { MapEntityService } from "../core/map-entity.service";
-import { fromMapEntityDto } from "@phobos-maptool/dto";
+import { fromMapEntityDto, fromTrackerDto } from "@phobos-maptool/dto";
+import { TrackerService } from "../core/tracker.service";
 
 @Injectable({ providedIn: 'root' })
 export class MapApiService {
@@ -14,7 +15,8 @@ export class MapApiService {
 
   constructor(
     private readonly gateway: MaptoolGateway,
-    private readonly entity: MapEntityService
+    private readonly entity: MapEntityService,
+    private readonly tracker: TrackerService
   ) {
     this.onRequestSubscription = gateway.onRequest.subscribe(this.handleRequest.bind(this));
     console.log('MapApiService initialized');
@@ -33,6 +35,14 @@ export class MapApiService {
     const entity = fromMapEntityDto(entityDto);
 
     this.entity.setEntity(entity);
+    return {};
+  }
+
+  private async setTracker(request: SetTracker_Request): Promise<SetTracker_Response> {
+    const trackerDto = request.tracker!;
+    const tracker = fromTrackerDto(trackerDto);
+
+    this.tracker.setTracker(tracker);
     return {};
   }
   
