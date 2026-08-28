@@ -1,6 +1,7 @@
-import { Component, computed, Signal } from '@angular/core';
-import { Entity, EntityMouseEvent, MapClickEvent, TrxMap } from '@trx/map';
-import { MapEntityStatus, MapEntityType, Tracker } from '@phobos-maptool/models';
+import { Component, computed, signal, Signal, WritableSignal } from '@angular/core';
+import { Entity, EntityMouseEvent, MapClickEvent, Tracker, TrxMap } from '@trx/map';
+import { MapEntityStatus, MapEntityType } from '@phobos-maptool/models';
+import { PhButton } from '@phobos/elements';
 
 import { DialogService } from '../infrastructure/ui/dialog/dialog.service';
 import { CreateEntityDialogComponent } from './presentation/dialogs/create-entity/create-entity.dialog.component';
@@ -8,6 +9,7 @@ import { EntityFacadeService } from './application/entity.facade.service';
 import { ContextMenuService } from '../infrastructure/ui/context-menu/context-menu.service';
 import { MapEntityService } from './core/map-entity.service';
 import { toEntity } from './infrastructure/mapper/entity.mapper';
+import { toTracker } from './infrastructure/mapper/tracker.mapper';
 import { EditEntityDialogComponent } from './presentation/dialogs/edit-entity/edit-entity.dialog.component';
 import { MapApiService } from './api/map.api.service';
 import { TrackerService } from './core/tracker.service';
@@ -16,6 +18,7 @@ import { TrackerService } from './core/tracker.service';
   selector: 'app-map',
   imports: [
     TrxMap,
+    PhButton,
   ],
   standalone: true,
   templateUrl: './map.component.html',
@@ -25,12 +28,14 @@ export class MapComponent {
 
   public notes: string = '';
 
+  public trackersVisible: WritableSignal<boolean> = signal(true);
+
   public entities: Signal<Entity[]> = computed(() => {
     return this.entity.entities().map((e) => toEntity(e));
-  }); 
+  });
 
   public trackers: Signal<Tracker[]> = computed(() => {
-    return this.tracker.trackers().map((t) => t);
+    return this.tracker.trackers().map((t) => toTracker(t, !this.trackersVisible()));
   });
 
   constructor(
@@ -41,6 +46,10 @@ export class MapComponent {
     private readonly facade: EntityFacadeService,
     private readonly mapApi: MapApiService
   ) { }
+
+  public toggleTrackers() {
+    this.trackersVisible.update((visible) => !visible);
+  }
 
   public handleEntityDoubleClick(event: EntityMouseEvent) {
     const clickedEntity = this.entity.entities().find((e) => e.id === event.entity!.id);

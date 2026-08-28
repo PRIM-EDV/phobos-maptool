@@ -1,6 +1,6 @@
 <trx-map 
     [entities]="this.entities()" 
-    [trackers]="this.tracker.trackers()"
+    [trackers]="this.trackers()"
     (terrainContextMenu)="this.openNewContextMenu($event)"
     (entityDoubleClick)="this.handleEntityDoubleClick($event)" 
     (entityContextMenu)="this.openEditContextMenu($event)"
@@ -8,11 +8,16 @@
     (entityMoved)="this.handleEntityMoved($event)">
 </trx-map>
 
-<div class="notes">
-    <div class="header">
+<div class="panel">
+    <div class=controls>
+        <ph-button [isActive]="this.trackersVisible()" (click)="this.toggleTrackers()">TRACKERS</ph-button>
+    </div>
+    <div class=notes>
+            <div class="header">
         <div class="title">NOTES</div>
     </div>
-    <div class="content">
-        {{ this.notes }}
-    </div>
+        <div class="content">
+            {{ this.notes }}
+        </div>
+    </div>    
 </div>

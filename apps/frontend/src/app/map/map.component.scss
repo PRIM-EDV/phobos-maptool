@@ -4,18 +4,26 @@
     overflow: hidden;
 }
 
-div.notes {
+div.panel {
+  display: flex;
+  position: absolute;
+  bottom: 24px;
+  width: 300px;
+  right: 2px;
+  font-size: 12px;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  align-items: stretch;
+  flex-direction: column;
+
+  div.controls {
     display: flex;
-    position: absolute;
-    bottom: 24px;
-    width: 300px;
-    right: 2px;
+    flex-direction: row-reverse;
+  }
+
+  div.notes {
     background-color: #1e1e1e;
-    font-size: 12px;
-    color: #fff;
-    font-family: 'Fira Code', monospace;
-    align-items: stretch;
-    flex-direction: column;
+    width: 300px;
 
     div.header {
       display: flex;
@@ -32,10 +40,11 @@ div.notes {
         color: #a9aaac;
         background-color: #252526;
       }
-    }
+  }
 
     div.content {
       padding: 3px;
       color: #a9aaac;
     }
+  }
 }
