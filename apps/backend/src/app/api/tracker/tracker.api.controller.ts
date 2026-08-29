@@ -33,7 +33,7 @@ export class TrackerApiController {
                     entity: toMapEntityDto(trackerEntity)
                 }
             }
-            await this.gateway.requestAllButOne(client.id, request).then().catch(this.logger.error);
+            await this.gateway.requestAll(request).then().catch(this.logger.error);
         }
         
         await this.tracker.place(tracker);
